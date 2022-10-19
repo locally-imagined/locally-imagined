@@ -89,6 +89,55 @@ const styles = makeStyles((theme) => ({
     display: "inline-block",
     top: 20,
   },
+  signUp: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    height: "70%",
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    padding: theme.spacing(3),
+  },
+  signUpButton: {
+    color: "white",
+    backgroundColor: theme.palette.primary.main,
+    fontWeight: "bold",
+    justify: "space-between",
+    marginTop: theme.spacing(2),
+    width: "100%",
+  },
+  signUpCreate: {
+    display: "flex",
+    color: "white",
+    backgroundColor: "#03a402",
+    fontWeight: "bold",
+    width: "70%",
+    marginTop: theme.spacing(3),
+  },
+  signUpInput: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: "#eeeeee",
+    elevation: 1,
+    width: "100%",
+    height: "40px",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: theme.spacing(3),
+
+    padding: theme.spacing(2),
+  },
+  divider: {
+    marginTop: theme.spacing(3),
+  },
+  signUpTitle: {
+    color: theme.palette.primary.main,
+    fontSize: "27px",
+    fontWeight: "bold",
+  },
 }));
 
 export default styles;

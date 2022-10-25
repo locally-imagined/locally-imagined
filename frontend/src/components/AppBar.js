@@ -9,14 +9,15 @@ import {
   Collapse,
   IconButton,
   Modal,
-  Box,
   Paper,
-  Grid,
-  Container,
   Divider,
+  Tooltip,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
-import { Alert, AlertTitle } from "@mui/material/";
+import { Alert } from "@mui/material/";
 import CloseIcon from "@mui/icons-material/Close";
+
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import styles from "../styles";
@@ -30,9 +31,18 @@ import states from "../states";
 const Appbar = () => {
   const classes = styles();
   const history = useHistory();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openAccountMenu = Boolean(anchorEl);
   const [login, setLogin] = useState(states.login);
   const [openSignup, setSignup] = useState(false);
   const [error, setError] = useState(false);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  //handle menu close
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   //handle user input field change
   const handleInputChange = (event) => {
     setUser({
@@ -57,6 +67,7 @@ const Appbar = () => {
     event.preventDefault();
     console.log(user);
     const userlogin = { username: user.username, password: user.password };
+    console.log(JSON.stringify(userlogin));
     fetch("http://localhost:3010/v0/login", {
       method: "POST",
       body: JSON.stringify(userlogin),
@@ -82,6 +93,7 @@ const Appbar = () => {
       })
       .catch((err) => {
         console.log(err);
+        setLogin(true);
         setError(true);
       });
   };
@@ -135,7 +147,7 @@ const Appbar = () => {
               className={classes.fastlogin}
               placeholder="Username"
               inputProps={{ onChange: handleInputChange, required: true }}
-              type="username"
+              type="text"
               name="username"
             />
             {/*password input*/}
@@ -168,22 +180,61 @@ const Appbar = () => {
             </Button>
           </form>
         )}
-        {/*display avatar and log out button when login*/}
-        {login &&
-          (<Avatar alt="user" src={user.avatar} />)(
-            <Button
-              variant="text"
-              raised
-              className={classes.logout}
-              onClick={() => {
-                setLogin(false);
-                states.login = false;
-                history.push("/");
-              }}
+        {/*display avatar and username and log out button when login*/}
+        {login && (
+          <Tooltip title="Account settings">
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
             >
-              Log out
-            </Button>
-          )}
+              <Avatar className={classes.avatar}></Avatar>
+            </IconButton>
+          </Tooltip>
+        )}
+        <Menu
+          id="account-menu"
+          anchorEl={anchorEl}
+          className={classes.accountMenu}
+          open={openAccountMenu}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem
+            onClick={() => {
+              setAnchorEl(null);
+              history.push("/account");
+            }}
+            className={classes.accountMenuItem}
+          >
+            Profile
+          </MenuItem>
+          <MenuItem onClick={handleClose} className={classes.accountMenuItem}>
+            Account Setting
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              setLogin(false);
+              states.login = false;
+              setAnchorEl(null);
+              history.push("/");
+            }}
+            className={classes.accountMenuItem}
+          >
+            Logout
+          </MenuItem>
+        </Menu>
+
+        {login && (
+          <div raised className={classes.username}>
+            {`${user.username}`}
+          </div>
+        )}
       </Toolbar>
       {/*unsuccessful login alert*/}
       <Collapse in={error}>
@@ -206,6 +257,7 @@ const Appbar = () => {
           Incorrect username or password, <strong>try again</strong>
         </Alert>
       </Collapse>
+
       {/*Signup modal*/}
       <Modal open={openSignup} onClose={() => setSignup(false)}>
         <Paper className={classes.signUp}>

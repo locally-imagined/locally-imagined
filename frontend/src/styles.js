@@ -101,6 +101,9 @@ const styles = makeStyles((theme) => ({
     p: 4,
     padding: theme.spacing(3),
   },
+  logout: {
+    padding: theme.spacing(3),
+  },
   signUpButton: {
     color: "white",
     backgroundColor: theme.palette.primary.main,
@@ -137,6 +140,16 @@ const styles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: "27px",
     fontWeight: "bold",
+  },
+  username: {
+    color: theme.palette.primary.main,
+    padding: theme.spacing(2),
+  },
+  accountMenu: {
+    marginTop: "50px",
+  },
+  accountMenuItem: {
+    width: "300px",
   },
 }));
 

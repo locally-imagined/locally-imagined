@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@mui/material/";
 import CloseIcon from "@mui/icons-material/Close";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
@@ -93,7 +94,9 @@ const Appbar = () => {
       })
       .catch((err) => {
         console.log(err);
+        //fake login
         setLogin(true);
+        states.login = true;
         setError(true);
       });
   };
@@ -180,6 +183,7 @@ const Appbar = () => {
             </Button>
           </form>
         )}
+
         {/*display avatar and username and log out button when login*/}
         {login && (
           <Tooltip title="Account settings">
@@ -195,6 +199,7 @@ const Appbar = () => {
             </IconButton>
           </Tooltip>
         )}
+        {/*Account menu*/}
         <Menu
           id="account-menu"
           anchorEl={anchorEl}
@@ -234,6 +239,20 @@ const Appbar = () => {
           <div raised className={classes.username}>
             {`${user.username}`}
           </div>
+        )}
+        {/*Notifications button*/}
+        {login && (
+          <Tooltip title="Notifications">
+            <IconButton
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? "notifications" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <NotificationsIcon></NotificationsIcon>
+            </IconButton>
+          </Tooltip>
         )}
       </Toolbar>
       {/*unsuccessful login alert*/}

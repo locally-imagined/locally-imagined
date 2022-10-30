@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
-
+import LeftBar from "./LeftBar";
+import Listing from "./Listing";
 /**
  * Simple component with no state.
  *
@@ -18,6 +19,8 @@ function App() {
             }}
           >
             <Appbar />
+            <LeftBar />
+            <Listing />
           </div>
         </Route>
       </Switch>

@@ -4,6 +4,9 @@ const states = {
     firstname: "firstname",
     lastname: "lastname",
   },
+  url: "",
+  items: [],
+  filteredItems: [],
 };
 
 export default states;

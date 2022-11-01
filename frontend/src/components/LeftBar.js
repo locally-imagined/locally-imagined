@@ -13,7 +13,7 @@ import states from "../states";
 const LeftBar = () => {
   const history = useHistory();
   const classes = styles();
-
+  const [search, setSearch] = useState([]);
   return (
     <Grid item sm={3}>
       <Drawer variant="permanent">
@@ -25,8 +25,10 @@ const LeftBar = () => {
               disablePortal
               className={classes.search}
               options={states.items}
+              filterSelectedOptions
               sx={{ width: 300 }}
               getOptionLabel={(option) => option.title}
+              onChange={(event, value) => console.log(value)}
               renderInput={(params) => (
                 <TextField {...params} label="Search Marketplace" />
               )}

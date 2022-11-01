@@ -15,20 +15,19 @@ import {
 import { LocationOn } from "@mui/icons-material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import styles from "../styles";
 import states from "../states";
-import useItems from "../useItems";
 
 /**
  * right bar
  * @return {object} JSX
  */
-const RightBar = () => {
+const RightBar = (props) => {
   const classes = styles();
   const history = useHistory();
 
-  const items = useItems("https://jsonplaceholder.typicode.com/photos"); //fake json data
+  const items = props.items;
 
   return (
     <Grid item sm={7}>
@@ -54,13 +53,15 @@ const RightBar = () => {
               </span>
             </p>
 
-            {items.slice(1, 20).map((item) => (
+            {items.slice(1, 30).map((item) => (
               <Card className={classes.item} key={item.id}>
                 <CardActionArea>
-                  <CardMedia
+                  <LazyLoadImage
                     className={classes.image}
-                    image={item.url}
-                    title={item.title}
+                    src={item.url}
+                    width={600}
+                    height={600}
+                    alt="Image Alt"
                   />
                   <CardContent>
                     <Typography className={classes.itemTitle} varient="body">

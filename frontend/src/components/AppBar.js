@@ -18,7 +18,7 @@ import {
 import { Alert } from "@mui/material/";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-
+import AddIcon from "@mui/icons-material/Add";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import styles from "../styles";
@@ -36,6 +36,7 @@ const Appbar = () => {
   const openAccountMenu = Boolean(anchorEl);
   const [login, setLogin] = useState(states.login);
   const [openSignup, setSignup] = useState(false);
+  const [openPost, setPost] = useState(false);
   const [error, setError] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -69,13 +70,15 @@ const Appbar = () => {
     console.log(user);
     const userlogin = { username: user.username, password: user.password };
     console.log(JSON.stringify(userlogin));
-    fetch("http://localhost:3010/v0/login", {
-      method: "POST",
-      body: JSON.stringify(userlogin),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           throw res;
@@ -95,8 +98,8 @@ const Appbar = () => {
       .catch((err) => {
         console.log(err);
         //fake login
-        setLogin(true);
-        states.login = true;
+        // setLogin(true);
+        //states.login = true;
         setError(true);
       });
   };
@@ -110,13 +113,16 @@ const Appbar = () => {
     email:${user.email}
     phone:${user.telephone}
     password:${user.password}`);
-    fetch("http://localhost:3010/v0/register", {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          mode: "no-cors",
+        },
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           throw res;
@@ -124,15 +130,16 @@ const Appbar = () => {
         return res.json();
       })
       .then((json) => {
-        localStorage.setItem("user", JSON.stringify(json));
+        sessionStorage.setItem("user", JSON.stringify(json));
         states.user = json;
         states.login = true;
-        history.push("/");
       })
-      .catch(() => {
+      .catch((err) => {
         // do nothing.
+        console.log(err);
       });
   };
+  const submitPost = (event) => {};
 
   return (
     <AppBar className={classes.appBar} elevation={1}>
@@ -183,7 +190,20 @@ const Appbar = () => {
             </Button>
           </form>
         )}
-
+        {login && (
+          <Tooltip title="post">
+            <IconButton
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? "post" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={() => setPost(true)}
+            >
+              <AddIcon></AddIcon>
+            </IconButton>
+          </Tooltip>
+        )}
         {/*display avatar and username and log out button when login*/}
         {login && (
           <Tooltip title="Account settings">
@@ -235,11 +255,6 @@ const Appbar = () => {
           </MenuItem>
         </Menu>
 
-        {login && (
-          <div raised className={classes.username}>
-            {`${user.username}`}
-          </div>
-        )}
         {/*Notifications button*/}
         {login && (
           <Tooltip title="Notifications">
@@ -276,6 +291,44 @@ const Appbar = () => {
           Incorrect username or password, <strong>try again</strong>
         </Alert>
       </Collapse>
+
+      {/*Post modal*/}
+      <Modal open={openPost} onClose={() => setPost(false)}>
+        <Paper className={classes.signUp}>
+          <h1 className={classes.signUpTitle}>Post Your Art</h1>
+          <Divider className={classes.divider} />
+          <form onSubmit={submitPost}>
+            <InputBase
+              className={classes.signUpInput}
+              placeholder="Title"
+              inputProps={{
+                "data-testid": "title",
+                onChange: handleInputChange,
+                required: true,
+              }}
+              type="title"
+              name="title"
+            />
+            <input
+              accept="image/*"
+              className={classes.input}
+              id="contained-button-file"
+              multiple
+              type="file"
+            />
+            <Divider className={classes.divider} />
+            <Button
+              variant="text"
+              raised
+              type="submit"
+              value="Submit"
+              className={classes.signUpButton}
+            >
+              Post
+            </Button>
+          </form>
+        </Paper>
+      </Modal>
 
       {/*Signup modal*/}
       <Modal open={openSignup} onClose={() => setSignup(false)}>

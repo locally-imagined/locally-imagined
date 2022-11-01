@@ -144,7 +144,6 @@ const styles = makeStyles((theme) => ({
   },
   listingPage: {
     padding: 100,
-    height: "100vh",
     width: "63vw",
     position: "absolute",
     left: "23vw",

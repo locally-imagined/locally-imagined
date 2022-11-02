@@ -70,30 +70,40 @@ const Appbar = () => {
     console.log(user);
     const userlogin = { username: user.username, password: user.password };
     console.log(JSON.stringify(userlogin));
-    fetch(
-      `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
+    // fetch(
+    //   `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
+    //   {
+    //     "Access-Control-Allow-Origin": "*",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // )
+    axios
+      .get(
+        `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
+        {
+          "Access-Control-Allow-Origin": "*",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-        states.login = true;
-        return res.json();
-      })
-      .then((json) => {
-        localStorage.setItem("user", JSON.stringify(json));
-        states.user = JSON.parse(localStorage.getItem("user"));
-        states.login = true;
-        setLogin(states.login);
-        alert(states.user.firstname + " " + states.user.lastname);
+      )
+      .then((res) => {
+        if (res.status != 200) {
+          throw res;
+        } else {
+          setError(false);
+          console.log(res);
+          sessionStorage.setItem("token", res.data);
+          sessionStorage.setItem("user", JSON.stringify(res));
+          states.user = JSON.parse(sessionStorage.getItem("user"));
+          states.login = true;
+          setLogin(states.login);
+          alert(states.user.firstname + " " + states.user.lastname);
 
-        history.push("/");
+          history.push("/");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -103,6 +113,7 @@ const Appbar = () => {
         setError(true);
       });
   };
+
   //send signup request to database
   const submitSignup = (event) => {
     event.preventDefault();

@@ -23,18 +23,19 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import styles from "../styles";
 import states from "../states";
+import axios from "axios";
 
 /**
  * AppBar
  *
  * @return {object} JSX
  */
-const Appbar = () => {
+const Appbar = (props) => {
   const classes = styles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openAccountMenu = Boolean(anchorEl);
-  const [login, setLogin] = useState(states.login);
+  const [login, setLogin] = useState(props.login);
   const [openSignup, setSignup] = useState(false);
   const [openPost, setPost] = useState(false);
   const [error, setError] = useState(false);
@@ -69,7 +70,7 @@ const Appbar = () => {
     event.preventDefault();
     console.log(user);
     const userlogin = { username: user.username, password: user.password };
-    console.log(JSON.stringify(userlogin));
+
     // fetch(
     //   `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
     //   {
@@ -90,18 +91,19 @@ const Appbar = () => {
         }
       )
       .then((res) => {
-        if (res.status != 200) {
+        if (res.status != 200 || !res.data) {
           throw res;
         } else {
           setError(false);
           console.log(res);
-          sessionStorage.setItem("token", res.data);
-          sessionStorage.setItem("user", JSON.stringify(res));
-          states.user = JSON.parse(sessionStorage.getItem("user"));
+          user.token = res.data;
+          //sessionStorage.setItem("token", res.data);
+          sessionStorage.setItem("user", JSON.stringify(user));
+          console.log(sessionStorage.getItem("user"));
           states.login = true;
+          states.user.username = user.username;
           setLogin(states.login);
-          alert(states.user.firstname + " " + states.user.lastname);
-
+          alert(`username: ${states.user.username}`);
           history.push("/");
         }
       })
@@ -151,7 +153,13 @@ const Appbar = () => {
       });
   };
   const submitPost = (event) => {};
-
+  const handleLogout = () => {
+    sessionStorage.clear();
+    setLogin(false);
+    states.login = false;
+    setAnchorEl(null);
+    history.push("/");
+  };
   return (
     <AppBar className={classes.appBar} elevation={1}>
       <Toolbar className={classes.toolbar}>
@@ -201,6 +209,7 @@ const Appbar = () => {
             </Button>
           </form>
         )}
+        {/*post button*/}
         {login && (
           <Tooltip title="post">
             <IconButton
@@ -212,6 +221,20 @@ const Appbar = () => {
               onClick={() => setPost(true)}
             >
               <AddIcon></AddIcon>
+            </IconButton>
+          </Tooltip>
+        )}
+        {/*Notifications button*/}
+        {login && (
+          <Tooltip title="Notifications">
+            <IconButton
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? "notifications" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <NotificationsIcon></NotificationsIcon>
             </IconButton>
           </Tooltip>
         )}
@@ -253,33 +276,10 @@ const Appbar = () => {
           <MenuItem onClick={handleClose} className={classes.accountMenuItem}>
             Account Setting
           </MenuItem>
-          <MenuItem
-            onClick={() => {
-              setLogin(false);
-              states.login = false;
-              setAnchorEl(null);
-              history.push("/");
-            }}
-            className={classes.accountMenuItem}
-          >
+          <MenuItem onClick={handleLogout} className={classes.accountMenuItem}>
             Logout
           </MenuItem>
         </Menu>
-
-        {/*Notifications button*/}
-        {login && (
-          <Tooltip title="Notifications">
-            <IconButton
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? "notifications" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              <NotificationsIcon></NotificationsIcon>
-            </IconButton>
-          </Tooltip>
-        )}
       </Toolbar>
       {/*unsuccessful login alert*/}
       <Collapse in={error}>

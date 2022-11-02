@@ -1,6 +1,7 @@
 const states = {
   login: false,
   user: {
+    username: "",
     firstname: "firstname",
     lastname: "lastname",
   },

@@ -4,6 +4,7 @@ import Appbar from "./AppBar";
 import LeftBar from "./LeftBar";
 import Listing from "./Listing";
 import useItems from "../useItems";
+import states from "../states";
 /**
  * Simple component with no state.
  *
@@ -11,7 +12,14 @@ import useItems from "../useItems";
  */
 function App() {
   const items = useItems("https://jsonplaceholder.typicode.com/photos"); //fake json data
-
+  let user;
+  if (sessionStorage.getItem("user") !== null) {
+    user = JSON.parse(sessionStorage.user);
+    if (user?.token) states.login = true;
+  }
+  //console.log(user.token);
+  else states.login = false;
+  //console.log(states.login);
   return (
     <BrowserRouter>
       <Switch>
@@ -21,7 +29,7 @@ function App() {
               fontFamily: "Arial, Helvetica, sans-serif",
             }}
           >
-            <Appbar />
+            <Appbar login={states.login} />
             <LeftBar />
             <Listing items={items} />
           </div>

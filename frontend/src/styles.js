@@ -45,6 +45,9 @@ const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  category: {
+    width: "40vh",
+  },
   container: {
     width: "100vh",
     height: 350,
@@ -123,6 +126,7 @@ const styles = makeStyles((theme) => ({
   leftbar: {
     marginLeft: -20,
     display: "flex",
+    position: "absolute",
     flexDirection: "column",
     color: "black",
     height: "155vh",
@@ -148,7 +152,7 @@ const styles = makeStyles((theme) => ({
     position: "absolute",
     left: "23vw",
     margin: "auto",
-    backgroundColor: "#f5f5f5",
+    zIndex: 0,
   },
 
   fastlogin: {
@@ -229,7 +233,33 @@ const styles = makeStyles((theme) => ({
 
     padding: theme.spacing(2),
   },
+  searchIcon: {
+    left: 0,
+    color: "#bdbdbd",
+  },
+  searchInput: {
+    marginLeft: "10px",
+    left: 0,
+    width: 240,
+  },
+  searchResult: {
+    marginTop: "60px",
+    left: 0,
 
+    width: "100vw",
+    overflow: "hidden",
+    overflowY: "scroll",
+    height: "150px",
+    zIndex: 1,
+  },
+  searchItems: {
+    fontSize: "13px",
+    display: "flex",
+    marginTop: "10px",
+    height: "33px",
+    alignItems: "center",
+    color: "black",
+  },
   signUpTitle: {
     color: theme.palette.primary.main,
     fontSize: "27px",
@@ -239,12 +269,16 @@ const styles = makeStyles((theme) => ({
   subTitle: {
     fontSize: "18px",
     fontWeight: "bold",
-    paddingBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(3),
     paddingLeft: theme.spacing(1),
+    marginTop: 10,
   },
   search: {
-    marginLeft: -5,
     paddingBottom: 30,
+    marginTop: -19,
+    height: "6px",
+    border: "1px solid #999",
+    borderRadius: "7px",
   },
 
   toolbar: {

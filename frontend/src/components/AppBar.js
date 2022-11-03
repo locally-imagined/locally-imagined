@@ -24,7 +24,7 @@ import { useState } from "react";
 import styles from "../styles";
 import states from "../states";
 import axios from "axios";
-
+import SearchBar from "./SearchBar";
 /**
  * AppBar
  *
@@ -167,6 +167,7 @@ const Appbar = (props) => {
         <Typography className={classes.title} style={{ flex: 1 }}>
           Locally Imagined
         </Typography>
+        <SearchBar items={props.items} setFilter={props.setFilter} />
         {/*display fast login input fields while not login*/}
         {!login && (
           <form onSubmit={submitLogin}>

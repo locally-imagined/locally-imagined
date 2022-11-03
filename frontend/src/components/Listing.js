@@ -8,7 +8,6 @@ import {
   CardActionArea,
   Divider,
   Paper,
-  CardMedia,
   CardContent,
 } from "@material-ui/core";
 
@@ -20,15 +19,13 @@ import styles from "../styles";
 import states from "../states";
 
 /**
- * right bar
+ * Listing
  * @return {object} JSX
  */
 const RightBar = (props) => {
   const classes = styles();
   const history = useHistory();
-
-  const items = props.items;
-
+  //console.log(props.items);
   return (
     <Grid item sm={7}>
       <Paper elevation={0} className={classes.listingPage}>
@@ -53,7 +50,7 @@ const RightBar = (props) => {
               </span>
             </p>
 
-            {items.slice(1, 30).map((item) => (
+            {props.items.slice(1, 100).map((item) => (
               <Card className={classes.item} key={item.id}>
                 <CardActionArea>
                   <LazyLoadImage

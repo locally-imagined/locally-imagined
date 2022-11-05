@@ -50,7 +50,7 @@ const RightBar = (props) => {
               </span>
             </p>
 
-            {props.items.slice(1, 100).map((item) => (
+            {props.items.slice(0, 100).map((item) => (
               <Card className={classes.item} key={item.id}>
                 <CardActionArea>
                   <LazyLoadImage

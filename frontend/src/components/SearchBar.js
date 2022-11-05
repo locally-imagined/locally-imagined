@@ -1,11 +1,11 @@
 import React from "react";
-import { Grid, InputBase, Button, MenuItem } from "@material-ui/core";
+import { Grid, InputBase } from "@material-ui/core";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+
 import styles from "../styles";
 import states from "../states";
 import { Search } from "@material-ui/icons";
-import { Cancel } from "@mui/icons-material";
+
 /**
  * SearchBar
  * @return {object} JSX
@@ -14,17 +14,21 @@ const SearchBar = (props) => {
   const classes = styles();
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState([]);
-
+  const enterHandler = (event) => {
+    if (event.key === "Enter") {
+      props.setFilter(filter);
+      states.filteredItems = filter;
+      //console.log(filter);
+    }
+  };
   const handleSearchChange = (event) => {
     const search = event.target.value;
-    console.log(`search:${search}`);
+    //console.log(`search:${search}`);
     const filteredSearch = props.items.filter((value) => {
       return value.title.toLowerCase().includes(search.toLowerCase());
     });
     setFilter(filteredSearch);
-    props.setFilter(filteredSearch);
-    states.filteredItems = filteredSearch;
-    console.log(filteredSearch);
+    // console.log(filteredSearch);
   };
   return (
     <Grid className={classes.topbar}>
@@ -39,6 +43,7 @@ const SearchBar = (props) => {
           onClick={() => {
             setOpen(true);
           }}
+          onKeyDown={enterHandler}
           type="search"
           name="search"
         />

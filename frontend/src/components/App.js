@@ -22,6 +22,7 @@ function App() {
 
   const filterHandler = (filteredItems) => {
     setItems(filteredItems);
+    //console.log(`App.js:${filteredItems}`);
   };
   //verify user login state
   if (sessionStorage.getItem("user") !== null) {

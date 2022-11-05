@@ -39,6 +39,7 @@ const Appbar = (props) => {
   const [openSignup, setSignup] = useState(false);
   const [openPost, setPost] = useState(false);
   const [error, setError] = useState(false);
+  const [success, setSucess] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -103,7 +104,8 @@ const Appbar = (props) => {
           states.login = true;
           states.user.username = user.username;
           setLogin(states.login);
-          alert(`username: ${states.user.username}`);
+          setSucess(true);
+          //alert(`username: ${states.user.username}`);
           history.push("/");
         }
       })
@@ -301,6 +303,27 @@ const Appbar = (props) => {
           }
         >
           Incorrect username or password, <strong>try again</strong>
+        </Alert>
+      </Collapse>
+      {/*successful login alert*/}
+      <Collapse in={success}>
+        <Alert
+          severity="success"
+          className={classes.errorMsg}
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setSucess(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Log in Successfully
         </Alert>
       </Collapse>
 

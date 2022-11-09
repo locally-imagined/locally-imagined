@@ -17,7 +17,14 @@ import { useState } from "react";
 function App() {
   const imgaes = useItems("https://jsonplaceholder.typicode.com/photos");
   const [items, setItems] = useState(dummyData);
-
+  //user object
+  const [user, setUser] = useState({
+    userName: "",
+    password: "",
+    email: "",
+  });
+  //Post object
+  const [art, setArt] = useState({ postTitle: "", imgFile: "", postDesc: "" });
   // console.log(data);
 
   const filterHandler = (filteredItems) => {
@@ -43,6 +50,10 @@ function App() {
               login={states.login}
               items={imgaes}
               setFilter={filterHandler}
+              user={user}
+              setUser={setUser}
+              art={art}
+              setArt={setArt}
             />
             <LeftBar />
             <Listing items={items} />

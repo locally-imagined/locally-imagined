@@ -101,7 +101,7 @@ const styles = makeStyles((theme) => ({
   },
 
   login: {
-    color: theme.palette.primary.contrastText,
+    color: "white",
     backgroundColor: theme.palette.primary.main,
     justify: "space-between",
     marginLeft: theme.spacing(2),
@@ -239,8 +239,10 @@ const styles = makeStyles((theme) => ({
   },
   searchInput: {
     marginLeft: "10px",
+
     left: 0,
-    width: 240,
+    width: 200,
+    marginBottom: "100px",
   },
   searchResult: {
     marginTop: "60px",
@@ -279,6 +281,9 @@ const styles = makeStyles((theme) => ({
     height: "6px",
     border: "1px solid #999",
     borderRadius: "7px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 
   toolbar: {

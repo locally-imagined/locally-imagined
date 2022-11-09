@@ -39,6 +39,7 @@ const Appbar = (props) => {
   const [openSignup, setSignup] = useState(false);
   const [openPost, setPost] = useState(false);
   const [error, setError] = useState(false);
+  const [msg, setMsg] = useState("Login successfully");
   const [success, setSucess] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -57,20 +58,34 @@ const Appbar = (props) => {
 
   //user object
   const [user, setUser] = React.useState({
-    username: "",
+    userName: "",
     password: "",
     email: "",
-    telephone: "",
-    firstname: "",
-    lastname: "",
-    avatar: "",
   });
+  //Post object
+  const [art, setArt] = useState({ postTitle: "", imgFile: "", postDesc: "" });
+  const handlePostChange = (event) => {
+    if (event.target.name === "imgFile") {
+      setArt({
+        ...art,
+        [event.target.name]: new FormData(event.target),
+      });
+    } else {
+      setArt({
+        ...art,
+        [event.target.name]: event.target.value,
+      });
+    }
+
+    console.log(art);
+  };
 
   //send login request to database
   const submitLogin = (event) => {
     event.preventDefault();
     console.log(user);
-    const userlogin = { username: user.username, password: user.password };
+
+    const authorizationBasic = window.btoa(user.userName + ":" + user.password);
 
     // fetch(
     //   `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
@@ -81,13 +96,30 @@ const Appbar = (props) => {
     //     },
     //   }
     // )
+    // axios
+    //   .get(`https://locally-imagined.herokuapp.com/login`, {
+    //     // "Access-Control-Allow-Origin": "*",
+    //     // "Access-Control-Allow-Credentials": true,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       // "Content-Type": "text/plain;charset=utf-8",
+    //       "Access-Control-Allow-Origin": "*",
+    //       "Access-Control-Allow-Credentials": false,
+    //       // Authorization: "Basic " + authorizationBasic,
+    //     },
+    //     // auth: {
+    //     //   username: user.username,
+    //     //   password: user.password,
+    //     // },
+    //   })
     axios
-      .get(
-        `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
+      .post(
+        "https://locally-imagined.herokuapp.com/login",
+        {},
         {
-          "Access-Control-Allow-Origin": "*",
-          headers: {
-            "Content-Type": "application/json",
+          auth: {
+            username: user.userName,
+            password: user.password,
           },
         }
       )
@@ -102,10 +134,11 @@ const Appbar = (props) => {
           sessionStorage.setItem("user", JSON.stringify(user));
           console.log(sessionStorage.getItem("user"));
           states.login = true;
-          states.user.username = user.username;
+          states.user.userName = user.userName;
           setLogin(states.login);
+          setMsg("Log in Successfully");
           setSucess(true);
-          //alert(`username: ${states.user.username}`);
+          //alert(`userName: ${states.user.userName}`);
           history.push("/");
         }
       })
@@ -113,7 +146,8 @@ const Appbar = (props) => {
         console.log(err);
         //fake login
         // setLogin(true);
-        //states.login = true;
+        // states.login = true;
+        setMsg("Incorrect username or password");
         setError(true);
       });
   };
@@ -123,38 +157,54 @@ const Appbar = (props) => {
     event.preventDefault();
     setSignup(false);
     //for testing
-    alert(`firstname:${user.firstname}
-    lastname:${user.lastname}
+    alert(`
     email:${user.email}
-    phone:${user.telephone}
+    userName: ${user.userName}
     password:${user.password}`);
-    fetch(
-      `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          mode: "no-cors",
-        },
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
+    axios
+      .post(
+        "https://locally-imagined.herokuapp.com/signup",
+        {},
+        {
+          auth: {
+            username: user.userName,
+            password: user.password,
+          },
         }
-        return res.json();
-      })
-      .then((json) => {
-        sessionStorage.setItem("user", JSON.stringify(json));
-        states.user = json;
-        states.login = true;
+      )
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          setError(false);
+          console.log(res);
+          user.token = res.data;
+          //sessionStorage.setItem("token", res.data);
+          sessionStorage.setItem("user", JSON.stringify(user));
+          console.log(sessionStorage.getItem("user"));
+          states.login = true;
+          states.user.userName = user.userName;
+          setLogin(states.login);
+          setMsg("Sign Up Successfully");
+          setSucess(true);
+          //alert(`userName: ${states.user.userName}`);
+          history.push("/");
+        }
       })
       .catch((err) => {
         // do nothing.
+        setMsg("Username is already taken");
+        setError(true);
         console.log(err);
       });
   };
-  const submitPost = (event) => {};
+  const submitPost = (event) => {
+    event.preventDefault();
+    alert(`
+    postTitle:${art.postTitle}
+    postDesc: ${art.postDesc}
+    imgFile:${art.imgFile}`);
+  };
   const handleLogout = () => {
     sessionStorage.clear();
     setLogin(false);
@@ -180,7 +230,7 @@ const Appbar = (props) => {
               placeholder="Username"
               inputProps={{ onChange: handleInputChange, required: true }}
               type="text"
-              name="username"
+              name="userName"
             />
             {/*password input*/}
             <InputBase
@@ -284,7 +334,7 @@ const Appbar = (props) => {
           </MenuItem>
         </Menu>
       </Toolbar>
-      {/*unsuccessful login alert*/}
+      {/*unsuccessful alert*/}
       <Collapse in={error}>
         <Alert
           severity="error"
@@ -302,10 +352,10 @@ const Appbar = (props) => {
             </IconButton>
           }
         >
-          Incorrect username or password, <strong>try again</strong>
+          {msg}, <strong>try again</strong>
         </Alert>
       </Collapse>
-      {/*successful login alert*/}
+      {/*successful alert*/}
       <Collapse in={success}>
         <Alert
           severity="success"
@@ -323,7 +373,7 @@ const Appbar = (props) => {
             </IconButton>
           }
         >
-          Log in Successfully
+          {msg}
         </Alert>
       </Collapse>
 
@@ -338,18 +388,32 @@ const Appbar = (props) => {
               placeholder="Title"
               inputProps={{
                 "data-testid": "title",
-                onChange: handleInputChange,
+                onChange: handlePostChange,
                 required: true,
               }}
-              type="title"
-              name="title"
+              type="text"
+              name="postTitle"
+            />
+            <InputBase
+              className={classes.signUpInput}
+              placeholder="Description"
+              inputProps={{
+                "data-testid": "description",
+                onChange: handlePostChange,
+                required: true,
+              }}
+              type="text"
+              name="postDesc"
             />
             <input
               accept="image/*"
               className={classes.input}
               id="contained-button-file"
               multiple
+              onChange={handlePostChange}
+              required
               type="file"
+              name="imgFile"
             />
             <Divider className={classes.divider} />
             <Button
@@ -373,25 +437,13 @@ const Appbar = (props) => {
           <form onSubmit={submitSignup}>
             <InputBase
               className={classes.signUpInput}
-              placeholder="First Name"
+              placeholder="Username"
               inputProps={{
-                "data-testid": "firstname",
                 onChange: handleInputChange,
                 required: true,
               }}
-              type="firstname"
-              name="firstname"
-            />
-            <InputBase
-              className={classes.signUpInput}
-              placeholder="Last Name"
-              inputProps={{
-                "data-testid": "lastname",
-                onChange: handleInputChange,
-                required: true,
-              }}
-              type="lastname"
-              name="lastname"
+              type="text"
+              name="userName"
             />
             <InputBase
               className={classes.signUpInput}
@@ -404,17 +456,7 @@ const Appbar = (props) => {
               type="email"
               name="email"
             />
-            <InputBase
-              className={classes.signUpInput}
-              placeholder="Phone Number"
-              inputProps={{
-                "data-testid": "telephone",
-                onChange: handleInputChange,
-                required: true,
-              }}
-              type="telephone"
-              name="telephone"
-            />
+
             <InputBase
               className={classes.signUpInput}
               placeholder="Password"

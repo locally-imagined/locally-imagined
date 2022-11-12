@@ -11,33 +11,24 @@ import {
 } from "@material-ui/core";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import AddIcon from "@mui/icons-material/Add";
+
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
-import styles from "../styles";
-import states from "../states";
+import styles from "../../styles";
+import states from "../../states";
 
-import SearchBar from "./SearchBar";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import Post from "./Post";
-import AlertMsg from "./AlertMsg";
 /**
  * AppBar
  *
  * @return {object} JSX
  */
-const Appbar = (props) => {
+const NavBar = (props) => {
   const classes = styles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openAccountMenu = Boolean(anchorEl);
   const [login, setLogin] = useState(props.login);
-  const [openSignup, setSignup] = useState(false);
-  const [openPost, setPost] = useState(false);
-  const [error, setError] = useState(false);
-  const [msg, setMsg] = useState("Login successfully");
-  const [success, setSucess] = useState(false);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -68,34 +59,7 @@ const Appbar = (props) => {
         <Typography className={classes.title} style={{ flex: 1 }}>
           Locally Imagined
         </Typography>
-        <SearchBar items={props.items} setFilter={props.setFilter} />
-        {/*display fast login input fields while not login*/}
-        {!login && (
-          <Login
-            setError={setError}
-            setLogin={setLogin}
-            setMsg={setMsg}
-            setSucess={setSucess}
-            setUser={props.setUser}
-            user={props.user}
-            setSignup={setSignup}
-          />
-        )}
-        {/*post button*/}
-        {login && (
-          <Tooltip title="post">
-            <IconButton
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? "post" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={() => setPost(true)}
-            >
-              <AddIcon></AddIcon>
-            </IconButton>
-          </Tooltip>
-        )}
+
         {/*Notifications button*/}
         {login && (
           <Tooltip title="Notifications">
@@ -154,51 +118,8 @@ const Appbar = (props) => {
           </MenuItem>
         </Menu>
       </Toolbar>
-      {/*unsuccessful alert*/}
-      {error && (
-        <AlertMsg
-          error={error}
-          success={success}
-          type={"error"}
-          setError={setError}
-          setSucess={setSucess}
-          msg={msg}
-        />
-      )}
-      {/*successful alert*/}
-      {success && (
-        <AlertMsg
-          error={error}
-          success={success}
-          type={"success"}
-          setError={setError}
-          setSucess={setSucess}
-          msg={msg}
-        />
-      )}
-
-      {/*Post modal*/}
-      <Post
-        openPost={openPost}
-        setPost={setPost}
-        art={props.art}
-        setArt={props.setArt}
-      />
-
-      {/*Signup modal*/}
-      <SignUp
-        setSignup={setSignup}
-        handleInputChange={handleInputChange}
-        openSignup={openSignup}
-        setError={setError}
-        setLogin={setLogin}
-        setMsg={setMsg}
-        setSucess={setSucess}
-        setUser={props.setUser}
-        user={props.user}
-      />
     </AppBar>
   );
 };
 
-export default Appbar;
+export default NavBar;

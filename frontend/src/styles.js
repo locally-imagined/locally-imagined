@@ -18,6 +18,23 @@ const styles = makeStyles((theme) => ({
     position: "fixed",
     zIndex: theme.zIndex.drawer + 1,
   },
+  artistAvatar: {
+    marginLeft: "80px",
+    marginTop: "-40px",
+    height: "50px",
+    width: "50px",
+    border: "2px solid white",
+  },
+  artistFollowButton: {
+    marginLeft: "70px",
+    border: "2px solid",
+    borderColor: theme.palette.primary.light,
+    borderRadius: "10px",
+  },
+  artistUserName: {
+    marginLeft: "70px",
+    marginTop: "10px",
+  },
   anouncText: {
     color: theme.palette.primary.contrastText,
     marginTop: "40px",
@@ -29,8 +46,8 @@ const styles = makeStyles((theme) => ({
   announcement: {
     backgroundColor: theme.palette.primary.light,
     height: "200px",
-    marginTop: "-8vh",
-    marginRight: "auto",
+    marginTop: "0vh",
+    width: "90vw",
   },
   catBar: {
     position: "absolute",
@@ -47,6 +64,23 @@ const styles = makeStyles((theme) => ({
   },
   category: {
     width: "40vh",
+    fontSize: "15px",
+  },
+  categoryBox: {
+    width: "100",
+    backgroundColor: theme.palette.primary.light,
+    fontSize: "15px",
+    marginTop: "70px",
+  },
+  categoryBar: {
+    backgroundColor: "white",
+    paddingLeft: "9.6vw",
+    borderBottom: " 1px solid black",
+  },
+  categoryBarItem: {
+    paddingRight: "50px",
+    position: "relative",
+    width: "200px",
   },
   container: {
     width: "100vh",
@@ -67,6 +101,10 @@ const styles = makeStyles((theme) => ({
     height: "14vw",
     width: "15vw",
     borderRadius: "4px",
+    [theme.breakpoints.down("sm")]: {
+      height: "25vw",
+      width: "25vw",
+    },
   },
   item: {
     height: "25vw",
@@ -75,6 +113,10 @@ const styles = makeStyles((theme) => ({
     marginRight: "10px",
     backgroundColor: "transparent",
     boxShadow: "none",
+    [theme.breakpoints.down("sm")]: {
+      height: "40vw",
+      width: "25vw",
+    },
   },
   itemPrice: {
     fontWeight: "bold",
@@ -84,7 +126,7 @@ const styles = makeStyles((theme) => ({
     color: "#9e9e9e",
   },
   itemBox: {
-    width: "67vw",
+    width: "100vw",
     marginLeft: "-20px",
     [theme.breakpoints.down("sm")]: {
       width: "110vw",
@@ -93,13 +135,64 @@ const styles = makeStyles((theme) => ({
       left: 20,
     },
   },
+  itemModal: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+
+    width: "80vw",
+    height: "80vh",
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+  },
+  itemModalPicture: {
+    width: "60%",
+    height: "100%",
+    backgroundColor: "crimson",
+    boxShadow: 24,
+    p: 4,
+  },
+  itemModalInfoBox: {
+    width: "40%",
+    height: "100%",
+    display: "inline-block",
+    backgroundColor: "background.paper",
+    boxShadow: 24,
+  },
+  itemModalInfoTitle: {
+    fontSize: "18px",
+    fontWeight: "bold",
+  },
+  itemModalInfoBar: {
+    bottom: "70vh",
+    width: "28.5vw",
+    borderBottom: " 1px solid grey",
+  },
+  itemModalInfo: {},
+  itemModalInfoArtist: {
+    color: "grey",
+  },
+  itemModalFavIcon: {
+    marginLeft: "10vw",
+  },
+
   icon: {
     backgroundColor: "#eeeeee",
     color: "#424242",
     padding: "5px",
     borderRadius: "50%",
   },
-
+  listingTab: {
+    fontSize: "15px",
+    marginLeft: "120px",
+  },
+  listingNavItem: {
+    paddingTop: "50px",
+    paddingRight: "30px",
+    marginLeft: "10px",
+  },
   login: {
     color: "white",
     backgroundColor: theme.palette.primary.main,
@@ -130,7 +223,7 @@ const styles = makeStyles((theme) => ({
     flexDirection: "column",
     color: "black",
     height: "155vh",
-    width: "25vw",
+    width: "20vw",
     border: "1px solid #999",
     backgroundColor: "white",
     position: "sticky",
@@ -147,11 +240,6 @@ const styles = makeStyles((theme) => ({
     },
   },
   listingPage: {
-    padding: 100,
-    width: "63vw",
-    position: "absolute",
-    left: "23vw",
-    margin: "auto",
     zIndex: 0,
   },
 
@@ -171,6 +259,14 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+  },
+  favoriteIcon: {
+    marginLeft: "11vw",
+    marginBottom: "-8vh",
+    zIndex: 1,
+  },
+  favorited: {
+    color: "Crimson",
   },
 
   profilePic: {

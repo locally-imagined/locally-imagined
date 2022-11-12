@@ -4,6 +4,7 @@ import Appbar from "./AppBar";
 import LeftBar from "./LeftBar";
 import Listing from "./Listing";
 import useItems from "../useItems";
+import NavBar from "./AccountPage/NavBar";
 import dummyData from "./dummyData.json";
 import states from "../states";
 import { useState } from "react";
@@ -18,6 +19,7 @@ function App() {
   const imgaes = useItems("https://jsonplaceholder.typicode.com/photos");
   const [items, setItems] = useState(dummyData);
   //user object
+  const [login, setLogin] = useState(states.login);
   const [user, setUser] = useState({
     userName: "",
     password: "",
@@ -55,9 +57,12 @@ function App() {
               art={art}
               setArt={setArt}
             />
-            <LeftBar />
+
             <Listing items={items} />
           </div>
+        </Route>
+        <Route path="/account">
+          <NavBar login={states.login} user={user} setUser={setUser} />
         </Route>
       </Switch>
     </BrowserRouter>

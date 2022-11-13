@@ -29,6 +29,7 @@ import { LocationOn } from "@mui/icons-material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";
 import states from "../states";
 import Category from "./Category";
@@ -39,6 +40,8 @@ import Category from "./Category";
 const Listing = (props) => {
   const classes = styles();
   const history = useHistory();
+  // const [images, setImages] = React.useState(props.items);
+
   const [tab, setTab] = React.useState("explore");
   const [openItem, setOpenItem] = React.useState(false);
   const [curItemId, setCurItemId] = React.useState(0);
@@ -46,15 +49,18 @@ const Listing = (props) => {
   const [openItemUrl, setOpenItemUrl] = React.useState("");
   const openItemHandler = (id) => {
     setOpenItem(true);
-    setOpenItemUrl(props.items[id - 1].url);
-    setCurItemId(id - 1);
+    //console.log(id, props.items);
+    setOpenItemUrl(props.items[id].url);
 
-    // console.log(id);
+    setCurItemId(id);
+
+    //console.log(id);
   };
   const handleTabChange = (event, newTab) => {
     setTab(newTab);
   };
   const favoriteHandler = (event) => {
+    setCurItemId(0);
     event.currentTarget.classList.toggle(classes.favorited);
     if (!liked.includes(event.currentTarget.id)) {
       liked.push(event.currentTarget.id);
@@ -64,6 +70,9 @@ const Listing = (props) => {
       console.log(liked);
     }
   };
+  if (!props.items) {
+    return <h1>Loading</h1>;
+  }
   //console.log(props.items);
   return (
     <Grid>
@@ -93,20 +102,21 @@ const Listing = (props) => {
             </Button>
           </span> */}
           {tab === "explore" &&
-            props.items.slice(0, 100).map((item) => (
-              <Card className={classes.item} key={item.id}>
+            props.items.map((item, index) => (
+              <Card className={classes.item} key={index}>
                 <IconButton
                   className={classes.favoriteIcon}
                   onClick={(event) => favoriteHandler(event)}
-                  id={item.id}
+                  id={index}
                 >
                   <FavoriteIcon />
                 </IconButton>
-                <CardActionArea onClick={() => openItemHandler(item.id)}>
+                <CardActionArea onClick={() => openItemHandler(index)}>
                   <LazyLoadImage
                     className={classes.image}
                     src={item.url}
                     alt="Image Alt"
+                    effect="blur"
                   />
 
                   <CardContent>
@@ -118,13 +128,14 @@ const Listing = (props) => {
               </Card>
             ))}
           {tab === "following" &&
-            props.items.slice(0, 5).map((item) => (
-              <Card className={classes.item} key={item.id}>
+            props.items.slice(0, 5).map((item, index) => (
+              <Card className={classes.item} key={index}>
                 <CardActionArea>
                   <LazyLoadImage
                     className={classes.image}
                     src={item.url}
                     alt="Image Alt"
+                    effect="blur"
                   />
 
                   <Avatar className={classes.artistAvatar}></Avatar>

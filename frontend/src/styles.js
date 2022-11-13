@@ -150,7 +150,7 @@ const styles = makeStyles((theme) => ({
   itemModalPicture: {
     width: "60%",
     height: "100%",
-    backgroundColor: "crimson",
+    backgroundColor: "white",
     boxShadow: 24,
     p: 4,
   },

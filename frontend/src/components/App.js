@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
-import LeftBar from "./LeftBar";
+
 import Listing from "./Listing";
 import useItems from "../useItems";
 import NavBar from "./AccountPage/NavBar";
-import dummyData from "./dummyData.json";
+
 import states from "../states";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 //fake json data
 
 /**
@@ -16,10 +17,52 @@ import { useState } from "react";
  * @return {object} JSX
  */
 function App() {
-  const imgaes = useItems("https://jsonplaceholder.typicode.com/photos");
-  const [items, setItems] = useState(dummyData);
-  //user object
-  const [login, setLogin] = useState(states.login);
+  const [items, setItems] = useState([]);
+
+  const getSrc = (datas) => {
+    return axios.all(
+      datas.map((data) => {
+        return axios
+          .get(
+            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.imageID}`,
+            {}
+          )
+          .then((res) => {
+            if (res.status != 200 || !res.data) {
+              throw res;
+            } else {
+              let src = "data:image/jpeg;base64,";
+              src += res.data;
+              data.url = encodeURI(src);
+              //console.log(src);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+    );
+  };
+  useEffect(() => {
+    axios
+      .get("https://locally-imagined.herokuapp.com/posts/getpage/0", {})
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          const data = res.data;
+          getSrc(data).then(() => {
+            setItems(data);
+            console.log(JSON.parse(JSON.stringify(data)));
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // const [login, setLogin] = useState(states.login);
   const [user, setUser] = useState({
     userName: "",
     password: "",
@@ -50,7 +93,7 @@ function App() {
           >
             <Appbar
               login={states.login}
-              items={imgaes}
+              items={items}
               setFilter={filterHandler}
               user={user}
               setUser={setUser}

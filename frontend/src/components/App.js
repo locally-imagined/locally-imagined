@@ -3,12 +3,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
 
 import Listing from "./Listing";
-import useItems from "../useItems";
+
 import NavBar from "./AccountPage/NavBar";
 
 import states from "../states";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Dashboard from "./Dashboard/Dashboard";
 //fake json data
 
 /**
@@ -21,7 +22,7 @@ function App() {
 
   const getSrc = (datas) => {
     return axios.all(
-      datas.map((data) => {
+      datas.map(async (data) => {
         return axios
           .get(
             `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.imageID}`,
@@ -66,10 +67,18 @@ function App() {
   const [user, setUser] = useState({
     userName: "",
     password: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
     email: "",
   });
   //Post object
-  const [art, setArt] = useState({ postTitle: "", imgFile: "", postDesc: "" });
+  const [art, setArt] = useState({
+    title: "",
+    description: "",
+    price: "",
+    content: "",
+  });
   // console.log(data);
 
   const filterHandler = (filteredItems) => {
@@ -97,8 +106,6 @@ function App() {
               setFilter={filterHandler}
               user={user}
               setUser={setUser}
-              art={art}
-              setArt={setArt}
             />
 
             <Listing items={items} />
@@ -106,6 +113,10 @@ function App() {
         </Route>
         <Route path="/account">
           <NavBar login={states.login} user={user} setUser={setUser} />
+        </Route>
+        <Route path="/dashboard">
+          <NavBar login={states.login} user={user} setUser={setUser} />
+          <Dashboard art={art} setArt={setArt} />
         </Route>
       </Switch>
     </BrowserRouter>

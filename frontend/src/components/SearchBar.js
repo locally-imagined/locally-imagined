@@ -14,21 +14,30 @@ const SearchBar = (props) => {
   const classes = styles();
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState([]);
+  const [search, setSearch] = useState("");
   const enterHandler = (event) => {
     if (event.key === "Enter") {
-      props.setFilter(filter);
-      states.filteredItems = filter;
-      //console.log(filter);
+      if (search === "") {
+        props.setFilter(props.items);
+        states.filteredItems = props.items;
+        window.location.reload(false);
+      } else {
+        props.setFilter(filter);
+        states.filteredItems = filter;
+        console.log(filter);
+      }
     }
   };
   const handleSearchChange = (event) => {
-    const search = event.target.value;
-    //console.log(`search:${search}`);
+    setSearch(event.target.value);
+    // console.log(`search:${search}`);
+    // console.log(`items:`, props.items);
+
     const filteredSearch = props.items.filter((value) => {
       return value.title.toLowerCase().includes(search.toLowerCase());
     });
+    console.log(filteredSearch);
     setFilter(filteredSearch);
-    // console.log(filteredSearch);
   };
   return (
     <Grid className={classes.topbar}>

@@ -6,32 +6,21 @@ import {
   Button,
   Card,
   CardActionArea,
-  Divider,
   Paper,
   CardContent,
   Toolbar,
-  AppBar,
-  List,
   Modal,
   Avatar,
   IconButton,
-  ListItem,
-  ListItemText,
 } from "@material-ui/core";
 import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
 import Tabs from "@mui/material/Tabs";
-import Link from "@mui/material/Link";
 import Tab from "@mui/material/Tab";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { LocationOn } from "@mui/icons-material";
-import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";
-import states from "../states";
 import Category from "./Category";
 /**
  * Listing
@@ -170,10 +159,14 @@ const Listing = (props) => {
                 <Avatar></Avatar>
               </IconButton>
               <p style={{ textTransform: "none" }}>
-                <span className={classes.itemModalInfoTitle}>title</span> <br />
+                <span className={classes.itemModalInfoTitle}>
+                  {props.items[curItemId]?.title}
+                </span>
+                <br />
                 <span style={{ color: "grey", paddingRight: "10px" }}>by</span>
                 <span className={classes.itemModalInfoArtist}>artist</span>
-              </p>{" "}
+              </p>
+
               <IconButton
                 id={curItemId}
                 className={classes.itemModalFavIcon}

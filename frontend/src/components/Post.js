@@ -1,35 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, InputBase, Modal, Paper, Divider } from "@material-ui/core";
 
+import UploadIcon from "@mui/icons-material/Upload";
+
+import AlertMsg from "./AlertMsg";
 import styles from "../styles";
+import axios from "axios";
 
 const Post = (props) => {
   const classes = styles();
-  const handlePostChange = (event) => {
-    if (event.target.name === "imgFile") {
-      props.setArt({
-        ...props.art,
-        [event.target.name]: URL.createObjectURL(event.target.files),
-      });
-    } else {
-      props.setArt({
-        ...props.art,
-        [event.target.name]: event.target.value,
-      });
-    }
+  const [error, setError] = useState(false);
 
-    console.log(props.art);
+  const handlePostChange = (event) => {
+    event.target.name === "content"
+      ? props.setArt({
+          ...props.art,
+          [event.target.name]: event.target.files[0],
+        })
+      : props.setArt({
+          ...props.art,
+          [event.target.name]: event.target.value,
+        });
+
+    //console.log(props.art);
   };
 
   const submitPost = (event) => {
     event.preventDefault();
-    alert(`
-    postTitle:${props.art.postTitle}
-    postDesc: ${props.art.postDesc}
-    imgFile:${props.art.imgFile}`);
+    alert(`title:${props.art.title}
+    description:${props.art.description}
+    price:${props.art.price}
+    content:${props.art.content}`);
+
+    const token = JSON.parse(sessionStorage.getItem("user")).token;
+    console.log("token:", token);
+    const body = JSON.stringify(props.art);
+    axios
+      .post("https://locally-imagined.herokuapp.com/create", body, {
+        // prettier-ignore
+
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          console.log(`res:${res}`);
+          props.setOpenPost(false);
+        }
+      })
+      .catch((err) => {
+        setError(true);
+        console.log(err);
+      });
   };
   return (
-    <Modal open={props.openPost} onClose={() => props.setPost(false)}>
+    <Modal open={props.openPost} onClose={() => props.setOpenPost(false)}>
       <Paper className={classes.signUp}>
         <h1 className={classes.signUpTitle}>Post Your Art</h1>
         <Divider className={classes.divider} />
@@ -38,24 +66,37 @@ const Post = (props) => {
             className={classes.signUpInput}
             placeholder="Title"
             inputProps={{
-              "data-testid": "title",
+              "data-id": "title",
               onChange: handlePostChange,
               required: true,
             }}
             type="text"
-            name="postTitle"
+            name="title"
           />
           <InputBase
             className={classes.signUpInput}
             placeholder="Description"
             inputProps={{
-              "data-testid": "description",
+              "data-id": "description",
               onChange: handlePostChange,
               required: true,
             }}
             type="text"
-            name="postDesc"
+            name="description"
           />
+          <InputBase
+            className={classes.signUpInput}
+            placeholder="Price"
+            inputProps={{
+              "data-id": "price",
+              onChange: handlePostChange,
+              required: true,
+            }}
+            type="number"
+            name="price"
+          />
+
+          <UploadIcon style={{ marginTop: "10px", padding: "2px" }} />
           <input
             accept="image/*"
             className={classes.input}
@@ -64,19 +105,29 @@ const Post = (props) => {
             onChange={handlePostChange}
             required
             type="file"
-            name="imgFile"
+            name="content"
           />
-          <Divider className={classes.divider} />
+
+          <Divider className={classes.divider} style={{ marginTop: "20px" }} />
           <Button
             variant="text"
             raised
             type="submit"
             value="Submit"
-            className={classes.signUpButton}
+            className={classes.postButton}
+            style={{ color: "white" }}
           >
             Post
           </Button>
         </form>
+        {error && (
+          <AlertMsg
+            error={error}
+            type={"error"}
+            setError={setError}
+            msg={"error"}
+          />
+        )}
       </Paper>
     </Modal>
   );

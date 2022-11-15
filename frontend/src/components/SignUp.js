@@ -15,21 +15,28 @@ const SignUp = (props) => {
     event.preventDefault();
     props.setSignup(false);
     //for testing
-    // alert(`
-    // email:${user.email}
-    // userName: ${user.userName}
-    // password:${user.password}`);
+    alert(`
+    email:${props.user.email}
+    userName: ${props.user.userName}
+    password:${props.user.password}
+    phone:${props.user.phone}
+    firstname and lastname:${
+      props.user.firstName + " " + props.user.lastName
+    }`);
+    const body = JSON.stringify({
+      firstName: props.user.firstName,
+      lastName: props.user.lastName,
+      phone: props.user.phone,
+      email: props.user.email,
+    });
     axios
-      .post(
-        "https://locally-imagined.herokuapp.com/signup",
-        {},
-        {
-          auth: {
-            username: props.user.userName,
-            password: props.user.password,
-          },
-        }
-      )
+      .post("https://locally-imagined.herokuapp.com/signup", body, {
+        "content-type": "application/json",
+        auth: {
+          username: props.user.userName,
+          password: props.user.password,
+        },
+      })
       .then((res) => {
         if (res.status != 200 || !res.data) {
           throw res;
@@ -74,9 +81,38 @@ const SignUp = (props) => {
           />
           <InputBase
             className={classes.signUpInput}
+            placeholder="First Name"
+            inputProps={{
+              onChange: props.handleInputChange,
+              required: true,
+            }}
+            type="text"
+            name="firstName"
+          />
+          <InputBase
+            className={classes.signUpInput}
+            placeholder="Last Name"
+            inputProps={{
+              onChange: props.handleInputChange,
+              required: true,
+            }}
+            type="text"
+            name="lastName"
+          />
+          <InputBase
+            className={classes.signUpInput}
+            placeholder="Phone"
+            inputProps={{
+              onChange: props.handleInputChange,
+              required: true,
+            }}
+            type="number"
+            name="phone"
+          />
+          <InputBase
+            className={classes.signUpInput}
             placeholder="Email address"
             inputProps={{
-              "data-testid": "email",
               onChange: props.handleInputChange,
               required: true,
             }}
@@ -88,7 +124,6 @@ const SignUp = (props) => {
             className={classes.signUpInput}
             placeholder="Password"
             inputProps={{
-              "data-testid": "password",
               onChange: props.handleInputChange,
               required: true,
             }}

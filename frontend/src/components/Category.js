@@ -16,6 +16,7 @@ const Category = () => {
   const classes = styles();
   const history = useHistory();
   const mediumOptions = [
+    "all",
     "Oil",
     "Watercolour",
     "Acrylic",
@@ -27,6 +28,7 @@ const Category = () => {
     "Digital",
   ];
   const subjectOptions = [
+    "all",
     "History Painting",
     "Portrait Art",
     "Genre Painting",
@@ -34,6 +36,7 @@ const Category = () => {
     "Still Life Painting",
   ];
   const styleOptions = [
+    "all",
     "Realism",
     "Photorealism",
     "Expressionism",
@@ -47,9 +50,9 @@ const Category = () => {
   const [anchorMed, setAnchorMed] = React.useState(null);
   const [anchorSub, setAnchorSub] = React.useState(null);
   const [anchorSty, setAnchorSty] = React.useState(null);
-  const [selectedMedIndex, setSelectedMedIndex] = React.useState(1);
-  const [selectedSubIndex, setSelectedSubIndex] = React.useState(1);
-  const [selectedStyIndex, setSelectedStyIndex] = React.useState(1);
+  const [selectedMedIndex, setSelectedMedIndex] = React.useState(0);
+  const [selectedSubIndex, setSelectedSubIndex] = React.useState(0);
+  const [selectedStyIndex, setSelectedStyIndex] = React.useState(0);
   const openMed = Boolean(anchorMed);
   const openSub = Boolean(anchorSub);
   const openSty = Boolean(anchorSty);

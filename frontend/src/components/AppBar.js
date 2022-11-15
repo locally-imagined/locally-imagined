@@ -11,7 +11,8 @@ import {
 } from "@material-ui/core";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import AddIcon from "@mui/icons-material/Add";
+
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import styles from "../styles";
@@ -34,7 +35,7 @@ const Appbar = (props) => {
   const openAccountMenu = Boolean(anchorEl);
   const [login, setLogin] = useState(props.login);
   const [openSignup, setSignup] = useState(false);
-  const [openPost, setPost] = useState(false);
+
   const [error, setError] = useState(false);
   const [msg, setMsg] = useState("Login successfully");
   const [success, setSucess] = useState(false);
@@ -81,18 +82,17 @@ const Appbar = (props) => {
             setSignup={setSignup}
           />
         )}
-        {/*post button*/}
+        {/*Dashboard button*/}
         {login && (
-          <Tooltip title="post">
+          <Tooltip title="Dashboard">
             <IconButton
               size="small"
               sx={{ ml: 2 }}
-              aria-controls={open ? "post" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
-              onClick={() => setPost(true)}
+              onClick={() => history.push("/dashboard")}
             >
-              <AddIcon></AddIcon>
+              <DashboardIcon></DashboardIcon>
             </IconButton>
           </Tooltip>
         )}
@@ -176,14 +176,6 @@ const Appbar = (props) => {
           msg={msg}
         />
       )}
-
-      {/*Post modal*/}
-      <Post
-        openPost={openPost}
-        setPost={setPost}
-        art={props.art}
-        setArt={props.setArt}
-      />
 
       {/*Signup modal*/}
       <SignUp

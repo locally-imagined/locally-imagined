@@ -97,6 +97,66 @@ const styles = makeStyles((theme) => ({
   divider: {
     marginTop: theme.spacing(3),
   },
+  dashboard: {
+    width: "70vw",
+    height: "70vh",
+    backgroundColor: "LightSteelBlue",
+    borderRadius: "8px",
+    marginLeft: "15vw",
+    marginTop: "12vw",
+  },
+  dashboardTitle: {
+    marginLeft: "15vw",
+    marginTop: "8vw",
+    fontSize: "20px",
+    position: "absolute",
+    color: theme.palette.primary.main,
+  },
+  dashboardBox: {
+    width: "100vw",
+    height: "100vh",
+    position: "absolute",
+
+    backgroundColor: "#eeeeee",
+
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+      height: "100vh",
+    },
+  },
+  dashboardUploadBoard: {
+    width: "24vw",
+    height: "45vh",
+    marginLeft: "5vw",
+    position: "absolute",
+    marginTop: "8vw",
+    borderRadius: "8px",
+    backgroundColor: "#eeeeee",
+    boxShadow: 3,
+    [theme.breakpoints.down("sm")]: {
+      width: "50vw",
+      height: "30vh",
+    },
+  },
+  dashboardUploadTitle: {
+    position: "absolute",
+    fontSize: "20px",
+    marginTop: "2vw",
+    marginLeft: "2vw",
+  },
+  dashboardUploadButton: {
+    backgroundColor: theme.palette.primary.main,
+    width: "10vw",
+    height: "10vh",
+    color: "white",
+    marginLeft: "7.5vw",
+    position: "absolute",
+    marginTop: "15vw",
+    [theme.breakpoints.down("sm")]: {
+      width: "15vw",
+      height: "10vh",
+    },
+  },
   image: {
     height: "14vw",
     width: "15vw",
@@ -161,6 +221,7 @@ const styles = makeStyles((theme) => ({
     backgroundColor: "background.paper",
     boxShadow: 24,
   },
+
   itemModalInfoTitle: {
     fontSize: "18px",
     fontWeight: "bold",
@@ -274,6 +335,25 @@ const styles = makeStyles((theme) => ({
     top: 20,
   },
 
+  postButton: {
+    color: "white",
+    backgroundColor: theme.palette.primary.main,
+    fontWeight: "bold",
+    justify: "space-between",
+    marginTop: "20vh",
+    width: "90%",
+    position: "absolute",
+  },
+  postUploadButton: {
+    color: "black",
+    backgroundColor: "white",
+    fontWeight: "bold",
+    justify: "space-between",
+    marginTop: "12vh",
+    width: "50%",
+    marginLeft: "-40vh",
+    position: "absolute",
+  },
   username: {
     fontWeight: "bold",
     top: 70,

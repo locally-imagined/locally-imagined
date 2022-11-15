@@ -9,7 +9,28 @@ const styles = makeStyles((theme) => ({
   accountMenu: {
     marginTop: "50px",
   },
-
+  accountBoard: {
+    width: "70vw",
+    height: "70vh",
+    backgroundColor: "white",
+    borderRadius: "8px",
+    marginLeft: "15vw",
+    marginTop: "12vw",
+  },
+  accountBoardTitle: {
+    marginLeft: "15vw",
+    marginTop: "8vw",
+    fontSize: "20px",
+    position: "absolute",
+    color: theme.palette.primary.main,
+  },
+  accountBoardDetails: {
+    marginLeft: "10vw",
+    marginTop: "8vw",
+    fontSize: "20px",
+    position: "absolute",
+    color: "DarkSlateBlue",
+  },
   accountMenuItem: {
     width: "300px",
   },
@@ -30,6 +51,10 @@ const styles = makeStyles((theme) => ({
     border: "2px solid",
     borderColor: theme.palette.primary.light,
     borderRadius: "10px",
+  },
+  following: {
+    backgroundColor: "DarkSlateBlue",
+    borderColor: "DarkSlateBlue",
   },
   artistUserName: {
     marginLeft: "70px",

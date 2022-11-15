@@ -10,24 +10,54 @@ import axios from "axios";
 const Post = (props) => {
   const classes = styles();
   const [error, setError] = useState(false);
+  const getBase64 = (file) => {
+    return new Promise((resolve) => {
+      let baseURL = "";
 
+      let reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        baseURL = reader.result;
+        console.log(baseURL);
+        resolve(baseURL);
+      };
+    });
+  };
   const handlePostChange = (event) => {
-    event.target.name === "content"
-      ? props.setArt({
-          ...props.art,
-          [event.target.name]: event.target.files[0],
+    // event.target.name === "content"
+    //   ? props.setArt({
+    //       ...props.art,
+    //       [event.target.name]: event.target.files[0],
+    //     })
+    //   : props.setArt({
+    //       ...props.art,
+    //       [event.target.name]: event.target.value,
+    //     });
+    if (event.target.name === "content") {
+      getBase64(event.target.files[0])
+        .then((result) => {
+          props.setArt({
+            ...props.art,
+            [event.target.name]: result,
+          });
         })
-      : props.setArt({
-          ...props.art,
-          [event.target.name]: event.target.value,
+        .catch((err) => {
+          console.log(err);
         });
-
+    } else {
+      props.setArt({
+        ...props.art,
+        [event.target.name]: event.target.value,
+      });
+    }
     //console.log(props.art);
   };
 
   const submitPost = (event) => {
     event.preventDefault();
-    alert(`title:${props.art.title}
+    console.log(`title:${props.art.title}
     description:${props.art.description}
     price:${props.art.price}
     content:${props.art.content}`);

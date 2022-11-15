@@ -5,7 +5,7 @@ import Appbar from "./AppBar";
 import Listing from "./Listing";
 
 import NavBar from "./AccountPage/NavBar";
-
+import AccountPage from "./AccountPage/AccountPage";
 import states from "../states";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -88,6 +88,9 @@ function App() {
   //verify user login state
   if (sessionStorage.getItem("user") !== null) {
     const user = JSON.parse(sessionStorage.user);
+    useEffect(() => {
+      setUser(user);
+    }, []);
     if (user?.token) states.login = true;
   } else states.login = false;
 
@@ -113,6 +116,7 @@ function App() {
         </Route>
         <Route path="/account">
           <NavBar login={states.login} user={user} setUser={setUser} />
+          <AccountPage user={user} />
         </Route>
         <Route path="/dashboard">
           <NavBar login={states.login} user={user} setUser={setUser} />

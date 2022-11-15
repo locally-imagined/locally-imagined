@@ -38,6 +38,7 @@ const Post = (props) => {
     if (event.target.name === "content") {
       getBase64(event.target.files[0])
         .then((result) => {
+          result = result.split(",").pop();
           props.setArt({
             ...props.art,
             [event.target.name]: result,
@@ -52,7 +53,7 @@ const Post = (props) => {
         [event.target.name]: event.target.value,
       });
     }
-    //console.log(props.art);
+    console.log(props.art);
   };
 
   const submitPost = (event) => {

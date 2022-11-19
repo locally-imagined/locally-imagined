@@ -62,6 +62,7 @@ const Appbar = (props) => {
     history.push("/");
     window.location.reload(false);
   };
+
   return (
     <AppBar className={classes.appBar} elevation={1}>
       <Toolbar className={classes.toolbar}>

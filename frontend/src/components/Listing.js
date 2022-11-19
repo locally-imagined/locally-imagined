@@ -11,7 +11,9 @@ import {
   Toolbar,
   Modal,
   Avatar,
+  Divider,
   IconButton,
+  InputBase,
 } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
@@ -22,6 +24,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";
 import Category from "./Category";
+import Items from "./Items";
+import ItemDetails from "./ItemDetails";
 /**
  * Listing
  * @return {object} JSX
@@ -56,7 +60,7 @@ const Listing = (props) => {
     //setFollow("following");
   };
   const favoriteHandler = (event) => {
-    setCurItemId(0);
+    //setCurItemId(0);
     event.currentTarget.classList.toggle(classes.favorited);
     if (!liked.includes(event.currentTarget.id)) {
       liked.push(event.currentTarget.id);
@@ -70,6 +74,7 @@ const Listing = (props) => {
     return <h1>Loading</h1>;
   }
   //console.log(props.items);
+
   return (
     <Grid>
       <Category />
@@ -97,32 +102,14 @@ const Listing = (props) => {
               Santa Cruz · 40 mi
             </Button>
           </span> */}
-          {tab === "explore" &&
-            props.items.map((item, index) => (
-              <Card className={classes.item} key={index}>
-                <IconButton
-                  className={classes.favoriteIcon}
-                  onClick={(event) => favoriteHandler(event)}
-                  id={index}
-                >
-                  <FavoriteIcon />
-                </IconButton>
-                <CardActionArea onClick={() => openItemHandler(index)}>
-                  <LazyLoadImage
-                    className={classes.image}
-                    src={item.url}
-                    alt="Image Alt"
-                    effect="blur"
-                  />
-
-                  <CardContent>
-                    <Typography className={classes.itemTitle} varient="body">
-                      {item.title}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            ))}
+          {tab === "explore" && (
+            <Items
+              favoriteHandler={favoriteHandler}
+              openItemHandler={openItemHandler}
+              items={props.items}
+              icon={"favorite"}
+            />
+          )}
           {tab === "following" &&
             props.items.slice(0, 5).map((item, index) => (
               <Card className={classes.item} key={index}>
@@ -151,46 +138,13 @@ const Listing = (props) => {
             ))}
         </Container>
       </Paper>
-
-      <Modal
-        open={openItem}
-        onClose={() => {
-          setOpenItem(false);
-        }}
-      >
-        <Paper className={classes.itemModal}>
-          <LazyLoadImage
-            className={classes.itemModalPicture}
-            src={openItemUrl}
-            alt="Image Alt"
-            id={curItemId}
-          ></LazyLoadImage>
-
-          <Box className={classes.itemModalInfoBox}>
-            <Toolbar className={classes.itemModalInfoBar}>
-              <IconButton>
-                <Avatar></Avatar>
-              </IconButton>
-              <p style={{ textTransform: "none" }}>
-                <span className={classes.itemModalInfoTitle}>
-                  {props.items[curItemId]?.title}
-                </span>
-                <br />
-                <span style={{ color: "grey", paddingRight: "10px" }}>by</span>
-                <span className={classes.itemModalInfoArtist}>artist</span>
-              </p>
-
-              <IconButton
-                id={curItemId}
-                className={classes.itemModalFavIcon}
-                onClick={(event) => favoriteHandler(event)}
-              >
-                <FavoriteIcon />
-              </IconButton>
-            </Toolbar>
-          </Box>
-        </Paper>
-      </Modal>
+      <ItemDetails
+        openItem={openItem}
+        setOpenItem={setOpenItem}
+        openItemUrl={openItemUrl}
+        curItemId={curItemId}
+        items={props.items}
+      />
     </Grid>
   );
 };

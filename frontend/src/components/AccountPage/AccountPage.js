@@ -1,22 +1,37 @@
 import React from "react";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, IconButton } from "@material-ui/core";
 import Box from "@mui/material/Box";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
-import styles from "../../styles";
 
+import Items from "../Items";
+import styles from "../../styles";
+import { useState } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import ClearIcon from "@mui/icons-material/Clear";
+import Edit from "./Edit";
 const AccountPage = (props) => {
-  //console.log(props.user);
+  const [edit, setEdit] = useState("");
+  const [openEdit, setOpenEdit] = useState(false);
+  const [editId, setEditId] = useState(0);
+  const [openItemUrl, setOpenItemUrl] = React.useState("");
+  const openEditHandler = (index) => {
+    setEditId(index);
+    console.log(index);
+    setOpenItemUrl(props.items[index].url);
+  };
+  const iconHandler = (event) => {};
+  const editHandler = () => {
+    setEdit("edit");
+  };
+
   const classes = styles();
   if (!props.user.userName) return <h1></h1>;
 
   return (
-    <Grid className={classes.dashboardBox}>
-      <Typography className={classes.accountBoardTitle}>
-        Welcome Back {props.user.userName}
-      </Typography>
+    <Box className={classes.accountBox}>
       <Box className={classes.accountBoard}>
-        <Typography className={classes.accountBoardDetails}>
+        <Typography component={"span"} className={classes.accountBoardDetails}>
           About {props.user.userName} <br />{" "}
           <p style={{ fontSize: "15px", color: "grey" }}>
             Joined November 2022
@@ -41,8 +56,39 @@ const AccountPage = (props) => {
             0 Favorited
           </span>
         </Typography>
+        {edit === "" && (
+          <IconButton className={classes.accountIcons} onClick={editHandler}>
+            <EditIcon />
+          </IconButton>
+        )}
+        {edit === "edit" && (
+          <IconButton
+            className={classes.accountIcons}
+            onClick={() => setEdit("")}
+          >
+            <ClearIcon />
+          </IconButton>
+        )}
+        <Box className={classes.accountItems}>
+          <Items
+            items={props.items}
+            setOpenEdit={setOpenEdit}
+            icon={edit}
+            openItemHandler={openEditHandler}
+            iconHandler={iconHandler}
+            setEditId={setEditId}
+          />
+        </Box>
+        <Edit
+          setOpenEdit={setOpenEdit}
+          openEdit={openEdit}
+          openItemUrl={openItemUrl}
+          editId={editId}
+          items={props.items}
+          icon={"favorite"}
+        />
       </Box>
-    </Grid>
+    </Box>
   );
 };
 export default AccountPage;

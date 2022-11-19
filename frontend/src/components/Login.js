@@ -89,7 +89,6 @@ const Login = (props) => {
     <form onSubmit={submitLogin}>
       {/*username input*/}
       <InputBase
-        raised
         className={classes.fastlogin}
         placeholder="Username"
         inputProps={{ onChange: handleInputChange, required: true }}
@@ -98,7 +97,6 @@ const Login = (props) => {
       />
       {/*password input*/}
       <InputBase
-        raised
         className={classes.fastlogin}
         placeholder="Password"
         inputProps={{ onChange: handleInputChange, required: true }}
@@ -108,7 +106,6 @@ const Login = (props) => {
       {/*login and submit*/}
       <Button
         variant="text"
-        raised
         type="submit"
         value="Submit"
         className={classes.login}
@@ -121,7 +118,6 @@ const Login = (props) => {
         underline="hover"
         className={classes.register}
         onClick={() => props.setSignup(true)}
-        raised
       >
         Sign Up
       </Button>

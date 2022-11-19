@@ -11,11 +11,12 @@ const styles = makeStyles((theme) => ({
   },
   accountBoard: {
     width: "70vw",
-    height: "70vh",
+    height: "100rem",
     backgroundColor: "white",
     borderRadius: "8px",
+    position: "absolute",
     marginLeft: "15vw",
-    marginTop: "12vw",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
   },
   accountBoardTitle: {
     marginLeft: "15vw",
@@ -24,10 +25,29 @@ const styles = makeStyles((theme) => ({
     position: "absolute",
     color: theme.palette.primary.main,
   },
+  accountBox: {
+    width: "100rem",
+    height: "100rem",
+    position: "absolute",
+
+    backgroundColor: "#eeeeee",
+  },
+  accountIcons: {
+    float: "right",
+    marginTop: "14rem",
+    marginRight: "1rem",
+  },
+  accountItems: {
+    marginTop: "20rem",
+    marginLeft: "4vw",
+    position: "absolute",
+    width: "70vw",
+  },
   accountBoardDetails: {
     marginLeft: "10vw",
     marginTop: "8vw",
     fontSize: "20px",
+
     position: "absolute",
     color: "DarkSlateBlue",
   },
@@ -121,6 +141,9 @@ const styles = makeStyles((theme) => ({
   },
   divider: {
     marginTop: theme.spacing(3),
+    [theme.breakpoints.down("md")]: {
+      width: "60%",
+    },
   },
   dashboard: {
     width: "70vw",
@@ -129,6 +152,7 @@ const styles = makeStyles((theme) => ({
     borderRadius: "8px",
     marginLeft: "15vw",
     marginTop: "12vw",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
   },
   dashboardTitle: {
     marginLeft: "15vw",
@@ -149,27 +173,28 @@ const styles = makeStyles((theme) => ({
       height: "100vh",
     },
   },
-  dashboardUploadBoard: {
+  dashboardBoard: {
     width: "24vw",
     height: "45vh",
     marginLeft: "5vw",
-    position: "absolute",
+    display: "inline-block",
     marginTop: "8vw",
     borderRadius: "8px",
     backgroundColor: "#eeeeee",
     boxShadow: 3,
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
     [theme.breakpoints.down("sm")]: {
       width: "50vw",
       height: "30vh",
     },
   },
-  dashboardUploadTitle: {
+  dashboardTitle: {
     position: "absolute",
     fontSize: "20px",
     marginTop: "2vw",
     marginLeft: "2vw",
   },
-  dashboardUploadButton: {
+  dashboardButton: {
     backgroundColor: theme.palette.primary.main,
     width: "10vw",
     height: "10vh",
@@ -180,6 +205,27 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "15vw",
       height: "10vh",
+    },
+  },
+  deletePrompt: {
+    width: "15rem",
+    height: "5rem",
+
+    [theme.breakpoints.down("md")]: {
+      width: "20vw",
+      marginLeft: "-1vw",
+    },
+  },
+  editForm: {
+    position: "fixed",
+    display: "inline-block",
+    width: "25rem",
+    padding: "2rem",
+    height: "70.7vh",
+  },
+  errorMsg: {
+    [theme.breakpoints.down("md")]: {
+      width: "20vw",
     },
   },
   image: {
@@ -365,9 +411,12 @@ const styles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     fontWeight: "bold",
     justify: "space-between",
-    marginTop: "20vh",
+    marginTop: "2rem ",
     width: "90%",
     position: "absolute",
+    [theme.breakpoints.down("md")]: {
+      width: "40%",
+    },
   },
   postUploadButton: {
     color: "black",
@@ -428,11 +477,15 @@ const styles = makeStyles((theme) => ({
     elevation: 1,
     width: "100%",
     height: "40px",
+    display: "block",
     justifyContent: "center",
     alignItems: "center",
     marginTop: theme.spacing(3),
 
     padding: theme.spacing(2),
+    [theme.breakpoints.down("md")]: {
+      width: "60%",
+    },
   },
   searchIcon: {
     left: 0,

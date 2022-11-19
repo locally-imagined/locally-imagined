@@ -25,7 +25,7 @@ function App() {
       datas.map(async (data) => {
         return axios
           .get(
-            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.imageID}`,
+            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.imageIDs[0]}`,
             {}
           )
           .then((res) => {
@@ -77,7 +77,9 @@ function App() {
     title: "",
     description: "",
     price: "",
-    content: "",
+    medium:"",
+    content: [],
+
   });
   // console.log(data);
 
@@ -111,13 +113,14 @@ function App() {
               setUser={setUser}
             />
 
-            <Listing items={items} />
+            <Listing items={items} user={user} />
           </div>
         </Route>
         <Route path="/account">
           <NavBar login={states.login} user={user} setUser={setUser} />
-          <AccountPage user={user} />
+          <AccountPage user={user} items={items} />
         </Route>
+
         <Route path="/dashboard">
           <NavBar login={states.login} user={user} setUser={setUser} />
           <Dashboard art={art} setArt={setArt} />

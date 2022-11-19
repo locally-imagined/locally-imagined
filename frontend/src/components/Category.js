@@ -27,6 +27,7 @@ const Category = () => {
     "Spray Paint",
     "Digital",
   ];
+  // const mediumOptions = ["all", "Painting", "Drawing", "Print", "Other"];
   const subjectOptions = [
     "all",
     "History Painting",
@@ -46,6 +47,7 @@ const Category = () => {
     "Pop Art",
     "Anime",
   ];
+  const delivaryOptions = ["all", "Local Delivery", "Shipping", "Pickup"];
 
   const [anchorMed, setAnchorMed] = React.useState(null);
   const [anchorSub, setAnchorSub] = React.useState(null);

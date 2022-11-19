@@ -1,48 +1,66 @@
 import React, { useState } from "react";
-import { Button, InputBase, Modal, Paper, Divider } from "@material-ui/core";
-
+import {
+  Button,
+  InputBase,
+  Modal,
+  Paper,
+  Divider,
+  Dialog,
+} from "@material-ui/core";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import UploadIcon from "@mui/icons-material/Upload";
-
+import Menu from "@mui/material/Menu";
 import AlertMsg from "./AlertMsg";
 import styles from "../styles";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import axios from "axios";
 
 const Post = (props) => {
   const classes = styles();
   const [error, setError] = useState(false);
+  const [medium, setMedium] = React.useState("");
+
+  const mediumOptions = [
+    "Painting",
+    "Oil",
+    "Watercolour",
+    "Acrylic",
+    "Gouache",
+    "Pastel",
+    "Encaustic",
+    "Fresco",
+    "Spray Paint",
+    "Digital",
+  ];
+  const handleMediumChange = (event) => {
+    console.log(event.target.value);
+    setMedium(event.target.value);
+    props.setArt({
+      ...props.art,
+      medium: event.target.value,
+    });
+    console.log(props.art);
+  };
   const getBase64 = (file) => {
     return new Promise((resolve) => {
       let baseURL = "";
-
       let reader = new FileReader();
-
       reader.readAsDataURL(file);
-
       reader.onload = () => {
         baseURL = reader.result;
-        console.log(baseURL);
+        //console.log(baseURL);
         resolve(baseURL);
       };
     });
   };
   const handlePostChange = (event) => {
-    // event.target.name === "content"
-    //   ? props.setArt({
-    //       ...props.art,
-    //       [event.target.name]: event.target.files[0],
-    //     })
-    //   : props.setArt({
-    //       ...props.art,
-    //       [event.target.name]: event.target.value,
-    //     });
     if (event.target.name === "content") {
       getBase64(event.target.files[0])
         .then((result) => {
           result = result.split(",").pop();
-          props.setArt({
-            ...props.art,
-            [event.target.name]: result,
-          });
+          props.art.content.push(result);
         })
         .catch((err) => {
           console.log(err);
@@ -58,10 +76,13 @@ const Post = (props) => {
 
   const submitPost = (event) => {
     event.preventDefault();
-    console.log(`title:${props.art.title}
-    description:${props.art.description}
-    price:${props.art.price}
-    content:${props.art.content}`);
+    console.log(props.art);
+    //   console.log(`title:${props.art.title}
+    //   description:${props.art.description}
+    //   price:${props.art.price}
+    //   medium:${props.art.medium}
+    //   content:${props.art.content}
+    //  `);
 
     const token = JSON.parse(sessionStorage.getItem("user")).token;
     console.log("token:", token);
@@ -69,7 +90,7 @@ const Post = (props) => {
     axios
       .post("https://locally-imagined.herokuapp.com/create", body, {
         // prettier-ignore
-
+        "content-type": "application/json",
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -88,7 +109,11 @@ const Post = (props) => {
       });
   };
   return (
-    <Modal open={props.openPost} onClose={() => props.setOpenPost(false)}>
+    <Modal
+      open={props.openPost}
+      onClose={() => props.setOpenPost(false)}
+      disableEnforceFocus
+    >
       <Paper className={classes.signUp}>
         <h1 className={classes.signUpTitle}>Post Your Art</h1>
         <Divider className={classes.divider} />
@@ -127,7 +152,26 @@ const Post = (props) => {
             name="price"
           />
 
+          <InputLabel>Medium</InputLabel>
+
+          <Select
+            value={medium}
+            defaultValue=""
+            onChange={handleMediumChange}
+            label="Medium"
+            style={{ width: "100px", height: "40px" }}
+          >
+            {mediumOptions.map((name, index) => (
+              <MenuItem key={index} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+
+          <br />
+          <br />
           <UploadIcon style={{ marginTop: "10px", padding: "2px" }} />
+
           <input
             accept="image/*"
             className={classes.input}

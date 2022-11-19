@@ -63,6 +63,7 @@ const SignUp = (props) => {
         console.log(err);
       });
   };
+
   return (
     <Modal open={props.openSignup} onClose={() => props.setSignup(false)}>
       <Paper className={classes.signUp}>
@@ -134,7 +135,6 @@ const SignUp = (props) => {
           <Divider className={classes.divider} />
           <Button
             variant="text"
-            raised
             type="submit"
             value="Submit"
             className={classes.signUpButton}

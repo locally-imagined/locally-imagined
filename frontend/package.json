@@ -5,7 +5,6 @@
   "author": "",
   "license": "UNLICENSED",
   "repository": "none",
-  "proxy": "http://localhost:3010",
   "dependencies": {
     "@emotion/react": "*",
     "@emotion/styled": "*",

@@ -140,7 +140,7 @@ const Edit = (props) => {
               type="submit"
               value="Submit"
               className={classes.postButton}
-              style={{ color: "white" }}
+              style={{ color: "white", marginTop: "10rem" }}
               onClick={() => submitChange(event)}
             >
               Save Changes

@@ -46,8 +46,8 @@ const Edit = (props) => {
     console.log("Token:", token);
     axios
       .delete(
-        `https://locally-imagined.herokuapp.com/delete/${
-          props.items[props.editId].imageIDs[0]
+        `https://locally-imagined.herokuapp.com/posts/delete/${
+          props.items[props.editId].postID
         }`,
         {
           headers: {
@@ -74,13 +74,11 @@ const Edit = (props) => {
 
   const submitChange = (event) => {
     event.preventDefault();
-    const url = `https://locally-imagined.herokuapp.com/edit/8c8cc754-41c3-4ab3-8acf-b2f0c6a1bdf3?title=${
-      edit.title
-    }&imageID=${props.items[props.editId].imageIDs[0]}`;
+    const url = `https://locally-imagined.herokuapp.com/posts/edit/8c8cc754-41c3-4ab3-8acf-b2f0c6a1bdf3?title=${edit.title}`;//&imageID=${props.items[props.editId].imageIDs[0]}`;
     console.log("Token:", token);
     console.log("URL:", url);
     axios
-      .put(url, {
+      .put(url, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

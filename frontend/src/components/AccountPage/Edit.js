@@ -46,20 +46,18 @@ const Edit = (props) => {
     console.log("Token:", token);
     axios
       .delete(
-        `https://locally-imagined.herokuapp.com/delete/${
-          props.items[props.editId].imageIDs[0]
+        `https://locally-imagined.herokuapp.com/posts/delete/${
+          props.items[props.editId].postID
         }`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-            "Access-Control-Allow-Credentials": "true",
           },
         }
       )
       .then((res) => {
-        if (res.status != 200 || !res.data) {
+        if (res.status != 204 || !res.data) {
           throw res;
         } else {
           console.log(`res:${res}`);
@@ -74,17 +72,19 @@ const Edit = (props) => {
 
   const submitChange = (event) => {
     event.preventDefault();
-    const url = `https://locally-imagined.herokuapp.com/edit/8c8cc754-41c3-4ab3-8acf-b2f0c6a1bdf3?title=${
-      edit.title
-    }&imageID=${props.items[props.editId].imageIDs[0]}`;
+    const url = `https://locally-imagined.herokuapp.com/posts/edit/8c8cc754-41c3-4ab3-8acf-b2f0c6a1bdf3?title=${edit.title}`; //&imageID=${props.items[props.editId].imageIDs[0]}`;
     console.log("Token:", token);
     console.log("URL:", url);
     axios
-      .put(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         if (res.status != 200 || !res.data) {
           throw res;

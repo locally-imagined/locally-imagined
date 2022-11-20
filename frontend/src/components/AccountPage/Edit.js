@@ -53,13 +53,11 @@ const Edit = (props) => {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:3000",
-            "Access-Control-Allow-Credentials": "true",
           },
         }
       )
       .then((res) => {
-        if (res.status != 200 || !res.data) {
+        if (res.status != 204 || !res.data) {
           throw res;
         } else {
           console.log(`res:${res}`);

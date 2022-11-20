@@ -66,13 +66,15 @@ const Edit = (props) => {
       .catch((err) => {
         setError(true);
         setDeleteArt(false);
-        console.log(err);
+        console.log(err.response.data);
       });
   };
 
   const submitChange = (event) => {
     event.preventDefault();
-    const url = `https://locally-imagined.herokuapp.com/posts/edit/8c8cc754-41c3-4ab3-8acf-b2f0c6a1bdf3?title=${edit.title}`; //&imageID=${props.items[props.editId].imageIDs[0]}`;
+    const url = `https://locally-imagined.herokuapp.com/posts/edit/${
+      props.items[props.editId].postID
+    }?title=${edit.title}`;
     console.log("Token:", token);
     console.log("URL:", url);
     axios
@@ -94,7 +96,7 @@ const Edit = (props) => {
       })
       .catch((err) => {
         setError(true);
-        console.log(err);
+        console.log(err.response.data);
       });
   };
 

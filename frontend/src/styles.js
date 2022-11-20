@@ -11,9 +11,9 @@ const styles = makeStyles((theme) => ({
   },
   accountBoard: {
     width: "70vw",
-    height: "100rem",
+
     backgroundColor: "white",
-    borderRadius: "8px",
+
     position: "absolute",
     marginLeft: "15vw",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
@@ -26,8 +26,8 @@ const styles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   accountBox: {
-    width: "100rem",
-    height: "100rem",
+    width: "80rem",
+
     position: "absolute",
 
     backgroundColor: "#eeeeee",
@@ -126,6 +126,20 @@ const styles = makeStyles((theme) => ({
     paddingRight: "50px",
     position: "relative",
     width: "200px",
+  },
+  changePage: {
+    margin: "0 auto",
+    width: "80%",
+    borderTop: " 1px solid grey",
+  },
+  changePageLink: {
+    margin: "0 auto",
+  },
+  changePageButton: {
+    "&:hover": {
+      opacity: 0.3,
+      cursor: "pointer",
+    },
   },
   container: {
     width: "100vh",
@@ -325,6 +339,17 @@ const styles = makeStyles((theme) => ({
     paddingRight: "30px",
     marginLeft: "10px",
   },
+  link: {
+    color: "#2979ff",
+    "&:hover": {
+      color: "#2979ff",
+      textDecorationLine: "underline",
+    },
+  },
+  listingPage: {
+    zIndex: 0,
+    margin: "0 auto",
+  },
   login: {
     color: "white",
     backgroundColor: theme.palette.primary.main,
@@ -364,16 +389,6 @@ const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  link: {
-    color: "#2979ff",
-    "&:hover": {
-      color: "#2979ff",
-      textDecorationLine: "underline",
-    },
-  },
-  listingPage: {
-    zIndex: 0,
-  },
 
   fastlogin: {
     position: "relative",
@@ -411,13 +426,52 @@ const styles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     fontWeight: "bold",
     justify: "space-between",
-    marginTop: "2rem ",
-    width: "90%",
+    margin: "2rem",
+
+    width: "10rem",
     position: "absolute",
     [theme.breakpoints.down("md")]: {
       width: "40%",
     },
   },
+  postPage: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "white",
+    width: "75rem",
+    height: "80vh",
+    bgcolor: "background.paper",
+    [theme.breakpoints.down("md")]: {
+      width: "40vw",
+      height: "50vh",
+    },
+  },
+  postPageDetail: {
+    position: "fixed",
+    display: "inline-block",
+    width: "25rem",
+    padding: "2rem",
+    height: "70.7vh",
+    [theme.breakpoints.down("md")]: {
+      width: "15rem",
+      height: "50vh",
+    },
+  },
+  postPageImageBox: {
+    position: "fixed",
+    marginLeft: "30rem",
+    display: "block",
+    width: "40rem",
+    padding: "2rem",
+    height: "70.7vh",
+    [theme.breakpoints.down("md")]: {
+      width: "40vw",
+      height: "45.8vh",
+    },
+  },
+  postPageImage: {},
   postUploadButton: {
     color: "black",
     backgroundColor: "white",

@@ -14,7 +14,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../styles";
 import states from "../states";
 
@@ -23,6 +23,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import Post from "./Post";
 import AlertMsg from "./AlertMsg";
+import ChangePage from "./ChangePage";
 /**
  * AppBar
  *
@@ -35,7 +36,6 @@ const Appbar = (props) => {
   const openAccountMenu = Boolean(anchorEl);
   const [login, setLogin] = useState(props.login);
   const [openSignup, setSignup] = useState(false);
-
   const [error, setError] = useState(false);
   const [msg, setMsg] = useState("Login successfully");
   const [success, setSucess] = useState(false);
@@ -53,6 +53,50 @@ const Appbar = (props) => {
       [event.target.name]: event.target.value,
     });
   };
+  const [sessionEnd, setSessionEnd] = useState(false);
+  const [info, setInfo] = useState(false);
+  class sessionTimer {
+    constructor(time) {
+      this.timeLeft = Number(time) * 60 * 60 * 1000;
+      this.timeLeftSec = Number(time) * 60 * 60;
+      this.setTimer();
+      this.setCountDown();
+    }
+    timeoutHandler() {
+      props.setUser({
+        userName: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+      });
+      sessionStorage.clear();
+
+      states.login = false;
+      history.push("/");
+      window.location.reload(false);
+    }
+    countDownHandler() {
+      this.timeLeftSec--;
+      if (Math.trunc(this.timeLeftSec) === 30) {
+        setSessionEnd(true);
+        setMsg(
+          `your session is about to end in ${Math.trunc(
+            this.timeLeftSec
+          )} seconds`
+        );
+        setInfo(true);
+      }
+      //console.log(`time left:${Math.trunc(this.timeLeftSec)}`);
+    }
+    setTimer() {
+      setTimeout(this.timeoutHandler, this.timeLeft);
+    }
+    setCountDown() {
+      setInterval(this.countDownHandler.bind(this), 1000);
+    }
+  }
 
   const handleLogout = () => {
     sessionStorage.clear();
@@ -81,6 +125,7 @@ const Appbar = (props) => {
             setUser={props.setUser}
             user={props.user}
             setSignup={setSignup}
+            sessionTimer={sessionTimer}
           />
         )}
         {/*Dashboard button*/}
@@ -157,25 +202,20 @@ const Appbar = (props) => {
       </Toolbar>
       {/*unsuccessful alert*/}
       {error && (
-        <AlertMsg
-          error={error}
-          success={success}
-          type={"error"}
-          setError={setError}
-          setSucess={setSucess}
-          msg={msg}
-        />
+        <AlertMsg error={error} type={"error"} setError={setError} msg={msg} />
       )}
       {/*successful alert*/}
       {success && (
         <AlertMsg
-          error={error}
           success={success}
           type={"success"}
-          setError={setError}
           setSucess={setSucess}
           msg={msg}
         />
+      )}
+      {/*Timeout alert*/}
+      {sessionEnd && (
+        <AlertMsg type={"info"} setInfo={setInfo} info={info} msg={msg} />
       )}
 
       {/*Signup modal*/}

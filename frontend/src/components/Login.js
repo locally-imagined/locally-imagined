@@ -18,34 +18,6 @@ const Login = (props) => {
   const submitLogin = (event) => {
     event.preventDefault();
     console.log(props.user);
-
-    //const authorizationBasic = window.btoa(user.userName + ":" + user.password);
-
-    // fetch(
-    //   `https://locally-imagined.herokuapp.com/login/${user.username}/${user.password}`,
-    //   {
-    //     "Access-Control-Allow-Origin": "*",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // )
-    // axios
-    //   .get(`https://locally-imagined.herokuapp.com/login`, {
-    //     // "Access-Control-Allow-Origin": "*",
-    //     // "Access-Control-Allow-Credentials": true,
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       // "Content-Type": "text/plain;charset=utf-8",
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Credentials": false,
-    //       // Authorization: "Basic " + authorizationBasic,
-    //     },
-    //     // auth: {
-    //     //   username: user.username,
-    //     //   password: user.password,
-    //     // },
-    //   })
     axios
       .post(
         "https://locally-imagined.herokuapp.com/login",
@@ -72,6 +44,7 @@ const Login = (props) => {
           props.setLogin(states.login);
           props.setMsg("Log in Successfully");
           props.setSucess(true);
+          const timer = new props.sessionTimer(2); //2 hours session timer
           //alert(`userName: ${states.user.userName}`);
           history.push("/");
         }

@@ -5,15 +5,25 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "../../styles";
-
+import AlertMsg from "../AlertMsg";
 import Post from "../Post";
 const Dashboard = (props) => {
   const history = useHistory();
   const classes = styles();
+  const [success, setSucess] = useState(false);
+  const [msg, setMsg] = useState("Post successfully");
+
   const [openPost, setOpenPost] = useState(false);
   return (
-    <Grid className={classes.dashboardBox}>
-      <Typography className={classes.dashboardTitle}>Dashboard</Typography>
+    <Grid className={classes.dashboardBox} style={{ marginTop: "3rem" }}>
+      {success && (
+        <AlertMsg
+          type={"success"}
+          success={success}
+          setSucess={setSucess}
+          msg={"success"}
+        />
+      )}
       <Box className={classes.dashboard}>
         <Box className={classes.dashboardBoard}>
           <Typography variant="h5" className={classes.dashboardTitle}>
@@ -51,6 +61,7 @@ const Dashboard = (props) => {
         setOpenPost={setOpenPost}
         art={props.art}
         setArt={props.setArt}
+        setSucess={setSucess}
       />
     </Grid>
   );

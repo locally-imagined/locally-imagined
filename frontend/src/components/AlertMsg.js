@@ -4,11 +4,13 @@ import { Alert } from "@mui/material/";
 import CloseIcon from "@mui/icons-material/Close";
 
 import styles from "../styles";
-
+/*
+props: error, success, type,
+*/
 const AlertMsg = (props) => {
   const classes = styles();
   return (
-    <Collapse in={props.error || props.success}>
+    <Collapse in={props.error || props.success || props.info}>
       <Alert
         severity={props.type}
         className={classes.errorMsg}
@@ -20,6 +22,7 @@ const AlertMsg = (props) => {
             onClick={() => {
               if (props.type === "error") props.setError(false);
               if (props.type === "success") props.setSucess(false);
+              if (props.type === "info") props.setInfo(false);
             }}
           >
             <CloseIcon fontSize="inherit" />

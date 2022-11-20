@@ -10,6 +10,7 @@ import states from "../states";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Dashboard from "./Dashboard/Dashboard";
+import ChangePage from "./ChangePage";
 //fake json data
 
 /**
@@ -19,6 +20,24 @@ import Dashboard from "./Dashboard/Dashboard";
  */
 function App() {
   const [items, setItems] = useState([]);
+  const [offset, setOffset] = useState(0);
+  // const [login, setLogin] = useState(states.login);
+  const [user, setUser] = useState({
+    userName: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+  });
+  //Post object
+  const [art, setArt] = useState({
+    title: "",
+    description: "",
+    price: "",
+    medium: "",
+    content: [],
+  });
 
   const getSrc = (datas) => {
     return axios.all(
@@ -46,7 +65,7 @@ function App() {
   };
   useEffect(() => {
     axios
-      .get("https://locally-imagined.herokuapp.com/posts/getpage/0", {})
+      .get(`https://locally-imagined.herokuapp.com/posts/getpage/${offset}`, {})
       .then((res) => {
         if (res.status != 200 || !res.data) {
           throw res;
@@ -61,26 +80,8 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [offset]);
 
-  // const [login, setLogin] = useState(states.login);
-  const [user, setUser] = useState({
-    userName: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-  });
-  //Post object
-  const [art, setArt] = useState({
-    title: "",
-    description: "",
-    price: "",
-    medium:"",
-    content: [],
-
-  });
   // console.log(data);
 
   const filterHandler = (filteredItems) => {
@@ -88,12 +89,11 @@ function App() {
     //console.log(`App.js:${filteredItems}`);
   };
   //verify user login state
+
   if (sessionStorage.getItem("user") !== null) {
     const user = JSON.parse(sessionStorage.user);
-    useEffect(() => {
-      setUser(user);
-    }, []);
-    if (user?.token) states.login = true;
+    useEffect(() => setUser(user), []);
+    states.login = user?.token ? true : false;
   } else states.login = false;
 
   return (
@@ -112,13 +112,18 @@ function App() {
               user={user}
               setUser={setUser}
             />
-
             <Listing items={items} user={user} />
+            <ChangePage setOffset={setOffset} offset={offset} items={items} />
           </div>
         </Route>
         <Route path="/account">
           <NavBar login={states.login} user={user} setUser={setUser} />
-          <AccountPage user={user} items={items} />
+          <AccountPage
+            user={user}
+            items={items}
+            setOffset={setOffset}
+            offset={offset}
+          />
         </Route>
 
         <Route path="/dashboard">

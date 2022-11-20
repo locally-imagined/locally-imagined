@@ -45,20 +45,13 @@ const Listing = (props) => {
     setOpenItem(true);
     //console.log(id, props.items);
     setOpenItemUrl(props.items[id].url);
-
     setCurItemId(id);
-
     //console.log(id);
   };
   const handleTabChange = (event, newTab) => {
     setTab(newTab);
   };
-  const followHandler = (event) => {
-    event.currentTarget.classList.toggle(classes.following);
-    event.currentTarget.textContent.toggle("following");
 
-    //setFollow("following");
-  };
   const favoriteHandler = (event) => {
     //setCurItemId(0);
     event.currentTarget.classList.toggle(classes.favorited);
@@ -86,22 +79,10 @@ const Listing = (props) => {
         className={classes.listingTab}
       >
         <Tab value="explore" label="Explore" />
-        <Tab value="following" label="Following" />
       </Tabs>
 
-      <Paper elevation={0} className={classes.listingPage}>
+      <Box elevation={0} className={classes.listingPage}>
         <Container>
-          {tab === "explore" && <h3>Today's Picks</h3>}
-          {tab === "following" && <h3>Artists to Follow</h3>}
-          {/* <span className={classes.locationBox}>
-            <Button
-              className={classes.locationButton}
-              style={{ color: "#2196f3" }}
-            >
-              <LocationOn />
-              Santa Cruz · 40 mi
-            </Button>
-          </span> */}
           {tab === "explore" && (
             <Items
               favoriteHandler={favoriteHandler}
@@ -110,34 +91,8 @@ const Listing = (props) => {
               icon={"favorite"}
             />
           )}
-          {tab === "following" &&
-            props.items.slice(0, 5).map((item, index) => (
-              <Card className={classes.item} key={index}>
-                <CardActionArea>
-                  <LazyLoadImage
-                    className={classes.image}
-                    src={item.url}
-                    alt="Image Alt"
-                    effect="blur"
-                  />
-
-                  <Avatar className={classes.artistAvatar}></Avatar>
-                  <Typography className={classes.artistUserName}>
-                    username
-                  </Typography>
-                  <CardContent></CardContent>
-                </CardActionArea>
-                <Button
-                  className={classes.artistFollowButton}
-                  id={index}
-                  onClick={followHandler}
-                >
-                  follow
-                </Button>
-              </Card>
-            ))}
         </Container>
-      </Paper>
+      </Box>
       <ItemDetails
         openItem={openItem}
         setOpenItem={setOpenItem}

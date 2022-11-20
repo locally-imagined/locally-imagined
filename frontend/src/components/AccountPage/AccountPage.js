@@ -9,6 +9,7 @@ import styles from "../../styles";
 import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
+import ChangePage from "../ChangePage";
 import Edit from "./Edit";
 const AccountPage = (props) => {
   const [edit, setEdit] = useState("");
@@ -32,7 +33,7 @@ const AccountPage = (props) => {
     <Box className={classes.accountBox}>
       <Box className={classes.accountBoard}>
         <Typography component={"span"} className={classes.accountBoardDetails}>
-          About {props.user.userName} <br />{" "}
+          About {props.user.userName} <br />
           <p style={{ fontSize: "15px", color: "grey" }}>
             Joined November 2022
           </p>
@@ -70,6 +71,7 @@ const AccountPage = (props) => {
           </IconButton>
         )}
         <Box className={classes.accountItems}>
+          <h3 style={{ color: "#494a91" }}>{props.user.userName}'s artworks</h3>
           <Items
             items={props.items}
             setOpenEdit={setOpenEdit}
@@ -77,6 +79,11 @@ const AccountPage = (props) => {
             openItemHandler={openEditHandler}
             iconHandler={iconHandler}
             setEditId={setEditId}
+          />
+          <ChangePage
+            setOffset={props.setOffset}
+            offset={props.offset}
+            items={props.items}
           />
         </Box>
         <Edit

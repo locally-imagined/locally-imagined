@@ -146,9 +146,9 @@ const Edit = (props) => {
         >
           <ArrowBackIcon
             onClick={prevHandler}
-            style={{ paddingRight: "39rem" }}
+            style={{ paddingRight: "39rem", color: "black" }}
           />
-          <ArrowForwardIcon onClick={nextHandler} />
+          <ArrowForwardIcon onClick={nextHandler} style={{ color: "black" }} />
         </Box>
         {props.images.length === 0 && (
           <Box className={classes.loading}>

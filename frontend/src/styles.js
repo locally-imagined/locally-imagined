@@ -68,11 +68,18 @@ const styles = makeStyles((theme) => ({
   },
   arrow: {
     color: "black",
+
     "&:hover": {
       opacity: 0.3,
       color: "grey",
       cursor: "pointer",
     },
+  },
+  arrowBox: {
+    marginTop: "15rem",
+    position: "absolute",
+    zIndex: 1,
+    color: "white",
   },
   artistFollowButton: {
     marginLeft: "70px",
@@ -301,7 +308,7 @@ const styles = makeStyles((theme) => ({
     p: 4,
   },
   itemModalPicture: {
-    width: "60%",
+    width: "50vw",
     height: "100%",
     backgroundColor: "white",
     boxShadow: 24,
@@ -609,7 +616,16 @@ const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
-
+  price: {
+    float: "right",
+    paddingRight: "20px",
+    [theme.breakpoints.down("md")]: {
+      paddingRight: "10rem",
+    },
+    [theme.breakpoints.down("sm")]: {
+      paddingRight: "20rem",
+    },
+  },
   toolbar: {
     display: "flex",
     justifyContent: "spacebetween",

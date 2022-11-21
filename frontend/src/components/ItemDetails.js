@@ -46,19 +46,16 @@ const ItemDetails = (props) => {
       }}
     >
       <Paper className={classes.itemModal}>
-        <Box
-          style={{
-            marginTop: "15rem",
-            position: "absolute",
-            zIndex: 1,
-            color: "white",
-          }}
-        >
-          <IconButton>
-            <ArrowBackIcon onClick={prevHandler} className={classes.arrow} />
+        <Box className={classes.arrowBox}>
+          <IconButton onClick={prevHandler} className={classes.arrow}>
+            <ArrowBackIcon className={classes.arrow} />
           </IconButton>
-          <IconButton style={{ marginLeft: "38rem" }}>
-            <ArrowForwardIcon onClick={nextHandler} className={classes.arrow} />
+          <IconButton
+            style={{ marginLeft: "43vw" }}
+            className={classes.arrow}
+            onClick={nextHandler}
+          >
+            <ArrowForwardIcon />
           </IconButton>
         </Box>
 
@@ -89,7 +86,7 @@ const ItemDetails = (props) => {
             <br />
             <span style={{ paddingRight: "10px" }}>by</span>
             <span>artist</span>
-            <span style={{ float: "right" }}>
+            <span className={classes.price}>
               ${props.items[props.curItemId]?.price}
             </span>
           </span>

@@ -3,14 +3,21 @@ import { Toolbar, Box } from "@material-ui/core";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import styles from "../styles";
 
 const ChangePage = (props) => {
   const classes = styles();
-
+  const history = useHistory();
+  let pathChanged = false;
+  history.listen((location) => {
+    pathChanged = location.pathname === "/" ? true : false;
+  });
+  useEffect(() => {
+    props.setOffset(0);
+  }, [pathChanged]);
   const prevHandler = () => {
     props.setOffset((val) => {
       if (val > 0) val--;

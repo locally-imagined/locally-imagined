@@ -144,11 +144,11 @@ const Edit = (props) => {
             color: "white",
           }}
         >
-          <IconButton>
-            <ArrowBackIcon onClick={prevHandler} className={classes.arrow} />
+          <IconButton onClick={prevHandler}>
+            <ArrowBackIcon className={classes.arrow} />
           </IconButton>
-          <IconButton style={{ marginLeft: "38rem" }}>
-            <ArrowForwardIcon onClick={nextHandler} className={classes.arrow} />
+          <IconButton style={{ marginLeft: "38rem" }} onClick={nextHandler}>
+            <ArrowForwardIcon className={classes.arrow} />
           </IconButton>
         </Box>
         {props.images.length === 0 && (

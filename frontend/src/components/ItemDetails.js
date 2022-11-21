@@ -11,26 +11,69 @@ import Box from "@mui/material/Box";
 
 import { useHistory } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useState } from "react";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";
+import ReactLoading from "react-loading";
 
 const ItemDetails = (props) => {
   const classes = styles();
   const history = useHistory();
+  const [offset, setOffset] = useState(0);
+
+  const prevHandler = () => {
+    setOffset((val) => {
+      if (val > 0) val--;
+      return val;
+    });
+  };
+  const nextHandler = () => {
+    setOffset((val) => {
+      if (val < props.images.length - 1) val++;
+      return val;
+    });
+  };
+
   return (
     <Modal
       open={props.openItem}
       onClose={() => {
         props.setOpenItem(false);
+        setOffset(0);
+        props.setImages([]);
       }}
     >
       <Paper className={classes.itemModal}>
-        <LazyLoadImage
-          className={classes.itemModalPicture}
-          src={props.openItemUrl}
-          alt="Image Alt"
-          id={props.curItemId}
-        ></LazyLoadImage>
+        <Box
+          style={{
+            marginTop: "15rem",
+            position: "absolute",
+            zIndex: 1,
+            color: "white",
+          }}
+        >
+          <ArrowBackIcon
+            onClick={prevHandler}
+            style={{ paddingRight: "39rem" }}
+          />
+          <ArrowForwardIcon onClick={nextHandler} />
+        </Box>
+        {props.images.length === 0 && (
+          <Box className={classes.loading}>
+            <ReactLoading type="bars" color="grey" height={100} width={100} />
+          </Box>
+        )}
+
+        {props.images.length > 0 && (
+          <LazyLoadImage
+            className={classes.itemModalPicture}
+            src={props.images[offset]}
+            alt="Image Alt"
+            id={props.curItemId}
+          ></LazyLoadImage>
+        )}
 
         <Box className={classes.editForm}>
           <IconButton>

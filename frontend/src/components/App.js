@@ -20,6 +20,8 @@ import ChangePage from "./ChangePage";
  */
 function App() {
   const [items, setItems] = useState([]);
+  const [images, setImages] = React.useState([]);
+  const imageSet = [];
   const [offset, setOffset] = useState(0);
   // const [login, setLogin] = useState(states.login);
   const [user, setUser] = useState({
@@ -38,6 +40,52 @@ function App() {
     medium: "",
     content: [],
   });
+  const getImagesSetSrc = (datas) => {
+    return axios.all(
+      datas.map(async (id) => {
+        return axios
+          .get(
+            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${id}`,
+            {}
+          )
+          .then((res) => {
+            if (res.status != 200 || !res.data) {
+              throw res;
+            } else {
+              let src = "data:image/jpeg;base64,";
+              src += res.data;
+              // console.log(src);
+
+              imageSet.push(encodeURI(src));
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+    );
+  };
+  const getImagesSet = (postID) => {
+    axios
+      .get(
+        `https://locally-imagined.herokuapp.com/posts/getimages/${postID}`,
+        {}
+      )
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          const data = res.data;
+          console.log(data);
+          getImagesSetSrc(data).then(() => {
+            setImages(imageSet);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
 
   const getSrc = (datas) => {
     return axios.all(
@@ -112,7 +160,13 @@ function App() {
               user={user}
               setUser={setUser}
             />
-            <Listing items={items} user={user} />
+            <Listing
+              items={items}
+              user={user}
+              images={images}
+              setImages={setImages}
+              getImagesSet={getImagesSet}
+            />
             <ChangePage setOffset={setOffset} offset={offset} items={items} />
           </div>
         </Route>
@@ -123,6 +177,9 @@ function App() {
             items={items}
             setOffset={setOffset}
             offset={offset}
+            images={images}
+            setImages={setImages}
+            getImagesSet={getImagesSet}
           />
         </Route>
 

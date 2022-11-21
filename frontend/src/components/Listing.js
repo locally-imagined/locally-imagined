@@ -20,12 +20,14 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";
 import Category from "./Category";
 import Items from "./Items";
 import ItemDetails from "./ItemDetails";
+import ReactLoading from "react-loading";
 /**
  * Listing
  * @return {object} JSX
@@ -37,16 +39,17 @@ const Listing = (props) => {
 
   const [tab, setTab] = React.useState("explore");
   const [openItem, setOpenItem] = React.useState(false);
+
   const [follow, setFollow] = React.useState("follow");
   const [curItemId, setCurItemId] = React.useState(0);
   const liked = [];
   const [openItemUrl, setOpenItemUrl] = React.useState("");
+
   const openItemHandler = (id) => {
     setOpenItem(true);
-    //console.log(id, props.items);
+    props.getImagesSet(props.items[id].postID);
     setOpenItemUrl(props.items[id].url);
     setCurItemId(id);
-    //console.log(id);
   };
   const handleTabChange = (event, newTab) => {
     setTab(newTab);
@@ -83,6 +86,11 @@ const Listing = (props) => {
 
       <Box elevation={0} className={classes.listingPage}>
         <Container>
+          {props.items.length === 0 && (
+            <Box className={classes.loading}>
+              <ReactLoading type="bars" color="grey" height={100} width={100} />
+            </Box>
+          )}
           {tab === "explore" && (
             <Items
               favoriteHandler={favoriteHandler}
@@ -99,6 +107,8 @@ const Listing = (props) => {
         openItemUrl={openItemUrl}
         curItemId={curItemId}
         items={props.items}
+        images={props.images}
+        setImages={props.setImages}
       />
     </Grid>
   );

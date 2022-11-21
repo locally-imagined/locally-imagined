@@ -14,7 +14,9 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../../styles";
 import { useState } from "react";
-
+import ReactLoading from "react-loading";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AlertMsg from "../AlertMsg";
 import axios from "axios";
@@ -22,6 +24,8 @@ import axios from "axios";
 const Edit = (props) => {
   const classes = styles();
   const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [msg, setMsg] = useState("");
   const [deleteArt, setDeleteArt] = useState(false);
   const [edit, setEdit] = useState({
     title: "",
@@ -29,6 +33,20 @@ const Edit = (props) => {
     price: "",
     delete: "",
   });
+  const [offset, setOffset] = useState(0);
+
+  const prevHandler = () => {
+    setOffset((val) => {
+      if (val > 0) val--;
+      return val;
+    });
+  };
+  const nextHandler = () => {
+    setOffset((val) => {
+      if (val < props.images.length - 1) val++;
+      return val;
+    });
+  };
   const token = JSON.parse(sessionStorage.getItem("user")).token;
   const deleteHandler = () => {
     setDeleteArt(true);
@@ -57,16 +75,20 @@ const Edit = (props) => {
         }
       )
       .then((res) => {
-        if (res.status != 204 || !res.data) {
+        if (res.status !== 204) {
           throw res;
         } else {
           console.log(`res:${res}`);
+          setSuccess(true);
+          setMsg("deleted");
+          props.setOpenEdit(false);
+          window.location.reload(false);
         }
       })
       .catch((err) => {
         setError(true);
         setDeleteArt(false);
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 
@@ -92,6 +114,10 @@ const Edit = (props) => {
           throw res;
         } else {
           console.log(`res:${res}`);
+          setSuccess(true);
+          setMsg("edited");
+          props.openEdit(false);
+          window.location.reload(false);
         }
       })
       .catch((err) => {
@@ -105,15 +131,38 @@ const Edit = (props) => {
       open={props.openEdit}
       onClose={() => {
         props.setOpenEdit(false);
+        setOffset(0);
+        props.setImages([]);
       }}
     >
       <Paper className={classes.itemModal}>
-        <LazyLoadImage
-          className={classes.itemModalPicture}
-          src={props.openItemUrl}
-          alt="Image Alt"
-          id={props.editId}
-        ></LazyLoadImage>
+        <Box
+          style={{
+            marginTop: "15rem",
+            position: "absolute",
+            zIndex: 1,
+            color: "white",
+          }}
+        >
+          <ArrowBackIcon
+            onClick={prevHandler}
+            style={{ paddingRight: "39rem" }}
+          />
+          <ArrowForwardIcon onClick={nextHandler} />
+        </Box>
+        {props.images.length === 0 && (
+          <Box className={classes.loading}>
+            <ReactLoading type="bars" color="grey" height={100} width={100} />
+          </Box>
+        )}
+        {props.images.length > 0 && (
+          <LazyLoadImage
+            className={classes.itemModalPicture}
+            src={props.images[offset]}
+            alt="Image Alt"
+            id={props.editId}
+          ></LazyLoadImage>
+        )}
 
         <Box className={classes.editForm}>
           <span className={classes.title} style={{ padding: "2rem" }}>
@@ -156,6 +205,14 @@ const Edit = (props) => {
                 type={"error"}
                 setError={setError}
                 msg={"error"}
+              />
+            )}
+            {success && (
+              <AlertMsg
+                success={success}
+                type={"success"}
+                setSucess={setSuccess}
+                msg={msg}
               />
             )}
           </form>

@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import ChangePage from "../ChangePage";
 import Edit from "./Edit";
+import ReactLoading from "react-loading";
 const AccountPage = (props) => {
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
@@ -20,6 +21,7 @@ const AccountPage = (props) => {
     setEditId(index);
     console.log(index);
     setOpenItemUrl(props.items[index].url);
+    props.getImagesSet(props.items[index].postID);
   };
   const iconHandler = (event) => {};
   const editHandler = () => {
@@ -72,6 +74,11 @@ const AccountPage = (props) => {
         )}
         <Box className={classes.accountItems}>
           <h3 style={{ color: "#494a91" }}>{props.user.userName}'s artworks</h3>
+          {props.items.length === 0 && (
+            <Box className={classes.loading}>
+              <ReactLoading type="bars" color="grey" height={100} width={100} />
+            </Box>
+          )}
           <Items
             items={props.items}
             setOpenEdit={setOpenEdit}
@@ -93,6 +100,8 @@ const AccountPage = (props) => {
           editId={editId}
           items={props.items}
           icon={"favorite"}
+          images={props.images}
+          setImages={props.setImages}
         />
       </Box>
     </Box>

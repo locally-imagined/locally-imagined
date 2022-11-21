@@ -389,6 +389,14 @@ const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  loading: {
+    width: "100%",
+    height: "100%",
+    marginLeft: "45%",
+    backgroundColor: "white",
+    boxShadow: 24,
+    p: 4,
+  },
 
   fastlogin: {
     position: "relative",

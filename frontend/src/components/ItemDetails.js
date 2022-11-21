@@ -54,12 +54,14 @@ const ItemDetails = (props) => {
             color: "white",
           }}
         >
-          <ArrowBackIcon
-            onClick={prevHandler}
-            style={{ paddingRight: "39rem", color: "black" }}
-          />
-          <ArrowForwardIcon onClick={nextHandler} style={{ color: "black" }} />
+          <IconButton>
+            <ArrowBackIcon onClick={prevHandler} className={classes.arrow} />
+          </IconButton>
+          <IconButton style={{ marginLeft: "38rem" }}>
+            <ArrowForwardIcon onClick={nextHandler} className={classes.arrow} />
+          </IconButton>
         </Box>
+
         {props.images.length === 0 && (
           <Box className={classes.loading}>
             <ReactLoading type="bars" color="grey" height={100} width={100} />

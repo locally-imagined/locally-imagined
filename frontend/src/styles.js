@@ -66,6 +66,14 @@ const styles = makeStyles((theme) => ({
     width: "50px",
     border: "2px solid white",
   },
+  arrow: {
+    color: "black",
+    "&:hover": {
+      opacity: 0.3,
+      color: "grey",
+      cursor: "pointer",
+    },
+  },
   artistFollowButton: {
     marginLeft: "70px",
     border: "2px solid",

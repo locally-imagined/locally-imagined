@@ -13,6 +13,7 @@ import ChangePage from "../ChangePage";
 import Edit from "./Edit";
 import AlertMsg from "../AlertMsg";
 import ReactLoading from "react-loading";
+import ItemDetails from "../ItemDetails";
 const AccountPage = (props) => {
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
@@ -98,7 +99,7 @@ const AccountPage = (props) => {
             items={props.items}
             setOpenEdit={setOpenEdit}
             icon={edit}
-            openItemHandler={openEditHandler}
+            openEditHandler={openEditHandler}
             iconHandler={iconHandler}
             setEditId={setEditId}
           />

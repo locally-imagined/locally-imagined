@@ -133,7 +133,7 @@ const Category = () => {
             </MenuItem>
           ))}
         </Menu>
-        <List
+        {/* <List
           component="nav"
           aria-label="Subject settings"
           sx={{ bgcolor: "background.paper" }}
@@ -217,7 +217,7 @@ const Category = () => {
               {option}
             </MenuItem>
           ))}
-        </Menu>
+        </Menu> */}
       </Toolbar>
     </Box>
   );

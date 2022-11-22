@@ -30,7 +30,7 @@ const Items = (props) => {
         <IconButton
           className={classes.favoriteIcon}
           onClick={() => {
-            props.openItemHandler(index);
+            props.openEditHandler(index);
             props.setOpenEdit(true);
           }}
           id={index}

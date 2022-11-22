@@ -46,18 +46,20 @@ const ItemDetails = (props) => {
       }}
     >
       <Paper className={classes.itemModal}>
-        <Box className={classes.arrowBox}>
-          <IconButton onClick={prevHandler} className={classes.arrow}>
-            <ArrowBackIcon className={classes.arrow} />
-          </IconButton>
-          <IconButton
-            style={{ marginLeft: "43vw" }}
-            className={classes.arrow}
-            onClick={nextHandler}
-          >
-            <ArrowForwardIcon />
-          </IconButton>
-        </Box>
+        {props.images.length > 1 && (
+          <Box className={classes.arrowBox}>
+            <IconButton onClick={prevHandler} className={classes.arrow}>
+              <ArrowBackIcon className={classes.arrow} />
+            </IconButton>
+            <IconButton
+              style={{ marginLeft: "43vw" }}
+              className={classes.arrow}
+              onClick={nextHandler}
+            >
+              <ArrowForwardIcon />
+            </IconButton>
+          </Box>
+        )}
 
         {props.images.length === 0 && (
           <Box className={classes.loading}>
@@ -97,14 +99,14 @@ const ItemDetails = (props) => {
             {props.items[props.curItemId]?.description}
           </p>
           <Divider className={classes.divider} style={{ marginTop: "10rem" }} />
-
+          {/*
           <Button
             variant="text"
             className={classes.postButton}
             style={{ color: "white" }}
           >
             Add to Chart
-          </Button>
+          </Button> */}
         </Box>
       </Paper>
     </Modal>

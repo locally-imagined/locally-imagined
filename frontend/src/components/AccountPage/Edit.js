@@ -208,21 +208,23 @@ const Edit = (props) => {
   return (
     <Modal open={props.openEdit} onClose={closeEditHandler}>
       <Paper className={classes.itemModal}>
-        <Box
-          style={{
-            marginTop: "15rem",
-            position: "absolute",
-            zIndex: 1,
-            color: "white",
-          }}
-        >
-          <IconButton onClick={prevHandler}>
-            <ArrowBackIcon className={classes.arrow} />
-          </IconButton>
-          <IconButton style={{ marginLeft: "43vw" }} onClick={nextHandler}>
-            <ArrowForwardIcon className={classes.arrow} />
-          </IconButton>
-        </Box>
+        {props.images.length > 1 && (
+          <Box
+            style={{
+              marginTop: "15rem",
+              position: "absolute",
+              zIndex: 1,
+              color: "white",
+            }}
+          >
+            <IconButton onClick={prevHandler}>
+              <ArrowBackIcon className={classes.arrow} />
+            </IconButton>
+            <IconButton style={{ marginLeft: "43vw" }} onClick={nextHandler}>
+              <ArrowForwardIcon className={classes.arrow} />
+            </IconButton>
+          </Box>
+        )}
         {props.images.length === 0 && (
           <Box className={classes.loading}>
             <ReactLoading type="bars" color="grey" height={100} width={100} />
@@ -293,7 +295,7 @@ const Edit = (props) => {
               type="submit"
               value="Submit"
               className={classes.postButton}
-              style={{ color: "white", marginTop: "10rem" }}
+              style={{ color: "white" }}
               onClick={() => submitChange(event)}
             >
               Save Changes

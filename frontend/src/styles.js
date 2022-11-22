@@ -297,7 +297,7 @@ const styles = makeStyles((theme) => ({
     },
   },
   itemModal: {
-    position: "absolute",
+    position: "relative",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
@@ -451,7 +451,7 @@ const styles = makeStyles((theme) => ({
     fontWeight: "bold",
     justify: "space-between",
     margin: "2rem",
-
+    marginTop: "10rem",
     width: "10rem",
     position: "absolute",
     [theme.breakpoints.down("md")]: {
@@ -495,7 +495,17 @@ const styles = makeStyles((theme) => ({
       height: "45.8vh",
     },
   },
-  postPageImage: {},
+  price: {
+    float: "right",
+    paddingRight: "20px",
+    [theme.breakpoints.down("md")]: {
+      paddingRight: "10rem",
+    },
+    [theme.breakpoints.down("sm")]: {
+      paddingRight: "20rem",
+    },
+  },
+
   postUploadButton: {
     color: "black",
     backgroundColor: "white",
@@ -549,7 +559,6 @@ const styles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   signUpInput: {
-    position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: "#eeeeee",
     elevation: 1,
@@ -563,6 +572,9 @@ const styles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
       width: "60%",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "30%",
     },
   },
   searchIcon: {
@@ -617,16 +629,7 @@ const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  price: {
-    float: "right",
-    paddingRight: "20px",
-    [theme.breakpoints.down("md")]: {
-      paddingRight: "10rem",
-    },
-    [theme.breakpoints.down("sm")]: {
-      paddingRight: "20rem",
-    },
-  },
+
   toolbar: {
     display: "flex",
     justifyContent: "spacebetween",

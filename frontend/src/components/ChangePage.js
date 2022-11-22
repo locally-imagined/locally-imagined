@@ -11,18 +11,21 @@ import styles from "../styles";
 const ChangePage = (props) => {
   const classes = styles();
   const history = useHistory();
-  let pathChanged = false;
-  history.listen((location) => {
-    pathChanged = location.pathname === "/" ? true : false;
-  });
+  const scrollOption = {
+    top: 100,
+    left: 100,
+    behavior: "smooth",
+  };
   useEffect(() => {
     props.setOffset(0);
-  }, [pathChanged]);
+  }, [props.curPath]);
   const prevHandler = () => {
     props.setOffset((val) => (val > 0 ? --val : val));
+    window.scrollTo(scrollOption);
   };
   const nextHandler = () => {
     props.setOffset((val) => (props.items.length === 25 ? ++val : val));
+    window.scrollTo(scrollOption);
   };
   // useEffect(() => {
   //   if (props.search) history.push(`/getpage/${offset}?keyword=${search}`);

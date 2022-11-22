@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
 
 import Listing from "./Listing";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import NavBar from "./AccountPage/NavBar";
 import AccountPage from "./AccountPage/AccountPage";
 import states from "../states";
@@ -13,13 +13,15 @@ import Dashboard from "./Dashboard/Dashboard";
 import ChangePage from "./ChangePage";
 
 /**
- * Simple component with no state.
  *
  * @return {object} JSX
  */
 function App() {
   const history = useHistory();
+
   const [items, setItems] = useState([]);
+  const [artistItem, setArtistItem] = useState([]);
+  const [curPath, setCurPath] = useState("");
   const [images, setImages] = React.useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,6 +45,9 @@ function App() {
     medium: "",
     content: [],
   });
+  const filterHandler = (filteredItems) => {
+    setItems(filteredItems);
+  };
   const imageSet = [];
   const getImagesSetSrc = (datas) => {
     return axios.all(
@@ -61,6 +66,30 @@ function App() {
               // console.log(src);
 
               imageSet.push({ src: encodeURI(src), imageId: id });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+    );
+  };
+
+  const getSrc = (datas) => {
+    return axios.all(
+      datas.map(async (data) => {
+        return axios
+          .get(
+            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.imageIDs[0]}`,
+            {}
+          )
+          .then((res) => {
+            if (res.status != 200 || !res.data) {
+              throw res;
+            } else {
+              let src = "data:image/jpeg;base64,";
+              src += res.data;
+              data.url = encodeURI(src);
             }
           })
           .catch((err) => {
@@ -93,31 +122,36 @@ function App() {
       });
   };
 
-  const getSrc = (datas) => {
-    return axios.all(
-      datas.map(async (data) => {
-        return axios
-          .get(
-            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.imageIDs[0]}`,
-            {}
-          )
-          .then((res) => {
-            if (res.status != 200 || !res.data) {
-              throw res;
-            } else {
-              let src = "data:image/jpeg;base64,";
-              src += res.data;
-              data.url = encodeURI(src);
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-    );
-  };
-  useEffect(() => {
+  const getArtistPosts = () => {
     setLoading(true);
+    const token = JSON.parse(sessionStorage.getItem("user")).token;
+    console.log(offset);
+    axios
+      .get(`https://locally-imagined.herokuapp.com/posts/myposts/${offset}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          const data = res.data;
+          // console.log(data);
+          getSrc(data).then(() => {
+            data.length === 0 ? setNoResult(true) : setNoResult(false);
+            setArtistItem(data);
+            setLoading(false);
+
+            console.log(JSON.parse(JSON.stringify(data)));
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
+  const getMainPagePosts = () => {
     axios
       .get(
         `https://locally-imagined.herokuapp.com/posts/getpage/${offset}${
@@ -142,11 +176,21 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, [offset]);
-
-  const filterHandler = (filteredItems) => {
-    setItems(filteredItems);
   };
+
+  useEffect(() => {
+    setLoading(true);
+
+    if (curPath === "/") {
+      console.log(curPath);
+      getMainPagePosts();
+    }
+    if (curPath === "/account") {
+      console.log(curPath);
+      getArtistPosts();
+    }
+  }, [offset, curPath]);
+
   //verify user login state
 
   if (sessionStorage.getItem("user") !== null) {
@@ -165,59 +209,70 @@ function App() {
             }}
           >
             <Appbar
-              login={states.login}
               items={items}
-              setFilter={filterHandler}
-              user={user}
-              setUser={setUser}
-              offset={offset}
-              getSrc={getSrc}
-              setSearch={setSearch}
-              search={search}
-              setOffset={setOffset}
+              login={states.login}
               loading={loading}
-              setLoading={setLoading}
               noResult={noResult}
+              offset={offset}
+              search={search}
+              user={user}
+              getSrc={getSrc}
+              getArtistPosts={getArtistPosts}
+              setOffset={setOffset}
+              setUser={setUser}
+              setLoading={setLoading}
+              setSearch={setSearch}
+              setFilter={filterHandler}
               setNoResult={setNoResult}
+              setCurPath={setCurPath}
             />
             <Listing
               items={items}
-              loading={loading}
-              user={user}
               images={images}
-              offset={offset}
-              setImages={setImages}
-              getImagesSet={getImagesSet}
               noResult={noResult}
+              loading={loading}
+              offset={offset}
+              user={user}
+              getImagesSet={getImagesSet}
+              setImages={setImages}
             />
-            <ChangePage setOffset={setOffset} offset={offset} items={items} />
+            <ChangePage
+              items={items}
+              curPath={curPath}
+              offset={offset}
+              setOffset={setOffset}
+            />
           </div>
         </Route>
 
         <Route path="/account">
           <NavBar
             login={states.login}
-            user={user}
             offset={offset}
             setUser={setUser}
+            user={user}
           />
           <AccountPage
-            user={user}
+            artistItem={artistItem}
             items={items}
-            setOffset={setOffset}
-            offset={offset}
             images={images}
-            setImages={setImages}
-            getImagesSet={getImagesSet}
             deleteCheck={deleteCheck}
-            setDeleteCheck={setDeleteCheck}
+            loading={loading}
+            noResult={noResult}
+            offset={offset}
+            user={user}
+            getImagesSet={getImagesSet}
             getSrc={getSrc}
+            setImages={setImages}
+            setOffset={setOffset}
+            setDeleteCheck={setDeleteCheck}
+            setCurPath={setCurPath}
           />
         </Route>
 
         <Route path="/dashboard">
           <NavBar login={states.login} user={user} setUser={setUser} />
-          <Dashboard art={art} setArt={setArt} />
+          <Dashboard art={art} setArt={setArt} setCurPath={setCurPath} />
         </Route>
       </Switch>
     </BrowserRouter>

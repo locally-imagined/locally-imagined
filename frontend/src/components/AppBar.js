@@ -13,7 +13,7 @@ import {
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "../styles";
 import states from "../states";
@@ -31,6 +31,10 @@ import ChangePage from "./ChangePage";
 const Appbar = (props) => {
   const classes = styles();
   const history = useHistory();
+  const location = useLocation();
+  useEffect(() => {
+    props.setCurPath(location.pathname);
+  }, []);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [login, setLogin] = useState(props.login);
   const [openSignup, setSignup] = useState(false);
@@ -76,6 +80,7 @@ const Appbar = (props) => {
 
       states.login = false;
       history.push("/");
+
       window.location.reload(false);
     }
     countDownHandler() {
@@ -104,6 +109,7 @@ const Appbar = (props) => {
     states.login = false;
     setAnchorEl(null);
     history.push(`/`);
+
     window.location.reload(false);
   };
 
@@ -200,8 +206,10 @@ const Appbar = (props) => {
             onClick={() => {
               setAnchorEl(null);
               props.setSearch("");
+              props.getArtistPosts();
               history.push("/account");
-              window.location.reload(false);
+
+              //window.location.reload(false);
             }}
             className={classes.accountMenuItem}
           >

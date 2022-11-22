@@ -2,16 +2,19 @@ import React from "react";
 import { Button, Typography, Box, Grid } from "@material-ui/core";
 import UploadIcon from "@mui/icons-material/Upload";
 import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import styles from "../../styles";
 import AlertMsg from "../AlertMsg";
 import Post from "../Post";
 const Dashboard = (props) => {
   const history = useHistory();
+  useEffect(() => {
+    props.setCurPath(location.pathname);
+    console.log(location.pathname);
+  }, []);
   const classes = styles();
   const [success, setSucess] = useState(false);
-  const [msg, setMsg] = useState("Post successfully");
 
   const [openPost, setOpenPost] = useState(false);
   return (

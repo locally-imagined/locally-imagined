@@ -6,7 +6,8 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 
 import Items from "../Items";
 import styles from "../../styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import ChangePage from "../ChangePage";
@@ -15,6 +16,11 @@ import AlertMsg from "../AlertMsg";
 import ReactLoading from "react-loading";
 import ItemDetails from "../ItemDetails";
 const AccountPage = (props) => {
+  const location = useLocation();
+  useEffect(() => {
+    props.setCurPath(location.pathname);
+  }, []);
+
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
   const [msg, setMsg] = useState("");
@@ -26,15 +32,15 @@ const AccountPage = (props) => {
 
   const openItemHandler = (id) => {
     setOpenItem(true);
-    props.getImagesSet(props.items[id].postID);
-    setOpenItemUrl(props.items[id].url);
+    props.getImagesSet(props.artistItem[id].postID);
+    setOpenItemUrl(props.artistItem[id].url);
     setCurItemId(id);
   };
   const openEditHandler = (index) => {
     setEditId(index);
     console.log(index);
-    setOpenItemUrl(props.items[index].url);
-    props.getImagesSet(props.items[index].postID);
+    setOpenItemUrl(props.artistItem[index].url);
+    props.getImagesSet(props.artistItem[index].postID);
   };
   const iconHandler = (event) => {};
   const editHandler = () => {
@@ -99,13 +105,29 @@ const AccountPage = (props) => {
         )}
         <Box className={classes.accountItems}>
           <h3 style={{ color: "#494a91" }}>{props.user.userName}'s artworks</h3>
-          {props.items.length === 0 && (
-            <Box className={classes.loading} style={{ marginLeft: "25vw" }}>
+          {props.loading && (
+            <Box
+              className={classes.loading}
+              style={{ marginLeft: "37vw", height: "100vh" }}
+            >
               <ReactLoading type="bars" color="grey" height={100} width={100} />
             </Box>
           )}
+          {props.noResult && (
+            <Typography
+              variant="h5"
+              style={{
+                marginLeft: "45%",
+                color: " grey",
+                paddingTop: "10vw",
+                paddingBottom: "100vh",
+              }}
+            >
+              No result
+            </Typography>
+          )}
           <Items
-            items={props.items}
+            items={props.artistItem}
             setOpenEdit={setOpenEdit}
             icon={edit}
             openEditHandler={openEditHandler}
@@ -113,10 +135,11 @@ const AccountPage = (props) => {
             iconHandler={iconHandler}
             setEditId={setEditId}
           />
+
           <ChangePage
             setOffset={props.setOffset}
             offset={props.offset}
-            items={props.items}
+            items={props.artistItem}
           />
         </Box>
         <Edit
@@ -124,7 +147,7 @@ const AccountPage = (props) => {
           openEdit={openEdit}
           openItemUrl={openItemUrl}
           editId={editId}
-          items={props.items}
+          items={props.artistItem}
           icon={"favorite"}
           images={props.images}
           setImages={props.setImages}
@@ -140,7 +163,7 @@ const AccountPage = (props) => {
           setOpenItem={setOpenItem}
           openItemUrl={openItemUrl}
           curItemId={curItemId}
-          items={props.items}
+          items={props.artistItem}
           images={props.images}
           setImages={props.setImages}
         />

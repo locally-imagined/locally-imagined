@@ -58,7 +58,13 @@ const ItemDetails = (props) => {
 
         {props.images.length === 0 && (
           <Box className={classes.loading}>
-            <ReactLoading type="bars" color="grey" height={100} width={100} />
+            <ReactLoading
+              className={classes.loadingLogo}
+              type="bars"
+              color="grey"
+              height={100}
+              width={100}
+            />
           </Box>
         )}
 

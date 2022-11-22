@@ -100,7 +100,7 @@ const AccountPage = (props) => {
         <Box className={classes.accountItems}>
           <h3 style={{ color: "#494a91" }}>{props.user.userName}'s artworks</h3>
           {props.items.length === 0 && (
-            <Box className={classes.loading}>
+            <Box className={classes.loading} style={{ marginLeft: "25vw" }}>
               <ReactLoading type="bars" color="grey" height={100} width={100} />
             </Box>
           )}

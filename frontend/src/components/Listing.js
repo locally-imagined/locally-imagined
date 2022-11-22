@@ -80,7 +80,7 @@ const Listing = (props) => {
       <Box elevation={0} className={classes.listingPage}>
         <Container>
           {props.items.length === 0 && (
-            <Box className={classes.loading}>
+            <Box className={classes.loading} style={{ marginLeft: "37vw" }}>
               <ReactLoading type="bars" color="grey" height={100} width={100} />
             </Box>
           )}

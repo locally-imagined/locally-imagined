@@ -45,7 +45,7 @@ const styles = makeStyles((theme) => ({
   },
   accountBoardDetails: {
     marginLeft: "10vw",
-    marginTop: "8vw",
+    marginTop: "4vw",
     fontSize: "20px",
 
     position: "absolute",
@@ -417,12 +417,13 @@ const styles = makeStyles((theme) => ({
     },
   },
   loading: {
-    width: "100%",
-    height: "100%",
-    marginLeft: "45%",
-    backgroundColor: "white",
-    boxShadow: 24,
-    p: 4,
+    height: "80vh",
+    position: "relative",
+  },
+  loadingLogo: {
+    marginTop: "230px",
+    marginLeft: "500px",
+    position: " absolute",
   },
 
   fastlogin: {

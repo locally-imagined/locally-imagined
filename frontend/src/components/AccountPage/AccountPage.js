@@ -73,10 +73,9 @@ const AccountPage = (props) => {
           <span
             style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
           >
-            {" "}
-            0 Followers
+            {props.artistItem.length} artworks
           </span>
-          <span
+          {/* <span
             style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
           >
             {" "}
@@ -87,7 +86,7 @@ const AccountPage = (props) => {
           >
             {" "}
             0 Favorited
-          </span>
+          </span> */}
         </Typography>
 
         {edit === "" && (

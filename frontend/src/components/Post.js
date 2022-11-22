@@ -51,7 +51,17 @@ const Post = (props) => {
     });
     console.log(props.art);
   };
-
+  const closeHandler = () => {
+    props.setOpenPost(false);
+    props.setArt({
+      title: "",
+      description: "",
+      price: "",
+      medium: "",
+      content: [],
+    });
+    setUrl([]);
+  };
   const prevHandler = () => {
     setOffset((val) => {
       if (val > 0) val--;
@@ -129,6 +139,7 @@ const Post = (props) => {
           console.log(`res:${res}`);
           props.setOpenPost(false);
           props.setSucess(true);
+          closeHandler();
         }
       })
       .catch((err) => {
@@ -137,21 +148,7 @@ const Post = (props) => {
       });
   };
   return (
-    <Modal
-      open={props.openPost}
-      onClose={() => {
-        props.setOpenPost(false);
-        props.setArt({
-          title: "",
-          description: "",
-          price: "",
-          medium: "",
-          content: [],
-        });
-        setUrl("");
-      }}
-      disableEnforceFocus
-    >
+    <Modal open={props.openPost} onClose={closeHandler} disableEnforceFocus>
       <Box className={classes.postPage}>
         <Box className={classes.postPageDetail}>
           <h1 className={classes.signUpTitle}>Post Your Art</h1>

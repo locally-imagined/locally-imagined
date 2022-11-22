@@ -24,6 +24,9 @@ const ChangePage = (props) => {
   const nextHandler = () => {
     props.setOffset((val) => (props.items.length === 25 ? ++val : val));
   };
+  // useEffect(() => {
+  //   if (props.search) history.push(`/getpage/${offset}?keyword=${search}`);
+  // }, [props.offset]);
   return (
     <Toolbar className={classes.changePage}>
       <Box className={classes.changePageLink}>

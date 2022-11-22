@@ -57,7 +57,7 @@ const NavBar = (props) => {
       <Toolbar className={classes.toolbar}>
         {/*title*/}
         <Typography className={classes.title} style={{ flex: 1 }}>
-          <span onClick={() => history.push("/")}> Locally Imagined </span>
+          <span onClick={() => history.push(`/`)}> Locally Imagined </span>
         </Typography>
 
         {/*Notifications button*/}

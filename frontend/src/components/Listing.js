@@ -79,11 +79,15 @@ const Listing = (props) => {
 
       <Box elevation={0} className={classes.listingPage}>
         <Container>
-          {props.items.length === 0 && (
-            <Box className={classes.loading} style={{ marginLeft: "37vw" }}>
+          {props.loading && (
+            <Box
+              className={classes.loading}
+              style={{ marginLeft: "37vw", height: "100vh" }}
+            >
               <ReactLoading type="bars" color="grey" height={100} width={100} />
             </Box>
           )}
+
           {tab === "explore" && (
             <Items
               favoriteHandler={favoriteHandler}
@@ -91,6 +95,19 @@ const Listing = (props) => {
               items={props.items}
               icon={"favorite"}
             />
+          )}
+          {props.noResult && (
+            <Typography
+              variant="h5"
+              style={{
+                marginLeft: "45%",
+                color: " grey",
+                paddingTop: "10vw",
+                paddingBottom: "100vh",
+              }}
+            >
+              No result
+            </Typography>
           )}
         </Container>
       </Box>

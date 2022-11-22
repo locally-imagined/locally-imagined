@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
 
 import Listing from "./Listing";
-
+import { useHistory } from "react-router-dom";
 import NavBar from "./AccountPage/NavBar";
 import AccountPage from "./AccountPage/AccountPage";
 import states from "../states";
@@ -18,8 +18,12 @@ import ChangePage from "./ChangePage";
  * @return {object} JSX
  */
 function App() {
+  const history = useHistory();
   const [items, setItems] = useState([]);
   const [images, setImages] = React.useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [noResult, setNoResult] = useState(false);
   const [offset, setOffset] = useState(0);
   const [deleteCheck, setDeleteCheck] = useState([]);
   const [user, setUser] = useState({
@@ -30,6 +34,7 @@ function App() {
     phone: "",
     email: "",
   });
+
   //Post object
   const [art, setArt] = useState({
     title: "",
@@ -103,7 +108,6 @@ function App() {
               let src = "data:image/jpeg;base64,";
               src += res.data;
               data.url = encodeURI(src);
-              //console.log(src);
             }
           })
           .catch((err) => {
@@ -113,15 +117,24 @@ function App() {
     );
   };
   useEffect(() => {
+    setLoading(true);
     axios
-      .get(`https://locally-imagined.herokuapp.com/posts/getpage/${offset}`, {})
+      .get(
+        `https://locally-imagined.herokuapp.com/posts/getpage/${offset}${
+          search ? `?keyword=${search}` : ``
+        }`,
+        {}
+      )
       .then((res) => {
         if (res.status != 200 || !res.data) {
           throw res;
         } else {
           const data = res.data;
           getSrc(data).then(() => {
+            data.length === 0 ? setNoResult(true) : setNoResult(false);
             setItems(data);
+            setLoading(false);
+
             console.log(JSON.parse(JSON.stringify(data)));
           });
         }
@@ -145,7 +158,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact>
+        <Route path={`/`} exact>
           <div
             style={{
               fontFamily: "Arial, Helvetica, sans-serif",
@@ -157,19 +170,37 @@ function App() {
               setFilter={filterHandler}
               user={user}
               setUser={setUser}
+              offset={offset}
+              getSrc={getSrc}
+              setSearch={setSearch}
+              search={search}
+              setOffset={setOffset}
+              loading={loading}
+              setLoading={setLoading}
+              noResult={noResult}
+              setNoResult={setNoResult}
             />
             <Listing
               items={items}
+              loading={loading}
               user={user}
               images={images}
+              offset={offset}
               setImages={setImages}
               getImagesSet={getImagesSet}
+              noResult={noResult}
             />
             <ChangePage setOffset={setOffset} offset={offset} items={items} />
           </div>
         </Route>
+
         <Route path="/account">
-          <NavBar login={states.login} user={user} setUser={setUser} />
+          <NavBar
+            login={states.login}
+            user={user}
+            offset={offset}
+            setUser={setUser}
+          />
           <AccountPage
             user={user}
             items={items}
@@ -180,6 +211,7 @@ function App() {
             getImagesSet={getImagesSet}
             deleteCheck={deleteCheck}
             setDeleteCheck={setDeleteCheck}
+            getSrc={getSrc}
           />
         </Route>
 

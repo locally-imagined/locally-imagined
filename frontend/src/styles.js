@@ -600,15 +600,27 @@ const styles = makeStyles((theme) => ({
       width: "30%",
     },
   },
+  search: {
+    paddingBottom: 30,
+    marginTop: -19,
+    height: "6px",
+    border: "1px solid #999",
+    borderRadius: "7px",
+    position: "relative",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
   searchIcon: {
-    left: 0,
+    left: "0px",
+    marginTop: "5px",
+    position: "absolute",
     color: "#bdbdbd",
   },
   searchInput: {
-    marginLeft: "10px",
-
-    left: 0,
-    width: 200,
+    marginLeft: "25px",
+    marginTop: "2px",
+    width: "80%",
     marginBottom: "100px",
   },
   searchResult: {
@@ -642,16 +654,7 @@ const styles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1),
     marginTop: 10,
   },
-  search: {
-    paddingBottom: 30,
-    marginTop: -19,
-    height: "6px",
-    border: "1px solid #999",
-    borderRadius: "7px",
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
+
   sliderDotBox: {
     fontSize: "5px",
 

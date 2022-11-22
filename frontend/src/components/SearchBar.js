@@ -5,7 +5,7 @@ import { useState } from "react";
 import styles from "../styles";
 import states from "../states";
 import { Search } from "@material-ui/icons";
-
+import axios from "axios";
 /**
  * SearchBar
  * @return {object} JSX
@@ -13,31 +13,57 @@ import { Search } from "@material-ui/icons";
 const SearchBar = (props) => {
   const classes = styles();
   const [open, setOpen] = useState(false);
-  const [filter, setFilter] = useState([]);
   const [search, setSearch] = useState("");
   const enterHandler = (event) => {
     if (event.key === "Enter") {
       if (search === "") {
-        props.setFilter(props.items);
-        states.filteredItems = props.items;
+        props.setFilter([]);
+
         window.location.reload(false);
       } else {
-        props.setFilter(filter);
-        states.filteredItems = filter;
-        console.log(filter);
+        searchImage(search);
       }
     }
   };
   const handleSearchChange = (event) => {
-    setSearch(event.target.value);
+    setSearch(event.target.value.toLowerCase());
+    props.setSearch(event.target.value.toLowerCase());
     // console.log(`search:${search}`);
     // console.log(`items:`, props.items);
 
-    const filteredSearch = props.items.filter((value) => {
-      return value.title.toLowerCase().includes(search.toLowerCase());
-    });
-    console.log(filteredSearch);
-    setFilter(filteredSearch);
+    // const filteredSearch = props.items.filter((value) => {
+    //   return value.title.toLowerCase().includes(search.toLowerCase());
+    // });
+    // console.log(filteredSearch);
+    // setFilter(filteredSearch);
+  };
+  const searchImage = (keyword) => {
+    const searchQuery = `?keyword=${keyword}`;
+    props.setLoading(true);
+    axios
+      .get(
+        `https://locally-imagined.herokuapp.com/posts/getpage/${props.offset}${searchQuery}`,
+        {}
+      )
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          const data = res.data;
+          props.getSrc(data).then(() => {
+            console.log(JSON.parse(JSON.stringify(data)));
+            props.setLoading(false);
+            data.length === 0
+              ? props.setNoResult(true)
+              : props.setNoResult(false);
+            props.setFilter(data);
+            props.setOffset(0);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <Grid className={classes.topbar}>

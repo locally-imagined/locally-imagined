@@ -103,7 +103,7 @@ const Appbar = (props) => {
     setLogin(false);
     states.login = false;
     setAnchorEl(null);
-    history.push("/");
+    history.push(`/`);
     window.location.reload(false);
   };
 
@@ -114,7 +114,18 @@ const Appbar = (props) => {
         <Typography className={classes.title} style={{ flex: 1 }}>
           Locally Imagined
         </Typography>
-        <SearchBar items={props.items} setFilter={props.setFilter} />
+        <SearchBar
+          items={props.items}
+          getSrc={props.getSrc}
+          setFilter={props.setFilter}
+          offset={props.offset}
+          setSearch={props.setSearch}
+          search={props.search}
+          setOffset={props.setOffset}
+          noResult={props.noResult}
+          setLoading={props.setLoading}
+          setNoResult={props.setNoResult}
+        />
         {/*display fast login input fields while not login*/}
         {!login && (
           <Login
@@ -136,7 +147,10 @@ const Appbar = (props) => {
               sx={{ ml: 2 }}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
-              onClick={() => history.push("/dashboard")}
+              onClick={() => {
+                props.setSearch("");
+                history.push("/dashboard");
+              }}
             >
               <DashboardIcon></DashboardIcon>
             </IconButton>
@@ -185,6 +199,7 @@ const Appbar = (props) => {
           <MenuItem
             onClick={() => {
               setAnchorEl(null);
+              props.setSearch("");
               history.push("/account");
               window.location.reload(false);
             }}

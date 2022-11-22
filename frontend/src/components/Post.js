@@ -29,7 +29,7 @@ const Post = (props) => {
   const [url, setUrl] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
-
+  const maxiumImages = 10;
   const mediumOptions = [
     "Painting",
     "Oil",
@@ -213,6 +213,7 @@ const Post = (props) => {
               multiple
               onChange={handlePostChange}
               required
+              disabled={url.length === maxiumImages}
               id="icon-button-file"
               type="file"
               name="content"
@@ -222,11 +223,19 @@ const Post = (props) => {
                 color="primary"
                 aria-label="upload picture"
                 component="span"
+                disabled={url.length === maxiumImages}
               >
                 <PhotoCamera />
               </IconButton>
-              <span style={{ fontSize: "13px", color: "grey" }}>
-                upload one or more images
+              <span
+                style={{
+                  fontSize: "13px",
+                  color: url.length === maxiumImages ? "red" : "grey",
+                }}
+              >
+                {url.length === maxiumImages
+                  ? "reached maxium images"
+                  : "upload image"}
               </span>
             </label>
 

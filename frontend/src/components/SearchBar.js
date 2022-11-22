@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, InputBase } from "@material-ui/core";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import styles from "../styles";
 import states from "../states";
 import { Search } from "@material-ui/icons";
@@ -12,13 +12,19 @@ import axios from "axios";
  */
 const SearchBar = (props) => {
   const classes = styles();
+  const history = useHistory();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  useEffect(() => {
+    history.push("/");
+    props.setCurPath("/");
+  }, [window.performance.getEntriesByType("navigation")[0].type]);
+
   const enterHandler = (event) => {
     if (event.key === "Enter") {
       if (search === "") {
         props.setFilter([]);
-
+        history.push(`/`);
         window.location.reload(false);
       } else {
         searchImage(search);
@@ -58,6 +64,7 @@ const SearchBar = (props) => {
               : props.setNoResult(false);
             props.setFilter(data);
             props.setOffset(0);
+            history.push(`/posts/getpage/${props.offset}${searchQuery}`);
           });
         }
       })

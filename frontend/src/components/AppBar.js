@@ -117,8 +117,16 @@ const Appbar = (props) => {
     <AppBar className={classes.appBar} elevation={1}>
       <Toolbar className={classes.toolbar}>
         {/*title*/}
-        <Typography className={classes.title} style={{ flex: 1 }}>
-          Locally Imagined
+        <Typography style={{ flex: 1 }}>
+          <span
+            onClick={() => {
+              history.push(`/`);
+              window.location.reload(false);
+            }}
+            className={classes.title}
+          >
+            Locally Imagined
+          </span>
         </Typography>
         <SearchBar
           items={props.items}
@@ -130,6 +138,7 @@ const Appbar = (props) => {
           setOffset={props.setOffset}
           noResult={props.noResult}
           setLoading={props.setLoading}
+          setCurPath={props.setCurPath}
           setNoResult={props.setNoResult}
         />
         {/*display fast login input fields while not login*/}

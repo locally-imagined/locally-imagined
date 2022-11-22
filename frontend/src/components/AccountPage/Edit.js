@@ -33,7 +33,11 @@ const Edit = (props) => {
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const [check, setCheck] = useState(false);
   const [offset, setOffset] = useState(0);
-
+  const scrollOption = {
+    top: 60,
+    left: 100,
+    behavior: "smooth",
+  };
   const handleDeleteCheckChange = (id) => {
     const updateArr = props.deleteCheck;
     updateArr[id] = updateArr[id] ? false : true;
@@ -125,6 +129,7 @@ const Edit = (props) => {
           props.setMsg("deleted");
           props.setOpenEdit(false);
           window.location.reload(false);
+          window.scrollTo(scrollOption);
         }
       })
       .catch((err) => {
@@ -201,6 +206,8 @@ const Edit = (props) => {
           props.setSuccess(true);
           props.setMsg("edited");
           props.setOpenEdit(false);
+
+          window.scrollTo(scrollOption);
           //window.location.reload(false);
         }
       })

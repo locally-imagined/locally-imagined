@@ -73,7 +73,7 @@ const AccountPage = (props) => {
           <span
             style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
           >
-            {props.artistItem.length} artworks
+            Landscape/Abstract Artist • Illustrator
           </span>
           {/* <span
             style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}

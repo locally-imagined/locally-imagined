@@ -244,6 +244,48 @@ function App() {
             />
           </div>
         </Route>
+        <Route path={`/posts/getpage`}>
+          <div
+            style={{
+              fontFamily: "Arial, Helvetica, sans-serif",
+            }}
+          >
+            <Appbar
+              items={items}
+              login={states.login}
+              loading={loading}
+              noResult={noResult}
+              offset={offset}
+              search={search}
+              user={user}
+              getSrc={getSrc}
+              getArtistPosts={getArtistPosts}
+              setOffset={setOffset}
+              setUser={setUser}
+              setLoading={setLoading}
+              setSearch={setSearch}
+              setFilter={filterHandler}
+              setNoResult={setNoResult}
+              setCurPath={setCurPath}
+            />
+            <Listing
+              items={items}
+              images={images}
+              noResult={noResult}
+              loading={loading}
+              offset={offset}
+              user={user}
+              getImagesSet={getImagesSet}
+              setImages={setImages}
+            />
+            <ChangePage
+              items={items}
+              curPath={curPath}
+              offset={offset}
+              setOffset={setOffset}
+            />
+          </div>
+        </Route>
 
         <Route path="/account">
           <NavBar

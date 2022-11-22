@@ -30,6 +30,11 @@ const Post = (props) => {
   const [offset, setOffset] = React.useState(0);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const maxiumImages = 10;
+  const scrollOption = {
+    top: 100,
+    left: 100,
+    behavior: "smooth",
+  };
   const mediumOptions = [
     "Painting",
     "Oil",
@@ -90,9 +95,9 @@ const Post = (props) => {
   };
   const handlePostChange = (event) => {
     if (event.target.name === "content") {
-      console.log("img");
+      //console.log("img");
       setUrl([...url, URL.createObjectURL(event.target.files[0])]);
-      console.log(url);
+      //console.log(url);
       getBase64(event.target.files[0])
         .then((result) => {
           result = result.split(",").pop();
@@ -140,6 +145,7 @@ const Post = (props) => {
           props.setOpenPost(false);
           props.setSucess(true);
           closeHandler();
+          window.scrollTo(scrollOption);
         }
       })
       .catch((err) => {

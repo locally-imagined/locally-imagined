@@ -679,6 +679,9 @@ const styles = makeStyles((theme) => ({
     fontSize: "27px",
     fontWeight: "bold",
     marginLeft: -20,
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
 
   topbar: {

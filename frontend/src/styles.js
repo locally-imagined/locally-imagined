@@ -127,6 +127,11 @@ const styles = makeStyles((theme) => ({
     width: "40vh",
     fontSize: "15px",
   },
+  cancelIcon: {
+    position: "absolute",
+    zIndex: 1,
+    right: "0px",
+  },
   categoryBox: {
     width: "100",
     backgroundColor: theme.palette.primary.light,
@@ -178,7 +183,7 @@ const styles = makeStyles((theme) => ({
   dashboard: {
     width: "70vw",
     height: "70vh",
-    backgroundColor: "LightSteelBlue",
+    backgroundColor: "#dadeeb",
     borderRadius: "8px",
     marginLeft: "15vw",
     marginTop: "12vw",
@@ -210,7 +215,7 @@ const styles = makeStyles((theme) => ({
     display: "inline-block",
     marginTop: "8vw",
     borderRadius: "8px",
-    backgroundColor: "#eeeeee",
+    backgroundColor: "white",
     boxShadow: 3,
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
     [theme.breakpoints.down("sm")]: {
@@ -247,10 +252,12 @@ const styles = makeStyles((theme) => ({
     },
   },
   editForm: {
-    position: "fixed",
-    display: "inline-block",
-    width: "25rem",
-    padding: "2rem",
+    position: "absolute",
+    right: "0px",
+    width: "27vw",
+    paddingLeft: "2rem",
+    paddingRight: "1rem",
+    paddingTop: "2rem",
     height: "70.7vh",
   },
   errorMsg: {
@@ -301,7 +308,7 @@ const styles = makeStyles((theme) => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-
+    display: "inline-block",
     width: "80vw",
     height: "80vh",
     bgcolor: "background.paper",
@@ -332,14 +339,18 @@ const styles = makeStyles((theme) => ({
     width: "28.5vw",
     borderBottom: " 1px solid grey",
   },
-  itemModalInfo: {},
+
   itemModalInfoArtist: {
     color: "grey",
   },
   itemModalFavIcon: {
     marginLeft: "10vw",
   },
-
+  imageBox: {
+    width: "50vw",
+    height: "100%",
+    position: "absolute",
+  },
   icon: {
     backgroundColor: "#eeeeee",
     color: "#424242",
@@ -499,10 +510,10 @@ const styles = makeStyles((theme) => ({
     float: "right",
     paddingRight: "20px",
     [theme.breakpoints.down("md")]: {
-      paddingRight: "10rem",
+      paddingRight: "5rem",
     },
     [theme.breakpoints.down("sm")]: {
-      paddingRight: "20rem",
+      paddingRight: "10rem",
     },
   },
 
@@ -629,7 +640,21 @@ const styles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  sliderDotBox: {
+    fontSize: "5px",
 
+    opacity: 0.7,
+    bottom: "10px",
+    right: "46%",
+    position: "absolute",
+    display: "inlineBlock",
+  },
+  sliderDot: {
+    opacity: "30%",
+    color: "white",
+    paddingRight: "10px",
+    cursor: "pointer",
+  },
   toolbar: {
     display: "flex",
     justifyContent: "spacebetween",

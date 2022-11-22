@@ -143,7 +143,7 @@ const Appbar = (props) => {
           </Tooltip>
         )}
         {/*Notifications button*/}
-        {login && (
+        {/* {login && (
           <Tooltip title="Notifications">
             <IconButton
               size="small"
@@ -155,7 +155,7 @@ const Appbar = (props) => {
               <NotificationsIcon></NotificationsIcon>
             </IconButton>
           </Tooltip>
-        )}
+        )} */}
         {/*display avatar and username and log out button when login*/}
         {login && (
           <Tooltip title="Account settings">

@@ -23,14 +23,17 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AlertMsg from "../AlertMsg";
 import axios from "axios";
+import SliderArrow from "../UI/SliderArrow";
+import SliderDot from "../UI/SliderDot";
 
 const Edit = (props) => {
   const classes = styles();
   const token = JSON.parse(sessionStorage.getItem("user")).token;
   const [error, setError] = useState(false);
-
+  const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const [check, setCheck] = useState(false);
   const [offset, setOffset] = useState(0);
+
   const handleDeleteCheckChange = (id) => {
     const updateArr = props.deleteCheck;
     updateArr[id] = updateArr[id] ? false : true;
@@ -62,6 +65,7 @@ const Edit = (props) => {
     setOffset((val) => {
       if (val > 0) val--;
       curOffset = val;
+      setCurrSlideStyle({ opacity: "100%" });
       return val;
     });
     if (props.deleteCheck[curOffset]) setCheck(true);
@@ -71,6 +75,7 @@ const Edit = (props) => {
     setOffset((val) => {
       if (val < props.images.length - 1) val++;
       curOffset = val;
+      setCurrSlideStyle({ opacity: "100%" });
       return val;
     });
     if (props.deleteCheck[curOffset]) setCheck(true);
@@ -206,38 +211,34 @@ const Edit = (props) => {
   };
 
   return (
-    <Modal open={props.openEdit} onClose={closeEditHandler}>
+    <Modal open={props.openEdit}>
       <Paper className={classes.itemModal}>
+        <IconButton className={classes.cancelIcon} onClick={closeEditHandler}>
+          <CancelIcon />
+        </IconButton>
         {props.images.length > 1 && (
-          <Box
-            style={{
-              marginTop: "15rem",
-              position: "absolute",
-              zIndex: 1,
-              color: "white",
-            }}
-          >
-            <IconButton onClick={prevHandler}>
-              <ArrowBackIcon className={classes.arrow} />
-            </IconButton>
-            <IconButton style={{ marginLeft: "43vw" }} onClick={nextHandler}>
-              <ArrowForwardIcon className={classes.arrow} />
-            </IconButton>
-          </Box>
+          <SliderArrow prevHandler={prevHandler} nextHandler={nextHandler} />
         )}
         {props.images.length === 0 && (
           <Box className={classes.loading}>
             <ReactLoading type="bars" color="grey" height={100} width={100} />
           </Box>
         )}
-        {props.images.length > 0 && (
-          <LazyLoadImage
-            className={classes.itemModalPicture}
-            src={props.images[offset].src}
-            alt="Image Alt"
-            id={props.editId}
-          ></LazyLoadImage>
-        )}
+        <Box className={classes.imageBox}>
+          {props.images.length > 0 && (
+            <LazyLoadImage
+              className={classes.itemModalPicture}
+              src={props.images[offset].src}
+              alt="Image Alt"
+              id={props.editId}
+            ></LazyLoadImage>
+          )}
+          <SliderDot
+            offset={offset}
+            currSlideStyle={currSlideStyle}
+            images={props.images}
+          />
+        </Box>
 
         <Box className={classes.editForm}>
           <span className={classes.title} style={{ padding: "2rem" }}>

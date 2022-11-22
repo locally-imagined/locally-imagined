@@ -61,7 +61,7 @@ const NavBar = (props) => {
         </Typography>
 
         {/*Notifications button*/}
-        {login && (
+        {/* {login && (
           <Tooltip title="Notifications">
             <IconButton
               size="small"
@@ -73,7 +73,7 @@ const NavBar = (props) => {
               <NotificationsIcon></NotificationsIcon>
             </IconButton>
           </Tooltip>
-        )}
+        )} */}
         {/*display avatar and username and log out button when login*/}
         {login && (
           <Tooltip title="Account settings">

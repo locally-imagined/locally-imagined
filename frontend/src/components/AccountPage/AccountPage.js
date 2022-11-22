@@ -21,6 +21,15 @@ const AccountPage = (props) => {
   const [editId, setEditId] = useState(0);
   const [openItemUrl, setOpenItemUrl] = React.useState("");
   const [success, setSuccess] = useState(false);
+  const [openItem, setOpenItem] = React.useState(false);
+  const [curItemId, setCurItemId] = React.useState(0);
+
+  const openItemHandler = (id) => {
+    setOpenItem(true);
+    props.getImagesSet(props.items[id].postID);
+    setOpenItemUrl(props.items[id].url);
+    setCurItemId(id);
+  };
   const openEditHandler = (index) => {
     setEditId(index);
     console.log(index);
@@ -100,6 +109,7 @@ const AccountPage = (props) => {
             setOpenEdit={setOpenEdit}
             icon={edit}
             openEditHandler={openEditHandler}
+            openItemHandler={openItemHandler}
             iconHandler={iconHandler}
             setEditId={setEditId}
           />
@@ -124,6 +134,15 @@ const AccountPage = (props) => {
           success={success}
           setMsg={setMsg}
           msg={msg}
+        />
+        <ItemDetails
+          openItem={openItem}
+          setOpenItem={setOpenItem}
+          openItemUrl={openItemUrl}
+          curItemId={curItemId}
+          items={props.items}
+          images={props.images}
+          setImages={props.setImages}
         />
       </Box>
     </Box>

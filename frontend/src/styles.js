@@ -26,7 +26,7 @@ const styles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   accountBox: {
-    width: "80rem",
+    width: "100vw",
 
     position: "absolute",
 
@@ -79,6 +79,7 @@ const styles = makeStyles((theme) => ({
     marginTop: "15rem",
     position: "absolute",
     zIndex: 1,
+
     color: "white",
   },
   artistFollowButton: {
@@ -552,7 +553,7 @@ const styles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     backgroundColor: "#eeeeee",
     elevation: 1,
-    width: "100%",
+    width: "90%",
     height: "40px",
     display: "block",
     justifyContent: "center",

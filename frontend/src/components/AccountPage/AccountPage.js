@@ -11,12 +11,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import ChangePage from "../ChangePage";
 import Edit from "./Edit";
+import AlertMsg from "../AlertMsg";
 import ReactLoading from "react-loading";
 const AccountPage = (props) => {
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
+  const [msg, setMsg] = useState("");
   const [editId, setEditId] = useState(0);
   const [openItemUrl, setOpenItemUrl] = React.useState("");
+  const [success, setSuccess] = useState(false);
   const openEditHandler = (index) => {
     setEditId(index);
     console.log(index);
@@ -33,6 +36,17 @@ const AccountPage = (props) => {
 
   return (
     <Box className={classes.accountBox}>
+      <br />
+      <br />
+      <br />
+      {success && (
+        <AlertMsg
+          success={success}
+          type={"success"}
+          setSucess={setSuccess}
+          msg={msg}
+        />
+      )}
       <Box className={classes.accountBoard}>
         <Typography component={"span"} className={classes.accountBoardDetails}>
           About {props.user.userName} <br />
@@ -59,6 +73,7 @@ const AccountPage = (props) => {
             0 Favorited
           </span>
         </Typography>
+
         {edit === "" && (
           <IconButton className={classes.accountIcons} onClick={editHandler}>
             <EditIcon />
@@ -102,6 +117,12 @@ const AccountPage = (props) => {
           icon={"favorite"}
           images={props.images}
           setImages={props.setImages}
+          deleteCheck={props.deleteCheck}
+          setDeleteCheck={props.setDeleteCheck}
+          setSuccess={setSuccess}
+          success={success}
+          setMsg={setMsg}
+          msg={msg}
         />
       </Box>
     </Box>

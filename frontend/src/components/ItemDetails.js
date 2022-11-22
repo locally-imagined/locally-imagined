@@ -68,7 +68,7 @@ const ItemDetails = (props) => {
         {props.images.length > 0 && (
           <LazyLoadImage
             className={classes.itemModalPicture}
-            src={props.images[offset]}
+            src={props.images[offset].src}
             alt="Image Alt"
             id={props.curItemId}
           ></LazyLoadImage>

@@ -19,16 +19,10 @@ const ChangePage = (props) => {
     props.setOffset(0);
   }, [pathChanged]);
   const prevHandler = () => {
-    props.setOffset((val) => {
-      if (val > 0) val--;
-      return val;
-    });
+    props.setOffset((val) => (val > 0 ? --val : val));
   };
   const nextHandler = () => {
-    props.setOffset((val) => {
-      if (props.items.length === 25) val++;
-      return val;
-    });
+    props.setOffset((val) => (props.items.length === 25 ? ++val : val));
   };
   return (
     <Toolbar className={classes.changePage}>

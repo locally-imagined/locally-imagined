@@ -17,7 +17,6 @@ import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "../styles";
 import states from "../states";
-
 import SearchBar from "./SearchBar";
 import Login from "./Login";
 import SignUp from "./SignUp";
@@ -33,12 +32,14 @@ const Appbar = (props) => {
   const classes = styles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const openAccountMenu = Boolean(anchorEl);
   const [login, setLogin] = useState(props.login);
   const [openSignup, setSignup] = useState(false);
   const [error, setError] = useState(false);
   const [msg, setMsg] = useState("Login successfully");
   const [success, setSucess] = useState(false);
+  const [sessionEnd, setSessionEnd] = useState(false);
+  const [info, setInfo] = useState(false);
+  const openAccountMenu = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -53,12 +54,12 @@ const Appbar = (props) => {
       [event.target.name]: event.target.value,
     });
   };
-  const [sessionEnd, setSessionEnd] = useState(false);
-  const [info, setInfo] = useState(false);
+
   class sessionTimer {
     constructor(time) {
       this.timeLeft = Number(time) * 60 * 60 * 1000;
       this.timeLeftSec = Number(time) * 60 * 60;
+      console.log(`session time:${Math.trunc(time)}hour`);
       this.setTimer();
       this.setCountDown();
     }
@@ -88,7 +89,6 @@ const Appbar = (props) => {
         );
         setInfo(true);
       }
-      //console.log(`time left:${Math.trunc(this.timeLeftSec)}`);
     }
     setTimer() {
       setTimeout(this.timeoutHandler, this.timeLeft);

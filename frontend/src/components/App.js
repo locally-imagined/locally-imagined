@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Dashboard from "./Dashboard/Dashboard";
 import ChangePage from "./ChangePage";
-//fake json data
 
 /**
  * Simple component with no state.
@@ -21,9 +20,8 @@ import ChangePage from "./ChangePage";
 function App() {
   const [items, setItems] = useState([]);
   const [images, setImages] = React.useState([]);
-  const imageSet = [];
   const [offset, setOffset] = useState(0);
-  // const [login, setLogin] = useState(states.login);
+  const [deleteCheck, setDeleteCheck] = useState([]);
   const [user, setUser] = useState({
     userName: "",
     password: "",
@@ -40,6 +38,7 @@ function App() {
     medium: "",
     content: [],
   });
+  const imageSet = [];
   const getImagesSetSrc = (datas) => {
     return axios.all(
       datas.map(async (id) => {
@@ -56,7 +55,7 @@ function App() {
               src += res.data;
               // console.log(src);
 
-              imageSet.push(encodeURI(src));
+              imageSet.push({ src: encodeURI(src), imageId: id });
             }
           })
           .catch((err) => {
@@ -76,9 +75,11 @@ function App() {
           throw res;
         } else {
           const data = res.data;
-          console.log(data);
+          // console.log(data);
           getImagesSetSrc(data).then(() => {
             setImages(imageSet);
+            setDeleteCheck(Array(imageSet.length).fill(false));
+            console.log(imageSet);
           });
         }
       })
@@ -130,18 +131,15 @@ function App() {
       });
   }, [offset]);
 
-  // console.log(data);
-
   const filterHandler = (filteredItems) => {
     setItems(filteredItems);
-    //console.log(`App.js:${filteredItems}`);
   };
   //verify user login state
 
   if (sessionStorage.getItem("user") !== null) {
-    const user = JSON.parse(sessionStorage.user);
-    useEffect(() => setUser(user), []);
-    states.login = user?.token ? true : false;
+    const userState = JSON.parse(sessionStorage.user);
+    if (!user.userName) setUser(userState);
+    states.login = userState?.token ? true : false;
   } else states.login = false;
 
   return (
@@ -180,6 +178,8 @@ function App() {
             images={images}
             setImages={setImages}
             getImagesSet={getImagesSet}
+            deleteCheck={deleteCheck}
+            setDeleteCheck={setDeleteCheck}
           />
         </Route>
 

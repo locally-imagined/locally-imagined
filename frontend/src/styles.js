@@ -11,6 +11,7 @@ const styles = makeStyles((theme) => ({
   },
   accountBoard: {
     width: "70vw",
+    borderRadius: "10px",
 
     backgroundColor: "white",
 
@@ -199,6 +200,7 @@ const styles = makeStyles((theme) => ({
   dashboardBox: {
     width: "100vw",
     height: "100vh",
+    left: "0px",
     position: "absolute",
 
     backgroundColor: "#eeeeee",
@@ -311,6 +313,7 @@ const styles = makeStyles((theme) => ({
     display: "inline-block",
     width: "80vw",
     height: "80vh",
+    borderRadius: "10px",
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
@@ -320,6 +323,7 @@ const styles = makeStyles((theme) => ({
     height: "100%",
     backgroundColor: "white",
     boxShadow: 24,
+    borderRadius: "10px",
     p: 4,
   },
   itemModalInfoBox: {
@@ -456,7 +460,13 @@ const styles = makeStyles((theme) => ({
     display: "inline-block",
     top: 20,
   },
-
+  postArrow: {
+    "&:hover": {
+      opacity: 0.3,
+      color: "grey",
+      cursor: "pointer",
+    },
+  },
   postButton: {
     color: "white",
     backgroundColor: theme.palette.primary.main,
@@ -478,6 +488,7 @@ const styles = makeStyles((theme) => ({
     backgroundColor: "white",
     width: "75rem",
     height: "80vh",
+    borderRadius: "10px",
     bgcolor: "background.paper",
     [theme.breakpoints.down("md")]: {
       width: "40vw",

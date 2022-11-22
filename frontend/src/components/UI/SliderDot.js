@@ -10,6 +10,7 @@ const SliderDot = (props) => {
             <span
               className={classes.sliderDot}
               key={index}
+              color={props.color}
               style={index === props.offset ? props.currSlideStyle : {}}
             >
               ⬤

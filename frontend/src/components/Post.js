@@ -17,7 +17,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import AlertMsg from "./AlertMsg";
 import styles from "../styles";
-
+import SliderDot from "./UI/SliderDot";
 import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -28,6 +28,8 @@ const Post = (props) => {
   const [medium, setMedium] = React.useState("");
   const [url, setUrl] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
+  const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
+
   const mediumOptions = [
     "Painting",
     "Oil",
@@ -42,7 +44,7 @@ const Post = (props) => {
   ];
   const handleMediumChange = (event) => {
     console.log(event.target.value);
-
+    setMedium(event.target.value);
     props.setArt({
       ...props.art,
       medium: event.target.value,
@@ -53,12 +55,14 @@ const Post = (props) => {
   const prevHandler = () => {
     setOffset((val) => {
       if (val > 0) val--;
+      setCurrSlideStyle({ opacity: "100%" });
       return val;
     });
   };
   const nextHandler = () => {
     setOffset((val) => {
       if (val < url.length - 1) val++;
+      setCurrSlideStyle({ opacity: "100%" });
       return val;
     });
   };
@@ -192,7 +196,7 @@ const Post = (props) => {
               defaultValue=""
               onChange={handleMediumChange}
               label="Medium"
-              style={{ width: "100px", height: "40px" }}
+              style={{ width: "150px", height: "40px" }}
             >
               {mediumOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>
@@ -235,7 +239,7 @@ const Post = (props) => {
               type="submit"
               value="Submit"
               className={classes.postButton}
-              style={{ color: "white" }}
+              style={{ color: "white", marginTop: "5rem" }}
             >
               Post
             </Button>
@@ -250,31 +254,55 @@ const Post = (props) => {
           )}
         </Box>
         <Box className={classes.postPageImageBox}>
-          <Box
+          {url.length > 1 && (
+            <Box
+              style={{
+                marginTop: "14rem",
+                position: "absolute",
+                zIndex: 1,
+              }}
+            >
+              <ArrowBackIcon
+                onClick={prevHandler}
+                style={{ paddingRight: "39rem" }}
+                className={classes.postArrow}
+              />
+              <ArrowForwardIcon
+                onClick={nextHandler}
+                className={classes.postArrow}
+              />
+            </Box>
+          )}
+          <div
+            style={{ height: "100%", marginLeft: "25vw", position: "absolute" }}
+          >
+            <SliderDot
+              offset={offset}
+              currSlideStyle={currSlideStyle}
+              images={url}
+              color={"white"}
+            />
+          </div>
+          <div
             style={{
-              marginTop: "14rem",
-              position: "absolute",
-              zIndex: 1,
+              boxShadow: 3,
+
+              marginLeft: "5rem",
+              position: "relative",
+              height: "35rem",
             }}
           >
-            <ArrowBackIcon
-              onClick={prevHandler}
-              style={{ paddingRight: "39rem" }}
-            />
-            <ArrowForwardIcon onClick={nextHandler} />
-          </Box>
-
-          <LazyLoadImage
-            style={{
-              height: `35rem`,
-              boxShadow: 3,
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
-              marginLeft: "5rem",
-            }}
-            src={url[offset]}
-            alt="Image Alt"
-            effect="blur"
-          ></LazyLoadImage>
+            <LazyLoadImage
+              style={{
+                height: `35rem`,
+                borderRadius: "5px",
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
+              }}
+              src={url[offset]}
+              alt="Image Alt"
+              effect="blur"
+            ></LazyLoadImage>
+          </div>
         </Box>
       </Box>
     </Modal>

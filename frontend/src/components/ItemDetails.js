@@ -81,6 +81,7 @@ const ItemDetails = (props) => {
             offset={offset}
             currSlideStyle={currSlideStyle}
             images={props.images}
+            color={"white"}
           />
         </Box>
 

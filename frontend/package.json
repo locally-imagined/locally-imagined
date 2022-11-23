@@ -33,10 +33,6 @@
     "puppeteer-core": "*",
     "react-scripts": "*"
   },
-  "engines": {
-    "npm": "6.x",
-    "node": "14.x"
-  },
   "scripts": {
     "build": "react-scripts build",
     "start": "react-scripts start"

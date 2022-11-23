@@ -656,7 +656,7 @@ const styles = makeStyles((theme) => ({
   },
 
   sliderDotBox: {
-    fontSize: "5px",
+    fontSize: "10px",
 
     opacity: 0.7,
     bottom: "10px",

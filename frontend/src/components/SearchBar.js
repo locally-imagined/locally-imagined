@@ -79,6 +79,7 @@ const SearchBar = (props) => {
           <Search />
         </span>
         <InputBase
+          disabled={props.tab === "mypost"}
           className={classes.searchInput}
           placeholder="Search Marketplace"
           onChange={handleSearchChange}

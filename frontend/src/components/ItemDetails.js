@@ -93,6 +93,24 @@ const ItemDetails = (props) => {
             <span className={classes.itemModalInfoTitle}>
               {props.items[props.curItemId]?.title}
             </span>
+            <span
+              style={{
+                paddingLeft: "100px",
+                fontSize: "15px",
+                color: "grey",
+              }}
+            >
+              {props.items[props.curItemId]?.medium}
+              <span
+                style={{
+                  paddingLeft: "50px",
+                  fontSize: "15px",
+                  color: "red",
+                }}
+              >
+                {props.items[props.curItemId]?.sold ? "Sold" : ""}
+              </span>
+            </span>
 
             <br />
             <span style={{ paddingRight: "10px" }}>by</span>

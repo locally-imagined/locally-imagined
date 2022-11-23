@@ -32,7 +32,7 @@ import ReactLoading from "react-loading";
 const Listing = (props) => {
   const classes = styles();
   const history = useHistory();
-  const [tab, setTab] = React.useState("explore");
+
   const [openItem, setOpenItem] = React.useState(false);
   const [curItemId, setCurItemId] = React.useState(0);
   const liked = [];
@@ -40,25 +40,34 @@ const Listing = (props) => {
 
   const openItemHandler = (id) => {
     setOpenItem(true);
-    props.getImagesSet(props.items[id].postID);
-    setOpenItemUrl(props.items[id].url);
+    props.getImagesSet(
+      props.tab === "explore"
+        ? props.items[id].postID
+        : props.artistItem[id].postID
+    );
+    setOpenItemUrl(
+      props.tab === "explore" ? props.items[id].url : props.artistItem[id].url
+    );
     setCurItemId(id);
   };
+
   const handleTabChange = (event, newTab) => {
-    setTab(newTab);
+    if (newTab === "mypost") props.getArtistPosts();
+    //setOffset(0);
+    props.setTab(newTab);
   };
 
-  const favoriteHandler = (event) => {
-    //setCurItemId(0);
-    event.currentTarget.classList.toggle(classes.favorited);
-    if (!liked.includes(event.currentTarget.id)) {
-      liked.push(event.currentTarget.id);
-      console.log(liked);
-    } else {
-      liked.splice(liked.indexOf(event.currentTarget.id), 1);
-      console.log(liked);
-    }
-  };
+  // const favoriteHandler = (event) => {
+  //   //setCurItemId(0);
+  //   event.currentTarget.classList.toggle(classes.favorited);
+  //   if (!liked.includes(event.currentTarget.id)) {
+  //     liked.push(event.currentTarget.id);
+  //     console.log(liked);
+  //   } else {
+  //     liked.splice(liked.indexOf(event.currentTarget.id), 1);
+  //     console.log(liked);
+  //   }
+  // };
   if (!props.items) {
     return <h1>Loading</h1>;
   }
@@ -68,16 +77,21 @@ const Listing = (props) => {
     <Grid>
       <Category />
       <Tabs
-        value={tab}
+        value={props.tab ? props.tab : "explore"}
         onChange={handleTabChange}
         textColor="secondary"
         indicatorColor="secondary"
         className={classes.listingTab}
       >
         <Tab value="explore" label="Explore" />
+        <Tab value="mypost" label="My Posts" />
       </Tabs>
 
-      <Box elevation={0} className={classes.listingPage}>
+      <Box
+        elevation={0}
+        style={{ paddingTop: "20px" }}
+        className={classes.listingPage}
+      >
         <Container>
           {props.loading && (
             <Box
@@ -88,14 +102,13 @@ const Listing = (props) => {
             </Box>
           )}
 
-          {tab === "explore" && (
-            <Items
-              favoriteHandler={favoriteHandler}
-              openItemHandler={openItemHandler}
-              items={props.items}
-              icon={"favorite"}
-            />
-          )}
+          <Items
+            // favoriteHandler={favoriteHandler}
+            openItemHandler={openItemHandler}
+            items={props.items}
+            icon={"favorite"}
+          />
+
           {props.noResult && (
             <Typography
               variant="h5"

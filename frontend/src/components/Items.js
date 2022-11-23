@@ -17,7 +17,7 @@ const Items = (props) => {
 
   return props.items.map((item, index) => (
     <Card className={classes.item} key={index}>
-      {props.icon === "favorite" && (
+      {/* {props.icon === "favorite" && (
         <IconButton
           className={classes.favoriteIcon}
           onClick={(event) => props.favoriteHandler(event)}
@@ -25,7 +25,7 @@ const Items = (props) => {
         >
           <FavoriteIcon />
         </IconButton>
-      )}
+      )} */}
       {props.icon === "edit" && (
         <IconButton
           className={classes.favoriteIcon}

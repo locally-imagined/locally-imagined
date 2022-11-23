@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
-
+import AddIcon from "@mui/icons-material/Add";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useHistory, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -129,6 +129,7 @@ const Appbar = (props) => {
           </span>
         </Typography>
         <SearchBar
+          tab={props.tab}
           items={props.items}
           getSrc={props.getSrc}
           setFilter={props.setFilter}
@@ -140,6 +141,7 @@ const Appbar = (props) => {
           setLoading={props.setLoading}
           setCurPath={props.setCurPath}
           setNoResult={props.setNoResult}
+          setTab={props.setTab}
         />
         {/*display fast login input fields while not login*/}
         {!login && (
@@ -167,7 +169,7 @@ const Appbar = (props) => {
                 history.push("/dashboard");
               }}
             >
-              <DashboardIcon></DashboardIcon>
+              <AddIcon></AddIcon>
             </IconButton>
           </Tooltip>
         )}
@@ -196,7 +198,9 @@ const Appbar = (props) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar className={classes.avatar}></Avatar>
+              <Avatar className={classes.avatar}>
+                {props.user.userName[0]}
+              </Avatar>
             </IconButton>
           </Tooltip>
         )}

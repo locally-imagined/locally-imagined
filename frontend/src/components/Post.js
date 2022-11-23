@@ -35,18 +35,7 @@ const Post = (props) => {
     left: 100,
     behavior: "smooth",
   };
-  const mediumOptions = [
-    "Painting",
-    "Oil",
-    "Watercolour",
-    "Acrylic",
-    "Gouache",
-    "Pastel",
-    "Encaustic",
-    "Fresco",
-    "Spray Paint",
-    "Digital",
-  ];
+  const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
   const handleMediumChange = (event) => {
     console.log(event.target.value);
     setMedium(event.target.value);

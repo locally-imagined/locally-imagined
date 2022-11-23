@@ -332,7 +332,7 @@ const Edit = (props) => {
             <InputLabel>Medium</InputLabel>
             <Select
               value={medium}
-              defaultValue={props.items[props.editId]?.medium}
+              defaultValue=""
               onChange={handleMediumChange}
               label="Medium"
               style={{ width: "150px", height: "40px" }}
@@ -346,11 +346,7 @@ const Edit = (props) => {
             <InputLabel>Sold</InputLabel>
             <Select
               value={sold}
-              defaultValue={
-                props.items[props.editId]?.sold
-                  ? soldOptions[0]
-                  : soldOptions[1]
-              }
+              defaultValue="false"
               onChange={handleSoldChange}
               label="Sold"
               style={{ width: "150px", height: "40px" }}

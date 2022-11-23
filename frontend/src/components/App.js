@@ -18,7 +18,7 @@ import ChangePage from "./ChangePage";
  */
 function App() {
   const history = useHistory();
-
+  const [tab, setTab] = React.useState("explore");
   const [items, setItems] = useState([]);
   const [artistItem, setArtistItem] = useState([]);
   const [curPath, setCurPath] = useState("");
@@ -36,7 +36,7 @@ function App() {
     phone: "",
     email: "",
   });
-
+  const imageSet = [];
   //Post object
   const [art, setArt] = useState({
     title: "",
@@ -48,7 +48,7 @@ function App() {
   const filterHandler = (filteredItems) => {
     setItems(filteredItems);
   };
-  const imageSet = [];
+
   const getImagesSetSrc = (datas) => {
     return axios.all(
       datas.map(async (id) => {
@@ -183,7 +183,7 @@ function App() {
 
     if (curPath === "/") {
       console.log(curPath);
-      getMainPagePosts();
+      tab === "explore" ? getMainPagePosts() : getArtistPosts();
     }
     if (curPath === "/account") {
       console.log(curPath);
@@ -209,13 +209,15 @@ function App() {
             }}
           >
             <Appbar
-              items={items}
+              items={tab === "explore" ? items : artistItem}
               login={states.login}
               loading={loading}
               noResult={noResult}
               offset={offset}
               search={search}
+              tab={tab}
               user={user}
+              setTab={setTab}
               getSrc={getSrc}
               getArtistPosts={getArtistPosts}
               setOffset={setOffset}
@@ -227,17 +229,22 @@ function App() {
               setCurPath={setCurPath}
             />
             <Listing
-              items={items}
+              items={tab === "explore" ? items : artistItem}
               images={images}
               noResult={noResult}
               loading={loading}
               offset={offset}
+              tab={tab}
               user={user}
+              artistItem={artistItem}
+              setTab={setTab}
+              setOffset={setOffset}
+              getArtistPosts={getArtistPosts}
               getImagesSet={getImagesSet}
               setImages={setImages}
             />
             <ChangePage
-              items={items}
+              items={tab === "explore" ? items : artistItem}
               curPath={curPath}
               offset={offset}
               setOffset={setOffset}
@@ -251,13 +258,15 @@ function App() {
             }}
           >
             <Appbar
-              items={items}
+              items={tab === "explore" ? items : artistItem}
               login={states.login}
               loading={loading}
               noResult={noResult}
               offset={offset}
               search={search}
+              tab={tab}
               user={user}
+              setTab={setTab}
               getSrc={getSrc}
               getArtistPosts={getArtistPosts}
               setOffset={setOffset}
@@ -269,17 +278,22 @@ function App() {
               setCurPath={setCurPath}
             />
             <Listing
-              items={items}
+              items={tab === "explore" ? items : artistItem}
               images={images}
               noResult={noResult}
               loading={loading}
               offset={offset}
+              tab={tab}
               user={user}
+              artistItem={artistItem}
+              setTab={setTab}
+              setOffset={setOffset}
+              getArtistPosts={getArtistPosts}
               getImagesSet={getImagesSet}
               setImages={setImages}
             />
             <ChangePage
-              items={items}
+              items={tab === "explore" ? items : artistItem}
               curPath={curPath}
               offset={offset}
               setOffset={setOffset}

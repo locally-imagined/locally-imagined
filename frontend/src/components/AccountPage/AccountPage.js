@@ -107,7 +107,7 @@ const AccountPage = (props) => {
           {props.loading && (
             <Box
               className={classes.loading}
-              style={{ marginLeft: "37vw", height: "100vh" }}
+              style={{ marginLeft: "30vw", height: "100vh" }}
             >
               <ReactLoading type="bars" color="grey" height={100} width={100} />
             </Box>

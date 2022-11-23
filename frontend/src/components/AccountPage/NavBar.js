@@ -87,7 +87,9 @@ const NavBar = (props) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar className={classes.avatar}></Avatar>
+              <Avatar className={classes.avatar}>
+                {props.user.userName[0]}
+              </Avatar>
             </IconButton>
           </Tooltip>
         )}

@@ -15,18 +15,7 @@ import styles from "../styles";
 const Category = () => {
   const classes = styles();
   const history = useHistory();
-  const mediumOptions = [
-    "all",
-    "Oil",
-    "Watercolour",
-    "Acrylic",
-    "Gouache",
-    "Pastel",
-    "Encaustic",
-    "Fresco",
-    "Spray Paint",
-    "Digital",
-  ];
+  const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
   // const mediumOptions = ["all", "Painting", "Drawing", "Print", "Other"];
   const subjectOptions = [
     "all",

@@ -33,9 +33,13 @@
     "puppeteer-core": "*",
     "react-scripts": "*"
   },
+  "engines": {
+    "npm": "6.x",
+    "node": "12.x"
+  },
   "scripts": {
     "build": "react-scripts build",
-    "start": "react-scripts start"
+    "start": "PORT=3000 react-scripts start"
   },
   "browserslist": {
     "production": [

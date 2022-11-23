@@ -16,15 +16,15 @@ const SearchBar = (props) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   useEffect(() => {
-    history.push("/getpage/0");
-    props.setCurPath("/getpage/0");
+    history.push("/");
+    props.setCurPath("/");
   }, [window.performance.getEntriesByType("navigation")[0].type]);
 
   const enterHandler = (event) => {
     if (event.key === "Enter") {
       if (search === "") {
         props.setFilter([]);
-        history.push(`/getpage/0`);
+        history.push(`/`);
         window.location.reload(false);
       } else {
         searchImage(search);

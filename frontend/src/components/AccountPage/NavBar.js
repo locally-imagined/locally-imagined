@@ -49,7 +49,7 @@ const NavBar = (props) => {
     setLogin(false);
     states.login = false;
     setAnchorEl(null);
-    history.push("/");
+    history.push("/getpage/");
     window.location.reload(false);
   };
   return (
@@ -57,7 +57,10 @@ const NavBar = (props) => {
       <Toolbar className={classes.toolbar}>
         {/*title*/}
         <Typography style={{ flex: 1 }}>
-          <span className={classes.title} onClick={() => history.push(`/`)}>
+          <span
+            className={classes.title}
+            onClick={() => history.push(`/getpage/`)}
+          >
             Locally Imagined
           </span>
         </Typography>

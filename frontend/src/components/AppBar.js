@@ -79,7 +79,7 @@ const Appbar = (props) => {
       sessionStorage.clear();
 
       states.login = false;
-      history.push("/");
+      history.push("/getpage/");
 
       window.location.reload(false);
     }
@@ -108,7 +108,7 @@ const Appbar = (props) => {
     setLogin(false);
     states.login = false;
     setAnchorEl(null);
-    history.push(`/`);
+    history.push(`/getpage/`);
 
     window.location.reload(false);
   };
@@ -120,7 +120,7 @@ const Appbar = (props) => {
         <Typography style={{ flex: 1 }}>
           <span
             onClick={() => {
-              history.push(`/`);
+              history.push(`/getpage/`);
               window.location.reload(false);
             }}
             className={classes.title}

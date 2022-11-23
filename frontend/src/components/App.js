@@ -181,7 +181,7 @@ function App() {
   useEffect(() => {
     setLoading(true);
 
-    if (curPath === "/") {
+    if (curPath.includes(`/getpage/`)) {
       console.log(curPath);
       tab === "explore" ? getMainPagePosts() : getArtistPosts();
     }
@@ -202,7 +202,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path={`/`} exact>
+        <Route path={`/getpage/`}>
           <div
             style={{
               fontFamily: "Arial, Helvetica, sans-serif",

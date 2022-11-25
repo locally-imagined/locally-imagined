@@ -9,9 +9,6 @@ import {
   Menu,
   MenuItem,
 } from "@material-ui/core";
-
-import NotificationsIcon from "@mui/icons-material/Notifications";
-
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import styles from "../../styles";

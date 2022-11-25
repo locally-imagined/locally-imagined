@@ -1,20 +1,5 @@
 import React from "react";
-import {
-  Typography,
-  Container,
-  Grid,
-  Button,
-  Card,
-  CardActionArea,
-  Paper,
-  CardContent,
-  Toolbar,
-  Modal,
-  Avatar,
-  Divider,
-  IconButton,
-  InputBase,
-} from "@material-ui/core";
+import { Typography, Container, Grid } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -31,11 +16,10 @@ import ReactLoading from "react-loading";
  */
 const Listing = (props) => {
   const classes = styles();
-  const history = useHistory();
 
   const [openItem, setOpenItem] = React.useState(false);
   const [curItemId, setCurItemId] = React.useState(0);
-  const liked = [];
+
   const [openItemUrl, setOpenItemUrl] = React.useState("");
 
   const openItemHandler = (id) => {

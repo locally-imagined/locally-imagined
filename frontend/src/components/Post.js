@@ -3,7 +3,6 @@ import {
   Button,
   InputBase,
   Modal,
-  Paper,
   Divider,
   IconButton,
   Box,
@@ -11,7 +10,6 @@ import {
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import UploadIcon from "@mui/icons-material/Upload";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -26,6 +24,7 @@ const Post = (props) => {
   const classes = styles();
   const [error, setError] = useState(false);
   const [medium, setMedium] = React.useState("");
+  const [delivery, setDelivery] = React.useState("");
   const [url, setUrl] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
@@ -36,15 +35,27 @@ const Post = (props) => {
     behavior: "smooth",
   };
   const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
-  const handleMediumChange = (event) => {
-    console.log(event.target.value);
-    setMedium(event.target.value);
+  const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
+  const handleSelectChange = (event) => {
+    console.log(event.target.name);
+    event.target.name === "medium"
+      ? setMedium(event.target.value)
+      : setDelivery(event.target.value);
     props.setArt({
       ...props.art,
-      medium: event.target.value,
+      [event.target.name]: event.target.value,
     });
     console.log(props.art);
   };
+  // const handleDeliveryChange = (event) => {
+  //   console.log(event.target.name);
+  //   setDelivery(event.target.value);
+  //   props.setArt({
+  //     ...props.art,
+  //     deliverytype: event.target.value,
+  //   });
+  //   console.log(props.art);
+  // };
   const closeHandler = () => {
     props.setOpenPost(false);
     props.setArt({
@@ -186,11 +197,27 @@ const Post = (props) => {
             <Select
               value={medium}
               defaultValue=""
-              onChange={handleMediumChange}
+              onChange={handleSelectChange}
               label="Medium"
+              name="medium"
               style={{ width: "150px", height: "40px" }}
             >
               {mediumOptions.map((name, index) => (
+                <MenuItem key={index} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+            <InputLabel>Delivery Options</InputLabel>
+            <Select
+              value={delivery}
+              defaultValue=""
+              onChange={handleSelectChange}
+              label="Delivery"
+              name="deliverytype"
+              style={{ width: "150px", height: "40px" }}
+            >
+              {delivaryOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>
                   {name}
                 </MenuItem>

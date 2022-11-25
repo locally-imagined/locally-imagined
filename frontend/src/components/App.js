@@ -43,6 +43,7 @@ function App() {
     description: "",
     price: "",
     medium: "",
+    deliverytype: "",
     content: [],
   });
   const filterHandler = (filteredItems) => {
@@ -180,7 +181,6 @@ function App() {
 
   useEffect(() => {
     setLoading(true);
-
     if (curPath === "/") {
       console.log(curPath);
       tab === "explore" ? getMainPagePosts() : getArtistPosts();

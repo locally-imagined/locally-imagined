@@ -11,9 +11,9 @@ import Box from "@mui/material/Box";
 
 import { useHistory } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import CancelIcon from "@mui/icons-material/Cancel";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
 import { useState } from "react";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";
@@ -126,6 +126,15 @@ const ItemDetails = (props) => {
             {props.items[props.curItemId]?.description}
           </p>
           <Divider className={classes.divider} style={{ marginTop: "10rem" }} />
+
+          {!props.items[props.curItemId]?.sold && (
+            <div>
+              <h4> Delivery Type:</h4>
+              <p style={{ paddingRight: "10px", color: "grey" }}>
+                {props.items[props.curItemId]?.deliverytype}
+              </p>
+            </div>
+          )}
           {/*
           <Button
             variant="text"

@@ -3,7 +3,6 @@ import { Grid, InputBase } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import styles from "../styles";
-import states from "../states";
 import { Search } from "@material-ui/icons";
 import axios from "axios";
 /**

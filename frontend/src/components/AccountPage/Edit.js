@@ -7,7 +7,6 @@ import {
   InputBase,
   Divider,
   IconButton,
-  TextField,
 } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
@@ -32,12 +31,14 @@ const Edit = (props) => {
   const classes = styles();
   const token = JSON.parse(sessionStorage.getItem("user")).token;
   const [medium, setMedium] = React.useState("");
+  const [delivery, setDelivery] = React.useState("");
   const [sold, setSold] = React.useState(false);
   const [error, setError] = useState(false);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const [check, setCheck] = useState(false);
   const [offset, setOffset] = useState(0);
   const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
+  const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
   const soldOptions = ["true", "false"];
 
   const scrollOption = {
@@ -98,22 +99,17 @@ const Edit = (props) => {
   const deleteHandler = () => {
     setDeleteArt(true);
   };
-  const handleMediumChange = (event) => {
-    setMedium(event.target.value);
+  const handleSelectChange = (event) => {
+    if (event.target.name === "medium") setMedium(event.target.value);
+    if (event.target.name === "deliverytype") setDelivery(event.target.value);
+    if (event.target.name === "sold") setSold(event.target.value);
     setEdit({
       ...edit,
-      medium: event.target.value,
+      [event.target.name]: event.target.value,
     });
     console.log(edit);
   };
-  const handleSoldChange = (event) => {
-    setSold(event.target.value);
-    setEdit({
-      ...edit,
-      sold: event.target.value,
-    });
-    console.log(edit);
-  };
+
   const handleEditChange = (event) => {
     console.log(event.target.name);
     setEdit({
@@ -175,7 +171,16 @@ const Edit = (props) => {
       : "";
     const mediumQuery = edit.medium ? `medium=${edit.medium}` : "";
     const soldQuery = edit.sold ? `sold=${edit.sold}` : "";
-    console.log(baseUrl, titleQuery, priceQuery, descriptionQuery);
+    const deliveryQuery = edit.deliverytype
+      ? `deliverytype=${edit.deliverytype}`
+      : "";
+    console.log(
+      baseUrl,
+      titleQuery,
+      priceQuery,
+      descriptionQuery,
+      deliveryQuery
+    );
     console.log(edit);
     const imageQuery =
       deleteArr.length > 0
@@ -205,6 +210,16 @@ const Edit = (props) => {
         priceQuery ||
         mediumQuery ||
         soldQuery) &&
+      deliveryQuery
+        ? `&${deliveryQuery}`
+        : deliveryQuery
+    }${
+      (titleQuery ||
+        descriptionQuery ||
+        priceQuery ||
+        mediumQuery ||
+        soldQuery ||
+        deliveryQuery) &&
       imageQuery
         ? `&${imageQuery}`
         : imageQuery
@@ -333,11 +348,27 @@ const Edit = (props) => {
             <Select
               value={medium}
               defaultValue={props.items[props.editId]?.medium}
-              onChange={handleMediumChange}
+              onChange={handleSelectChange}
               label="Medium"
+              name="medium"
               style={{ width: "150px", height: "40px" }}
             >
               {mediumOptions.map((name, index) => (
+                <MenuItem key={index} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+            <InputLabel>Delivery Options</InputLabel>
+            <Select
+              value={delivery}
+              defaultValue=""
+              onChange={handleSelectChange}
+              label="Delivery"
+              name="deliverytype"
+              style={{ width: "150px", height: "40px" }}
+            >
+              {delivaryOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>
                   {name}
                 </MenuItem>
@@ -351,8 +382,9 @@ const Edit = (props) => {
                   ? soldOptions[0]
                   : soldOptions[1]
               }
-              onChange={handleSoldChange}
+              onChange={handleSelectChange}
               label="Sold"
+              name="sold"
               style={{ width: "150px", height: "40px" }}
             >
               {soldOptions.map((name, index) => (

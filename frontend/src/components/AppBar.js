@@ -23,6 +23,7 @@ import SignUp from "./SignUp";
 import Post from "./Post";
 import AlertMsg from "./AlertMsg";
 import ChangePage from "./ChangePage";
+
 /**
  * AppBar
  *
@@ -32,9 +33,6 @@ const Appbar = (props) => {
   const classes = styles();
   const history = useHistory();
   const location = useLocation();
-  useEffect(() => {
-    props.setCurPath(location.pathname);
-  }, []);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [login, setLogin] = useState(props.login);
   const [openSignup, setSignup] = useState(false);
@@ -44,21 +42,6 @@ const Appbar = (props) => {
   const [sessionEnd, setSessionEnd] = useState(false);
   const [info, setInfo] = useState(false);
   const openAccountMenu = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  //handle menu close
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  //handle user input field change
-  const handleInputChange = (event) => {
-    props.setUser({
-      ...props.user,
-      [event.target.name]: event.target.value,
-    });
-  };
-
   class sessionTimer {
     constructor(time) {
       this.timeLeft = Number(time) * 60 * 60 * 1000;
@@ -80,7 +63,6 @@ const Appbar = (props) => {
 
       states.login = false;
       history.push("/");
-
       window.location.reload(false);
     }
     countDownHandler() {
@@ -102,16 +84,31 @@ const Appbar = (props) => {
       setInterval(this.countDownHandler.bind(this), 1000);
     }
   }
-
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  //handle menu close
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  //handle user input field change
+  const handleInputChange = (event) => {
+    props.setUser({
+      ...props.user,
+      [event.target.name]: event.target.value,
+    });
+  };
   const handleLogout = () => {
     sessionStorage.clear();
     setLogin(false);
     states.login = false;
     setAnchorEl(null);
     history.push(`/`);
-
     window.location.reload(false);
   };
+  useEffect(() => {
+    props.setCurPath(location.pathname);
+  }, []);
 
   return (
     <AppBar className={classes.appBar} elevation={1}>

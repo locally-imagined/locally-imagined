@@ -267,7 +267,7 @@ const Post = (props) => {
               type="submit"
               value="Submit"
               className={classes.postButton}
-              style={{ color: "white", marginTop: "5rem" }}
+              style={{ color: "white", marginTop: "1rem" }}
             >
               Post
             </Button>
@@ -302,7 +302,12 @@ const Post = (props) => {
             </Box>
           )}
           <div
-            style={{ height: "100%", marginLeft: "25vw", position: "absolute" }}
+            style={{
+              height: "100%",
+              marginLeft: "25vw",
+              marginTop: "1vh",
+              position: "absolute",
+            }}
           >
             <SliderDot
               offset={offset}

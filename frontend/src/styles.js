@@ -492,7 +492,7 @@ const styles = makeStyles((theme) => ({
     bgcolor: "background.paper",
     [theme.breakpoints.down("md")]: {
       width: "40vw",
-      height: "50vh",
+      height: "100vh",
     },
   },
   postPageDetail: {
@@ -501,14 +501,10 @@ const styles = makeStyles((theme) => ({
     width: "25rem",
     padding: "2rem",
     height: "70.7vh",
-    [theme.breakpoints.down("md")]: {
-      width: "15rem",
-      height: "50vh",
-    },
   },
   postPageImageBox: {
     position: "fixed",
-    marginLeft: "30rem",
+    marginLeft: "25rem",
     display: "block",
     width: "40rem",
     padding: "2rem",

@@ -399,20 +399,6 @@ const Edit = (props) => {
                 <Checkbox checked={check} onChange={checkHandler}></Checkbox>
               </span>
             )}
-            <Divider
-              className={classes.divider}
-              style={{ marginTop: "20px" }}
-            />
-            <Button
-              variant="text"
-              type="submit"
-              value="Submit"
-              className={classes.postButton}
-              style={{ color: "white" }}
-              onClick={() => submitChange(event)}
-            >
-              Save Changes
-            </Button>
             <IconButton onClick={deleteHandler}>
               <DeleteIcon />
             </IconButton>
@@ -424,6 +410,22 @@ const Edit = (props) => {
                 msg={"error"}
               />
             )}
+
+            <Divider
+              className={classes.divider}
+              style={{ marginTop: "20px" }}
+            />
+
+            <Button
+              variant="text"
+              type="submit"
+              value="Submit"
+              className={classes.postButton}
+              style={{ color: "white", marginTop: "5rem" }}
+              onClick={() => submitChange(event)}
+            >
+              Save Changes
+            </Button>
           </form>
           {deleteArt && (
             <Container className={classes.deletePrompt}>

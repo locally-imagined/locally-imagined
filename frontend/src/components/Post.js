@@ -144,6 +144,8 @@ const Post = (props) => {
           console.log(`res:${res}`);
           props.setOpenPost(false);
           props.setSucess(true);
+          setMedium("");
+          setDelivery("");
           closeHandler();
           window.scrollTo(scrollOption);
         }
@@ -200,6 +202,7 @@ const Post = (props) => {
               onChange={handleSelectChange}
               label="Medium"
               name="medium"
+              required
               style={{ width: "150px", height: "40px" }}
             >
               {mediumOptions.map((name, index) => (
@@ -215,6 +218,7 @@ const Post = (props) => {
               onChange={handleSelectChange}
               label="Delivery"
               name="deliverytype"
+              required
               style={{ width: "150px", height: "40px" }}
             >
               {delivaryOptions.map((name, index) => (

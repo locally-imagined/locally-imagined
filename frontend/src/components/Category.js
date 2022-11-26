@@ -12,69 +12,75 @@ import styles from "../styles";
  * category list
  * @return {object} JSX
  */
-const Category = () => {
+const Category = (props) => {
   const classes = styles();
   const history = useHistory();
-  const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
-  // const mediumOptions = ["all", "Painting", "Drawing", "Print", "Other"];
-  const subjectOptions = [
+  const mediumOptions = [
     "all",
-    "History Painting",
-    "Portrait Art",
-    "Genre Painting",
-    "Landscape Painting",
-    "Still Life Painting",
+    "Painting",
+    "Oil",
+    "Watercolour",
+    "Digital",
+    "Other",
   ];
-  const styleOptions = [
-    "all",
-    "Realism",
-    "Photorealism",
-    "Expressionism",
-    "Impressionism",
-    "Abstract",
-    "Surrealism",
-    "Pop Art",
-    "Anime",
-  ];
+
   const delivaryOptions = ["all", "Local Delivery", "Shipping", "Pickup"];
 
   const [anchorMed, setAnchorMed] = React.useState(null);
-  const [anchorSub, setAnchorSub] = React.useState(null);
-  const [anchorSty, setAnchorSty] = React.useState(null);
+  const [anchorDel, setAnchorDel] = React.useState(null);
+  const [medium, setMedium] = React.useState("");
+  const [deliverytype, setDeliverytype] = React.useState("");
   const [selectedMedIndex, setSelectedMedIndex] = React.useState(0);
-  const [selectedSubIndex, setSelectedSubIndex] = React.useState(0);
-  const [selectedStyIndex, setSelectedStyIndex] = React.useState(0);
+  const [selectedDelIndex, setSelectedDelIndex] = React.useState(0);
+
   const openMed = Boolean(anchorMed);
-  const openSub = Boolean(anchorSub);
-  const openSty = Boolean(anchorSty);
+  const openDel = Boolean(anchorDel);
+
   const handleClickItem = (event) => {
     if (event.currentTarget.id === "medium-list")
       setAnchorMed(event.currentTarget);
-    if (event.currentTarget.id === "subject-list")
-      setAnchorSub(event.currentTarget);
-    if (event.currentTarget.id === "style-list")
-      setAnchorSty(event.currentTarget);
+    // if (event.currentTarget.id === "delivery-list")
+    //   setAnchorDel(event.currentTarget);
   };
-
+  const queryFormater = (filterOption) => {
+    const mediumQuery =
+      filterOption.medium === "all" ? "" : `medium=${filterOption.medium}`;
+    if (!mediumQuery) props.setFilterQuery(``);
+    // const deliveryQuery =
+    //   filterOption.deliverytype === "all"
+    //     ? ""
+    //     : mediumQuery
+    //     ? `&deliverytype=${filterOption.deliverytype}`
+    //     : `deliverytype=${filterOption.deliverytype}`;
+    return mediumQuery;
+  };
   const handleItemClick = (event, index) => {
     if (event.currentTarget.id.includes("medium-menu-item")) {
+      props.setOffset(0);
       setSelectedMedIndex(index);
       setAnchorMed(null);
+      setMedium(mediumOptions[index]);
+      props.filterOption.medium = mediumOptions[index];
+      console.log(props.filterOption);
+      console.log(queryFormater(props.filterOption));
+      const query = queryFormater(props.filterOption);
+      props.getPosts(query, 0);
+      props.setFilterQuery(query);
     }
-    if (event.currentTarget.id.includes("subject-menu-item")) {
-      setSelectedSubIndex(index);
-      setAnchorSub(null);
-    }
-    if (event.currentTarget.id.includes("style-menu-item")) {
-      setSelectedStyIndex(index);
-      setAnchorSty(null);
-    }
+    // if (event.currentTarget.id.includes("delivery-menu-item")) {
+    //   setSelectedDelIndex(index);
+    //   setAnchorDel(null);
+    //   setDeliverytype(delivaryOptions[index]);
+    //   props.filterOption.deliverytype = delivaryOptions[index];
+    //   console.log(props.filterOption);
+    //   console.log(queryFormater(props.filterOption));
+    //   props.getFilterPosts(queryFormater(props.filterOption));
+    // }
   };
 
   const handleClose = (event) => {
     setAnchorMed(null);
-    setAnchorSub(null);
-    setAnchorSty(null);
+    setAnchorDel(null);
   };
 
   return (
@@ -124,83 +130,40 @@ const Category = () => {
         </Menu>
         {/* <List
           component="nav"
-          aria-label="Subject settings"
+          aria-label="Delivery settings"
           sx={{ bgcolor: "background.paper" }}
         >
           <ListItem
             button
-            id="subject-list"
+            id="delivery-list"
             aria-haspopup="listbox"
             aria-controls="lock-menu"
-            aria-label="Subject"
-            aria-expanded={openSub ? "true" : undefined}
+            aria-label="Delivery"
+            aria-expanded={openDel ? "true" : undefined}
             onClick={handleClickItem}
             className={classes.categoryBarItem}
           >
             <ListItemText
-              primary="Subject"
-              secondary={subjectOptions[selectedSubIndex]}
+              primary="Delivery"
+              secondary={delivaryOptions[selectedDelIndex]}
             />
           </ListItem>
         </List>
         <Menu
-          id="subject-menu"
-          anchorEl={anchorSub}
-          open={openSub}
+          id="delivery-menu"
+          anchorEl={anchorDel}
+          open={openDel}
           onClose={(event) => handleClose(event)}
           MenuListProps={{
             "aria-labelledby": "lock-button",
             role: "listbox",
           }}
         >
-          {subjectOptions.map((option, index) => (
-            <MenuItem
-              id={"subject-menu-item-" + option}
-              key={option}
-              selected={index === selectedSubIndex}
-              onClick={(event) => handleItemClick(event, index)}
-            >
-              {option}
-            </MenuItem>
-          ))}
-        </Menu>
-
-        <List
-          component="nav"
-          aria-label="Style settings"
-          sx={{ bgcolor: "background.paper" }}
-        >
-          <ListItem
-            button
-            id="style-list"
-            aria-haspopup="listbox"
-            aria-controls="lock-menu"
-            aria-label="Style"
-            aria-expanded={openSty ? "true" : undefined}
-            onClick={handleClickItem}
-            className={classes.categoryBarItem}
-          >
-            <ListItemText
-              primary="Style"
-              secondary={styleOptions[selectedStyIndex]}
-            />
-          </ListItem>
-        </List>
-        <Menu
-          id="style-menu"
-          anchorEl={anchorSty}
-          open={openSty}
-          onClose={(event) => handleClose(event)}
-          MenuListProps={{
-            "aria-labelledby": "lock-button",
-            role: "listbox",
-          }}
-        >
-          {styleOptions.map((option, index) => (
+          {delivaryOptions.map((option, index) => (
             <MenuItem
               key={option}
-              id={"style-menu-item-" + option}
-              selected={index === selectedStyIndex}
+              id={"delivery-menu-item-" + option}
+              selected={index === selectedDelIndex}
               onClick={(event) => handleItemClick(event, index)}
             >
               {option}

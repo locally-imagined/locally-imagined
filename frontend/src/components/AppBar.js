@@ -139,6 +139,7 @@ const Appbar = (props) => {
           setCurPath={props.setCurPath}
           setNoResult={props.setNoResult}
           setTab={props.setTab}
+          getPosts={props.getPosts}
         />
         {/*display fast login input fields while not login*/}
         {!login && (

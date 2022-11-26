@@ -26,7 +26,7 @@ const SearchBar = (props) => {
         history.push(`/`);
         window.location.reload(false);
       } else {
-        searchImage(search);
+        props.getPosts();
       }
     }
   };
@@ -42,35 +42,7 @@ const SearchBar = (props) => {
     // console.log(filteredSearch);
     // setFilter(filteredSearch);
   };
-  const searchImage = (keyword) => {
-    const searchQuery = `?keyword=${keyword}`;
-    props.setLoading(true);
-    axios
-      .get(
-        `https://locally-imagined.herokuapp.com/posts/getpage/${props.offset}${searchQuery}`,
-        {}
-      )
-      .then((res) => {
-        if (res.status != 200 || !res.data) {
-          throw res;
-        } else {
-          const data = res.data;
-          props.getSrc(data).then(() => {
-            console.log(JSON.parse(JSON.stringify(data)));
-            props.setLoading(false);
-            data.length === 0
-              ? props.setNoResult(true)
-              : props.setNoResult(false);
-            props.setFilter(data);
-            props.setOffset(0);
-            history.push(`/posts/getpage/${props.offset}${searchQuery}`);
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
   return (
     <Grid className={classes.topbar}>
       <div className={classes.search}>

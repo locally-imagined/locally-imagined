@@ -59,7 +59,12 @@ const Listing = (props) => {
 
   return (
     <Grid>
-      <Category />
+      <Category
+        filterOption={props.filterOption}
+        getPosts={props.getPosts}
+        setFilterQuery={props.setFilterQuery}
+        setOffset={props.setOffset}
+      />
       <Tabs
         value={props.tab ? props.tab : "explore"}
         onChange={handleTabChange}

@@ -321,7 +321,7 @@ const Edit = (props) => {
               }}
               type="text"
               name="title"
-            />
+            />{" "}
             <InputBase
               className={classes.signUpInput}
               placeholder="Description"
@@ -374,6 +374,12 @@ const Edit = (props) => {
                 </MenuItem>
               ))}
             </Select>
+            {props.images.length > 1 && (
+              <span style={{ paddingLeft: "10px" }}>
+                Delete picture {offset + 1}?
+                <Checkbox checked={check} onChange={checkHandler}></Checkbox>
+              </span>
+            )}
             <InputLabel>Sold</InputLabel>
             <Select
               value={sold}
@@ -393,12 +399,7 @@ const Edit = (props) => {
                 </MenuItem>
               ))}
             </Select>
-            {props.images.length > 1 && (
-              <span>
-                Delete picture {offset + 1}?
-                <Checkbox checked={check} onChange={checkHandler}></Checkbox>
-              </span>
-            )}
+            <span style={{ paddingLeft: "5px" }}> Delete Post</span>
             <IconButton onClick={deleteHandler}>
               <DeleteIcon />
             </IconButton>
@@ -410,40 +411,45 @@ const Edit = (props) => {
                 msg={"error"}
               />
             )}
-
             <Divider
               className={classes.divider}
               style={{ marginTop: "20px" }}
             />
-
-            <Button
-              variant="text"
-              type="submit"
-              value="Submit"
-              className={classes.postButton}
-              style={{ color: "white", marginTop: "5rem" }}
-              onClick={() => submitChange(event)}
-            >
-              Save Changes
-            </Button>
-          </form>
-          {deleteArt && (
-            <Container className={classes.deletePrompt}>
-              <div style={{ fontWeight: "bold", color: "red" }}>
-                Are you sure to delete this post?
-              </div>
-              <br />
-              <div>
-                <button onClick={deleteArtHandler}>Yes</button>
-                <button
-                  style={{ marginLeft: "50px" }}
-                  onClick={() => setDeleteArt(false)}
+            {!deleteArt && (
+              <Button
+                variant="text"
+                type="submit"
+                value="Submit"
+                className={classes.postButton}
+                style={{ color: "white", marginTop: "1rem" }}
+                onClick={() => submitChange()}
+              >
+                Save Changes
+              </Button>
+            )}
+            {deleteArt && (
+              <Container className={classes.deletePrompt}>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    color: "red",
+                  }}
                 >
-                  Cancel
-                </button>
-              </div>
-            </Container>
-          )}
+                  Are you sure to delete this post?
+                </div>
+                <br />
+                <div>
+                  <button onClick={deleteArtHandler}>Yes</button>
+                  <button
+                    style={{ marginLeft: "50px" }}
+                    onClick={() => setDeleteArt(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Container>
+            )}
+          </form>
         </Box>
       </Paper>
     </Modal>

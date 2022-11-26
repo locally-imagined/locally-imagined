@@ -24,6 +24,7 @@ function App() {
   const [curPath, setCurPath] = useState("");
   const [images, setImages] = React.useState([]);
   const [search, setSearch] = useState("");
+  const [filterQuery, setFilterQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [noResult, setNoResult] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -46,6 +47,9 @@ function App() {
     deliverytype: "",
     content: [],
   });
+  const filterOption = {
+    medium: "all",
+  };
   const filterHandler = (filteredItems) => {
     setItems(filteredItems);
   };
@@ -152,14 +156,62 @@ function App() {
         console.log(err.response.data);
       });
   };
-  const getMainPagePosts = () => {
+
+  //   setLoading(true);
+  //   if (!query) {
+  //     getMainPagePosts();
+  //     return;
+  //   }
+  //   console.log(
+  //     `https://locally-imagined.herokuapp.com/posts/getpagefiltered/${offset}?${
+  //       search ? `keyword=${search}` : ``
+  //     }${search ? `&${query}` : query}`
+  //   );
+  //   axios
+  //     .get(
+  //       `https://locally-imagined.herokuapp.com/posts/getpagefiltered/${offset}?${
+  //         search ? `keyword=${search}` : ``
+  //       }${search ? `&${query}` : query}`,
+  //       {}
+  //     )
+  //     .then((res) => {
+  //       if (res.status != 200 || !res.data) {
+  //         throw res;
+  //       } else {
+  //         const data = res.data;
+  //         // console.log(data);
+  //         getSrc(data).then(() => {
+  //           data.length === 0 ? setNoResult(true) : setNoResult(false);
+  //           setItems(data);
+  //           setLoading(false);
+
+  //           console.log(JSON.parse(JSON.stringify(data)));
+  //         });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response.data);
+  //     });
+  // };
+
+  const getPosts = (filterQuery, newOffset) => {
+    let url = "";
+    setLoading(true);
+    if (!filterQuery) {
+      const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpage/`;
+      url = `${baseUrl}${offset}${
+        search ? `?keyword=${encodeURIComponent(search)}` : ``
+      }`;
+    } else {
+      const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpagefiltered/`;
+      url = `${baseUrl}${offset}?${
+        search ? `keyword=${encodeURIComponent(search)}` : ``
+      }${search ? `&${filterQuery}` : filterQuery}`;
+    }
+
+    console.log(url);
     axios
-      .get(
-        `https://locally-imagined.herokuapp.com/posts/getpage/${offset}${
-          search ? `?keyword=${search}` : ``
-        }`,
-        {}
-      )
+      .get(url, {})
       .then((res) => {
         if (res.status != 200 || !res.data) {
           throw res;
@@ -169,7 +221,6 @@ function App() {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setItems(data);
             setLoading(false);
-
             console.log(JSON.parse(JSON.stringify(data)));
           });
         }
@@ -182,8 +233,8 @@ function App() {
   useEffect(() => {
     setLoading(true);
     if (curPath === "/") {
-      console.log(curPath);
-      tab === "explore" ? getMainPagePosts() : getArtistPosts();
+      console.log(`current path:`, curPath);
+      tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
     }
     if (curPath === "/account") {
       console.log(curPath);
@@ -227,6 +278,7 @@ function App() {
               setFilter={filterHandler}
               setNoResult={setNoResult}
               setCurPath={setCurPath}
+              getPosts={getPosts}
             />
             <Listing
               items={tab === "explore" ? items : artistItem}
@@ -242,55 +294,9 @@ function App() {
               getArtistPosts={getArtistPosts}
               getImagesSet={getImagesSet}
               setImages={setImages}
-            />
-            <ChangePage
-              items={tab === "explore" ? items : artistItem}
-              curPath={curPath}
-              offset={offset}
-              setOffset={setOffset}
-            />
-          </div>
-        </Route>
-        <Route path={`/posts/getpage`}>
-          <div
-            style={{
-              fontFamily: "Arial, Helvetica, sans-serif",
-            }}
-          >
-            <Appbar
-              items={tab === "explore" ? items : artistItem}
-              login={states.login}
-              loading={loading}
-              noResult={noResult}
-              offset={offset}
-              search={search}
-              tab={tab}
-              user={user}
-              setTab={setTab}
-              getSrc={getSrc}
-              getArtistPosts={getArtistPosts}
-              setOffset={setOffset}
-              setUser={setUser}
-              setLoading={setLoading}
-              setSearch={setSearch}
-              setFilter={filterHandler}
-              setNoResult={setNoResult}
-              setCurPath={setCurPath}
-            />
-            <Listing
-              items={tab === "explore" ? items : artistItem}
-              images={images}
-              noResult={noResult}
-              loading={loading}
-              offset={offset}
-              tab={tab}
-              user={user}
-              artistItem={artistItem}
-              setTab={setTab}
-              setOffset={setOffset}
-              getArtistPosts={getArtistPosts}
-              getImagesSet={getImagesSet}
-              setImages={setImages}
+              setFilterQuery={setFilterQuery}
+              filterOption={filterOption}
+              getPosts={getPosts}
             />
             <ChangePage
               items={tab === "explore" ? items : artistItem}

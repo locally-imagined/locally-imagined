@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
 
 import Listing from "./Listing";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Redirect, Link } from "react-router-dom";
 import NavBar from "./AccountPage/NavBar";
 import AccountPage from "./AccountPage/AccountPage";
 import states from "../states";
@@ -198,7 +198,7 @@ function App() {
       console.log(`current path:`, curPath);
       tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
     }
-    if (curPath === "/account") {
+    if (curPath.includes("/posts/artistposts")) {
       console.log(curPath);
       getArtistPosts(userID);
     }
@@ -215,70 +215,66 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path={`/`} exact>
-          <div
-            style={{
-              fontFamily: "Arial, Helvetica, sans-serif",
-            }}
-          >
-            <Appbar
-              items={tab === "explore" ? items : artistItem}
-              login={states.login}
-              loading={loading}
-              noResult={noResult}
-              offset={offset}
-              search={search}
-              tab={tab}
-              user={user}
-              setTab={setTab}
-              getSrc={getSrc}
-              getArtistPosts={getArtistPosts}
-              setOffset={setOffset}
-              setUser={setUser}
-              setLoading={setLoading}
-              setSearch={setSearch}
-              setFilter={filterHandler}
-              setNoResult={setNoResult}
-              setCurPath={setCurPath}
-              setUserID={setUserID}
-              getPosts={getPosts}
-            />
-            <Listing
-              items={tab === "explore" ? items : artistItem}
-              images={images}
-              noResult={noResult}
-              loading={loading}
-              offset={offset}
-              tab={tab}
-              user={user}
-              artistItem={artistItem}
-              setArtistItem={setArtistItem}
-              setTab={setTab}
-              setOffset={setOffset}
-              getArtistPosts={getArtistPosts}
-              getImagesSet={getImagesSet}
-              setImages={setImages}
-              setFilterQuery={setFilterQuery}
-              filterOption={filterOption}
-              getPosts={getPosts}
-              setUserID={setUserID}
-            />
-            <ChangePage
-              items={tab === "explore" ? items : artistItem}
-              curPath={curPath}
-              offset={offset}
-              setOffset={setOffset}
-            />
-          </div>
+        <Route path="/" exact>
+          <Appbar
+            items={tab === "explore" ? items : artistItem}
+            login={states.login}
+            loading={loading}
+            noResult={noResult}
+            offset={offset}
+            search={search}
+            tab={tab}
+            user={user}
+            setTab={setTab}
+            getSrc={getSrc}
+            getArtistPosts={getArtistPosts}
+            setOffset={setOffset}
+            setUser={setUser}
+            setLoading={setLoading}
+            setSearch={setSearch}
+            setFilter={filterHandler}
+            setNoResult={setNoResult}
+            setCurPath={setCurPath}
+            setUserID={setUserID}
+            getPosts={getPosts}
+          />
+          <Listing
+            items={tab === "explore" ? items : artistItem}
+            images={images}
+            noResult={noResult}
+            loading={loading}
+            offset={offset}
+            tab={tab}
+            user={user}
+            artistItem={artistItem}
+            setArtistItem={setArtistItem}
+            setTab={setTab}
+            setOffset={setOffset}
+            getArtistPosts={getArtistPosts}
+            getImagesSet={getImagesSet}
+            setImages={setImages}
+            setFilterQuery={setFilterQuery}
+            filterOption={filterOption}
+            getPosts={getPosts}
+            setUserID={setUserID}
+          />
+          <ChangePage
+            items={tab === "explore" ? items : artistItem}
+            curPath={curPath}
+            offset={offset}
+            setOffset={setOffset}
+          />
         </Route>
 
-        <Route path="/account">
+        <Route path="/posts/artistposts/userID:userID">
           <NavBar
             login={states.login}
             offset={offset}
             setUser={setUser}
             user={user}
             setArtistItem={setArtistItem}
+            setSearch={setSearch}
+            setUserID={setUserID}
           />
           <AccountPage
             artistItem={artistItem}
@@ -301,7 +297,14 @@ function App() {
         </Route>
 
         <Route path="/dashboard">
-          <NavBar login={states.login} user={user} setUser={setUser} />
+          <NavBar
+            login={states.login}
+            offset={offset}
+            setUser={setUser}
+            user={user}
+            setArtistItem={setArtistItem}
+            setUserID={setUserID}
+          />
           <Dashboard art={art} setArt={setArt} setCurPath={setCurPath} />
         </Route>
       </Switch>

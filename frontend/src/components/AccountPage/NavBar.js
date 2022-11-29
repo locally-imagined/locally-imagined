@@ -42,15 +42,14 @@ const NavBar = (props) => {
   };
   const accountHandler = () => {
     setAnchorEl(null);
-    props.setArtistItem([]);
-
-    window.location.reload(false);
+    props.setSearch("");
+    const userID = JSON.parse(sessionStorage.getItem("user")).token.userID;
+    const username = JSON.parse(sessionStorage.getItem("user")).userName;
+    console.log(username);
+    props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
-    sessionStorage.setItem(
-      "currentUserID",
-      JSON.parse(sessionStorage.getItem("user")).token.userID
-    );
-    history.push("/account");
+    sessionStorage.setItem("currentUserID", userID);
+    history.push(`/posts/artistposts/userID:${userID}`);
   };
   const handleLogout = () => {
     sessionStorage.clear();

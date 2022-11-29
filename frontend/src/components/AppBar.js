@@ -109,13 +109,13 @@ const Appbar = (props) => {
   const accountHandler = () => {
     setAnchorEl(null);
     props.setSearch("");
-    props.setUserID(JSON.parse(sessionStorage.getItem("user")).token.userID);
+    const userID = JSON.parse(sessionStorage.getItem("user")).token.userID;
+    const username = JSON.parse(sessionStorage.getItem("user")).userName;
+    console.log(username);
+    props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
-    sessionStorage.setItem(
-      "currentUserID",
-      JSON.parse(sessionStorage.getItem("user")).token.userID
-    );
-    history.push("/account");
+    sessionStorage.setItem("currentUserID", userID);
+    history.push(`/posts/artistposts/userID:${userID}`);
   };
   useEffect(() => {
     props.setCurPath(location.pathname);

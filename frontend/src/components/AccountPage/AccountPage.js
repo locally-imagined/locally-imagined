@@ -7,7 +7,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import Items from "../Items";
 import styles from "../../styles";
 import { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import ChangePage from "../ChangePage";
@@ -17,9 +17,14 @@ import ReactLoading from "react-loading";
 import ItemDetails from "../ItemDetails";
 const AccountPage = (props) => {
   const location = useLocation();
+  const paraUserID = useParams();
   useEffect(() => {
+    console.log("path changed");
+
+    console.log(paraUserID.userID.slice(1));
     props.setCurPath(location.pathname);
-  }, []);
+    props.setUserID(paraUserID.userID.slice(1));
+  }, [paraUserID]);
 
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);

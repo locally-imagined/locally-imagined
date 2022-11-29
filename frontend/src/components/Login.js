@@ -46,6 +46,7 @@ const Login = (props) => {
           const timer = new props.sessionTimer(2); //2 hours session timer
           //alert(`userName: ${states.user.userName}`);
           history.push("/");
+          window.location.reload(false);
         }
       })
       .catch((err) => {

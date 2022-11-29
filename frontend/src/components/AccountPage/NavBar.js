@@ -40,7 +40,18 @@ const NavBar = (props) => {
       [event.target.name]: event.target.value,
     });
   };
+  const accountHandler = () => {
+    setAnchorEl(null);
+    props.setArtistItem([]);
 
+    window.location.reload(false);
+    sessionStorage.removeItem("currentUserID");
+    sessionStorage.setItem(
+      "currentUserID",
+      JSON.parse(sessionStorage.getItem("user")).token.userID
+    );
+    history.push("/account");
+  };
   const handleLogout = () => {
     sessionStorage.clear();
     setLogin(false);
@@ -59,20 +70,6 @@ const NavBar = (props) => {
           </span>
         </Typography>
 
-        {/*Notifications button*/}
-        {/* {login && (
-          <Tooltip title="Notifications">
-            <IconButton
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? "notifications" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              <NotificationsIcon></NotificationsIcon>
-            </IconButton>
-          </Tooltip>
-        )} */}
         {/*display avatar and username and log out button when login*/}
         {login && (
           <Tooltip title="Account settings">
@@ -102,11 +99,7 @@ const NavBar = (props) => {
           }}
         >
           <MenuItem
-            onClick={() => {
-              setAnchorEl(null);
-              history.push("/account");
-              window.location.reload(false);
-            }}
+            onClick={accountHandler}
             className={classes.accountMenuItem}
           >
             Profile

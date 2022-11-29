@@ -24,6 +24,8 @@ function App() {
   const [curPath, setCurPath] = useState("");
   const [images, setImages] = React.useState([]);
   const [search, setSearch] = useState("");
+  const [userID, setUserID] = useState("");
+
   const [filterQuery, setFilterQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [noResult, setNoResult] = useState(false);
@@ -118,7 +120,7 @@ function App() {
           getImagesSetSrc(data).then(() => {
             setImages(imageSet);
             setDeleteCheck(Array(imageSet.length).fill(false));
-            console.log(imageSet);
+            // console.log(imageSet);
           });
         }
       })
@@ -127,16 +129,15 @@ function App() {
       });
   };
 
-  const getArtistPosts = () => {
+  const getArtistPosts = (userID) => {
+    if (!userID) {
+      userID = sessionStorage.getItem("currentUserID");
+    }
     setLoading(true);
-    const token = JSON.parse(sessionStorage.getItem("user")).token;
-    console.log(offset);
+    const url = `https://locally-imagined.herokuapp.com/posts/artistposts/${offset}?userID=${userID}`;
+    console.log(`url:${url}`);
     axios
-      .get(`https://locally-imagined.herokuapp.com/posts/myposts/${offset}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(url, {})
       .then((res) => {
         if (res.status != 200 || !res.data) {
           throw res;
@@ -147,61 +148,21 @@ function App() {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setArtistItem(data);
             setLoading(false);
-
-            console.log(JSON.parse(JSON.stringify(data)));
+            // console.log(JSON.parse(JSON.stringify(data)));
           });
         }
       })
       .catch((err) => {
-        console.log(err.response.data);
+        setLoading(false);
+        console.log(err);
       });
   };
-
-  //   setLoading(true);
-  //   if (!query) {
-  //     getMainPagePosts();
-  //     return;
-  //   }
-  //   console.log(
-  //     `https://locally-imagined.herokuapp.com/posts/getpagefiltered/${offset}?${
-  //       search ? `keyword=${search}` : ``
-  //     }${search ? `&${query}` : query}`
-  //   );
-  //   axios
-  //     .get(
-  //       `https://locally-imagined.herokuapp.com/posts/getpagefiltered/${offset}?${
-  //         search ? `keyword=${search}` : ``
-  //       }${search ? `&${query}` : query}`,
-  //       {}
-  //     )
-  //     .then((res) => {
-  //       if (res.status != 200 || !res.data) {
-  //         throw res;
-  //       } else {
-  //         const data = res.data;
-  //         // console.log(data);
-  //         getSrc(data).then(() => {
-  //           data.length === 0 ? setNoResult(true) : setNoResult(false);
-  //           setItems(data);
-  //           setLoading(false);
-
-  //           console.log(JSON.parse(JSON.stringify(data)));
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response.data);
-  //     });
-  // };
-
-  const getPosts = (filterQuery, newOffset) => {
+  const getPosts = (filterQuery) => {
     let url = "";
     setLoading(true);
-    if (!filterQuery) {
+    if (!filterQuery && !search) {
       const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpage/`;
-      url = `${baseUrl}${offset}${
-        search ? `?keyword=${encodeURIComponent(search)}` : ``
-      }`;
+      url = `${baseUrl}${offset}`;
     } else {
       const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpagefiltered/`;
       url = `${baseUrl}${offset}?${
@@ -221,12 +182,13 @@ function App() {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setItems(data);
             setLoading(false);
-            console.log(JSON.parse(JSON.stringify(data)));
+            // console.log(JSON.parse(JSON.stringify(data)));
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   };
 
@@ -238,9 +200,9 @@ function App() {
     }
     if (curPath === "/account") {
       console.log(curPath);
-      getArtistPosts();
+      getArtistPosts(userID);
     }
-  }, [offset, curPath]);
+  }, [offset, curPath, userID]);
 
   //verify user login state
 
@@ -278,6 +240,7 @@ function App() {
               setFilter={filterHandler}
               setNoResult={setNoResult}
               setCurPath={setCurPath}
+              setUserID={setUserID}
               getPosts={getPosts}
             />
             <Listing
@@ -289,6 +252,7 @@ function App() {
               tab={tab}
               user={user}
               artistItem={artistItem}
+              setArtistItem={setArtistItem}
               setTab={setTab}
               setOffset={setOffset}
               getArtistPosts={getArtistPosts}
@@ -297,6 +261,7 @@ function App() {
               setFilterQuery={setFilterQuery}
               filterOption={filterOption}
               getPosts={getPosts}
+              setUserID={setUserID}
             />
             <ChangePage
               items={tab === "explore" ? items : artistItem}
@@ -313,6 +278,7 @@ function App() {
             offset={offset}
             setUser={setUser}
             user={user}
+            setArtistItem={setArtistItem}
           />
           <AccountPage
             artistItem={artistItem}
@@ -329,6 +295,8 @@ function App() {
             setOffset={setOffset}
             setDeleteCheck={setDeleteCheck}
             setCurPath={setCurPath}
+            setArtistItem={setArtistItem}
+            setUserID={setUserID}
           />
         </Route>
 

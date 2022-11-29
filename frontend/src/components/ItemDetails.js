@@ -6,6 +6,7 @@ import {
   Avatar,
   Divider,
   IconButton,
+  Link,
 } from "@material-ui/core";
 import Box from "@mui/material/Box";
 
@@ -26,6 +27,11 @@ const ItemDetails = (props) => {
   const history = useHistory();
   const [offset, setOffset] = useState(0);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
+  const scrollOption = {
+    top: 60,
+    left: 100,
+    behavior: "smooth",
+  };
   const closeHandler = () => {
     props.setOpenItem(false);
     setOffset(0);
@@ -45,7 +51,15 @@ const ItemDetails = (props) => {
       return val;
     });
   };
-
+  const artistPost = (userID, username) => {
+    // console.log(userID);
+    // console.log(username);
+    props.setArtistItem([]);
+    sessionStorage.setItem("currentUserID", userID);
+    props.setUserID(userID);
+    history.push("/account");
+    window.scrollTo(scrollOption);
+  };
   return (
     <Modal open={props.openItem}>
       <Paper className={classes.itemModal}>
@@ -86,9 +100,25 @@ const ItemDetails = (props) => {
         </Box>
 
         <Box className={classes.editForm}>
-          <IconButton>
-            <Avatar></Avatar>
-          </IconButton>
+          {/* <Link href={`/account/#${props.items[props.curItemId]?.userID}`}> */}
+          {props.disableLink && (
+            <IconButton>
+              <Avatar></Avatar>
+            </IconButton>
+          )}
+          {!props.disableLink && (
+            <IconButton
+              onClick={() =>
+                artistPost(
+                  props.items[props.curItemId]?.userID,
+                  props.items[props.curItemId]?.username
+                )
+              }
+            >
+              <Avatar></Avatar>
+            </IconButton>
+          )}
+
           <span style={{ textTransform: "none" }}>
             <span className={classes.itemModalInfoTitle}>
               {props.items[props.curItemId]?.title}
@@ -114,7 +144,23 @@ const ItemDetails = (props) => {
 
             <br />
             <span style={{ paddingRight: "10px" }}>by</span>
-            <span>artist</span>
+            {!props.disableLink && (
+              <Link
+                onClick={() =>
+                  artistPost(
+                    props.items[props.curItemId]?.userID,
+                    props.items[props.curItemId]?.username
+                  )
+                }
+                color="inherit"
+                herf="/account"
+              >
+                {props.items[props.curItemId]?.username}
+              </Link>
+            )}
+            {props.disableLink && (
+              <span>{props.items[props.curItemId]?.username}</span>
+            )}
             <span className={classes.price}>
               ${props.items[props.curItemId]?.price}
             </span>

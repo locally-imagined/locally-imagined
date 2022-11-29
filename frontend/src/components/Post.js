@@ -125,7 +125,7 @@ const Post = (props) => {
     //   content:${props.art.content}
     //  `);
 
-    const token = JSON.parse(sessionStorage.getItem("user")).token;
+    const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
     console.log("token:", token);
     const body = JSON.stringify(props.art);
     axios

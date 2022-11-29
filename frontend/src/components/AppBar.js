@@ -106,6 +106,17 @@ const Appbar = (props) => {
     history.push(`/`);
     window.location.reload(false);
   };
+  const accountHandler = () => {
+    setAnchorEl(null);
+    props.setSearch("");
+    props.setUserID(JSON.parse(sessionStorage.getItem("user")).token.userID);
+    sessionStorage.removeItem("currentUserID");
+    sessionStorage.setItem(
+      "currentUserID",
+      JSON.parse(sessionStorage.getItem("user")).token.userID
+    );
+    history.push("/account");
+  };
   useEffect(() => {
     props.setCurPath(location.pathname);
   }, []);
@@ -214,14 +225,7 @@ const Appbar = (props) => {
           }}
         >
           <MenuItem
-            onClick={() => {
-              setAnchorEl(null);
-              props.setSearch("");
-              props.getArtistPosts();
-              history.push("/account");
-
-              //window.location.reload(false);
-            }}
+            onClick={accountHandler}
             className={classes.accountMenuItem}
           >
             Profile

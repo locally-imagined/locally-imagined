@@ -29,7 +29,7 @@ import SliderDot from "../UI/SliderDot";
 
 const Edit = (props) => {
   const classes = styles();
-  const token = JSON.parse(sessionStorage.getItem("user")).token;
+
   const [medium, setMedium] = React.useState("");
   const [delivery, setDelivery] = React.useState("");
   const [sold, setSold] = React.useState(false);
@@ -121,6 +121,7 @@ const Edit = (props) => {
   };
 
   const deleteArtHandler = () => {
+    const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
     console.log("delete:", props.items[props.editId].imageIDs[0]);
     console.log("Token:", token);
     const deleteArr = [];
@@ -229,6 +230,7 @@ const Edit = (props) => {
 
   const submitChange = (event) => {
     event.preventDefault();
+    const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
     const deleteArr = [];
     props.deleteCheck.forEach((val, index) => {
       if (val) {
@@ -284,7 +286,13 @@ const Edit = (props) => {
         )}
         {props.images.length === 0 && (
           <Box className={classes.loading}>
-            <ReactLoading type="bars" color="grey" height={100} width={100} />
+            <ReactLoading
+              className={classes.loadingLogo}
+              type="bars"
+              color="grey"
+              height={100}
+              width={100}
+            />
           </Box>
         )}
         <Box className={classes.imageBox}>

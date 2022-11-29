@@ -48,7 +48,6 @@ const AccountPage = (props) => {
   };
 
   const classes = styles();
-  if (!props.user.userName) return <h1></h1>;
 
   return (
     <Box className={classes.accountBox}>
@@ -64,18 +63,22 @@ const AccountPage = (props) => {
         />
       )}
       <Box className={classes.accountBoard}>
-        <Typography component={"span"} className={classes.accountBoardDetails}>
-          About {props.user.userName} <br />
-          <p style={{ fontSize: "15px", color: "grey" }}>
-            Joined November 2022
-          </p>
-          <br />
-          <span
-            style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
+        {props.artistItem[0] && (
+          <Typography
+            component={"span"}
+            className={classes.accountBoardDetails}
           >
-            Landscape/Abstract Artist • Illustrator
-          </span>
-          {/* <span
+            About {props.artistItem[0]?.username} <br />
+            <p style={{ fontSize: "15px", color: "grey" }}>
+              Joined November 2022
+            </p>
+            <br />
+            <span
+              style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
+            >
+              Landscape/Abstract Artist • Illustrator
+            </span>
+            {/* <span
             style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
           >
             {" "}
@@ -87,23 +90,29 @@ const AccountPage = (props) => {
             {" "}
             0 Favorited
           </span> */}
-        </Typography>
+          </Typography>
+        )}
 
-        {edit === "" && (
+        {props.user.userName === props.artistItem[0]?.username && edit === "" && (
           <IconButton className={classes.accountIcons} onClick={editHandler}>
             <EditIcon />
           </IconButton>
         )}
-        {edit === "edit" && (
-          <IconButton
-            className={classes.accountIcons}
-            onClick={() => setEdit("")}
-          >
-            <ClearIcon />
-          </IconButton>
-        )}
+        {props.user.userName === props.artistItem[0]?.username &&
+          edit === "edit" && (
+            <IconButton
+              className={classes.accountIcons}
+              onClick={() => setEdit("")}
+            >
+              <ClearIcon />
+            </IconButton>
+          )}
         <Box className={classes.accountItems}>
-          <h3 style={{ color: "#494a91" }}>{props.user.userName}'s artworks</h3>
+          {props.artistItem[0] && (
+            <h3 style={{ color: "#494a91" }}>
+              {props.artistItem[0]?.username}'s artworks
+            </h3>
+          )}
           {props.loading && (
             <Box
               className={classes.loading}
@@ -165,6 +174,7 @@ const AccountPage = (props) => {
           items={props.artistItem}
           images={props.images}
           setImages={props.setImages}
+          disableLink={true}
         />
       </Box>
     </Box>

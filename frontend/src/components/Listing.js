@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Container, Grid } from "@material-ui/core";
+import { Typography, Container, Grid, Link } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";
 import Category from "./Category";
+import states from "../states";
 import Items from "./Items";
 import ItemDetails from "./ItemDetails";
 import ReactLoading from "react-loading";
@@ -64,6 +65,7 @@ const Listing = (props) => {
         getPosts={props.getPosts}
         setFilterQuery={props.setFilterQuery}
         setOffset={props.setOffset}
+        tab={props.tab}
       />
       <Tabs
         value={props.tab ? props.tab : "explore"}
@@ -73,7 +75,8 @@ const Listing = (props) => {
         className={classes.listingTab}
       >
         <Tab value="explore" label="Explore" />
-        <Tab value="mypost" label="My Posts" />
+
+        {states.login && <Tab value="mypost" label="My Posts" />}
       </Tabs>
 
       <Box
@@ -119,8 +122,12 @@ const Listing = (props) => {
         openItemUrl={openItemUrl}
         curItemId={curItemId}
         items={props.items}
+        setUserID={props.setUserID}
         images={props.images}
+        getArtistPosts={props.getArtistPosts}
         setImages={props.setImages}
+        setArtistItem={props.setArtistItem}
+        disableLink={false}
       />
     </Grid>
   );

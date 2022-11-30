@@ -37,7 +37,11 @@ const Listing = (props) => {
   };
 
   const handleTabChange = (event, newTab) => {
-    if (newTab === "mypost") props.getArtistPosts();
+    if (newTab === "mypost") {
+      const userID = JSON.parse(sessionStorage.user).token.userID;
+      console.log(userID);
+      props.getArtistPosts(userID);
+    }
     //setOffset(0);
     props.setTab(newTab);
   };

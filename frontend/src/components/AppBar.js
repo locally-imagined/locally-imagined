@@ -201,6 +201,7 @@ const Appbar = (props) => {
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClick}
+              data-testid="account-setting"
               size="small"
               sx={{ ml: 2 }}
               aria-controls={open ? "account-menu" : undefined}
@@ -215,7 +216,6 @@ const Appbar = (props) => {
         )}
         {/*Account menu*/}
         <Menu
-          id="account-menu"
           anchorEl={anchorEl}
           className={classes.accountMenu}
           open={openAccountMenu}

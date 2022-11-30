@@ -17,7 +17,7 @@ const SearchBar = (props) => {
   useEffect(() => {
     history.push("/");
     props.setCurPath("/");
-  }, [window.performance.getEntriesByType("navigation")[0].type]);
+  }, []);
 
   const enterHandler = (event) => {
     if (event.key === "Enter") {

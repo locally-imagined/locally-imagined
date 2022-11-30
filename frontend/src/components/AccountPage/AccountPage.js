@@ -25,7 +25,10 @@ const AccountPage = (props) => {
     props.setCurPath(location.pathname);
     props.setUserID(paraUserID.userID.slice(1));
   }, [paraUserID]);
-
+  const username = props.artistItem[0]
+    ? props.artistItem[0].username
+    : JSON.parse(sessionStorage.getItem("user")).userName;
+  console.log(username);
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
   const [msg, setMsg] = useState("");
@@ -68,14 +71,14 @@ const AccountPage = (props) => {
         />
       )}
       <Box className={classes.accountBoard}>
-        {props.artistItem[0] && (
+        {username && (
           <Typography
             component={"span"}
             className={classes.accountBoardDetails}
           >
-            About {props.artistItem[0]?.username} <br />
+            About {username} <br />
             <p style={{ fontSize: "15px", color: "grey" }}>
-              Joined November 2022
+              Joined December 2022
             </p>
             <br />
             <span
@@ -114,9 +117,7 @@ const AccountPage = (props) => {
           )}
         <Box className={classes.accountItems}>
           {props.artistItem[0] && (
-            <h3 style={{ color: "#494a91" }}>
-              {props.artistItem[0]?.username}'s artworks
-            </h3>
+            <h3 style={{ color: "#494a91" }}>{username}'s artworks</h3>
           )}
           {props.loading && (
             <Box

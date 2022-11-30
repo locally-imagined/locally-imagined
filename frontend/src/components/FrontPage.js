@@ -303,6 +303,7 @@ function FrontPage() {
             setUser={setUser}
             user={user}
             setArtistItem={setArtistItem}
+            setSearch={setSearch}
             setUserID={setUserID}
           />
           <Dashboard

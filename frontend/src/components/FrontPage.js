@@ -305,7 +305,13 @@ function FrontPage() {
             setArtistItem={setArtistItem}
             setUserID={setUserID}
           />
-          <Dashboard art={art} setArt={setArt} setCurPath={setCurPath} />
+          <Dashboard
+            art={art}
+            setArt={setArt}
+            setCurPath={setCurPath}
+            setSearch={setSearch}
+            setUserID={setUserID}
+          />
         </Route>
       </Switch>
     </BrowserRouter>

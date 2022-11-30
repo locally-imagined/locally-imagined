@@ -15,7 +15,16 @@ const Dashboard = (props) => {
   }, []);
   const classes = styles();
   const [success, setSucess] = useState(false);
-
+  const accountHandler = () => {
+    props.setSearch("");
+    const userID = JSON.parse(sessionStorage.getItem("user")).token.userID;
+    const username = JSON.parse(sessionStorage.getItem("user")).userName;
+    //console.log(username);
+    props.setUserID(userID);
+    sessionStorage.removeItem("currentUserID");
+    sessionStorage.setItem("currentUserID", userID);
+    history.push(`/posts/artistposts/userID:${userID}`);
+  };
   const [openPost, setOpenPost] = useState(false);
   return (
     <Grid className={classes.dashboardBox} style={{ marginTop: "3rem" }}>
@@ -50,7 +59,7 @@ const Dashboard = (props) => {
           <Button
             className={classes.dashboardButton}
             style={{ color: "white" }}
-            onClick={() => history.push("/account")}
+            onClick={accountHandler}
           >
             <EditIcon />
             Edit

@@ -111,7 +111,7 @@ const Appbar = (props) => {
     props.setSearch("");
     const userID = JSON.parse(sessionStorage.getItem("user")).token.userID;
     const username = JSON.parse(sessionStorage.getItem("user")).userName;
-    console.log(username);
+    //console.log(username);
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);

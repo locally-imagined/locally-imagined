@@ -135,7 +135,7 @@ function FrontPage() {
     }
     setLoading(true);
     const url = `https://locally-imagined.herokuapp.com/posts/artistposts/${offset}?userID=${userID}`;
-    console.log(`url:${url}`);
+    // console.log(`url:${url}`);
     axios
       .get(url, {})
       .then((res) => {
@@ -170,7 +170,7 @@ function FrontPage() {
       }${search ? `&${filterQuery}` : filterQuery}`;
     }
 
-    console.log(url);
+    // console.log(url);
     axios
       .get(url, {})
       .then((res) => {
@@ -194,12 +194,12 @@ function FrontPage() {
 
   useEffect(() => {
     setLoading(true);
-    if (curPath === "/") {
-      console.log(`current path:`, curPath);
+    if (curPath.includes("/getpage")) {
+      // console.log(`current path:`, curPath);
       tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
     }
     if (curPath.includes("/posts/artistposts")) {
-      console.log(curPath);
+      // console.log(curPath);
       getArtistPosts(userID);
     }
   }, [offset, curPath, userID]);
@@ -216,6 +216,9 @@ function FrontPage() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
+          <Redirect from="/" to={`/getpage`}></Redirect>
+        </Route>
+        <Route path="/getpage">
           <Appbar
             items={tab === "explore" ? items : artistItem}
             login={states.login}

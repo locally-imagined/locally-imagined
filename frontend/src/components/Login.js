@@ -16,7 +16,7 @@ const Login = (props) => {
   //send login request to database
   const submitLogin = (event) => {
     event.preventDefault();
-    console.log(props.user);
+    // console.log(props.user);
     axios
       .post(
         "https://locally-imagined.herokuapp.com/login",
@@ -33,11 +33,11 @@ const Login = (props) => {
           throw res;
         } else {
           props.setError(false);
-          console.log(res);
+          // console.log(res);
           props.user.token = res.data;
           //sessionStorage.setItem("token", res.data);
           sessionStorage.setItem("user", JSON.stringify(props.user));
-          console.log(sessionStorage.getItem("user"));
+          // console.log(sessionStorage.getItem("user"));
           states.login = true;
           states.user.userName = props.user.userName;
           props.setLogin(states.login);
@@ -45,15 +45,12 @@ const Login = (props) => {
           props.setSucess(true);
           const timer = new props.sessionTimer(2); //2 hours session timer
           //alert(`userName: ${states.user.userName}`);
-          history.push("/");
-          window.location.reload(false);
+          history.push("/getpage");
+          // window.location.reload(false);
         }
       })
       .catch((err) => {
         console.log(err);
-        //fake login
-        // setLogin(true);
-        // states.login = true;
         props.setMsg("Incorrect username or password");
         props.setError(true);
       });

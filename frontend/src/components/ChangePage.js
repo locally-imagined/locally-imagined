@@ -27,9 +27,7 @@ const ChangePage = (props) => {
     props.setOffset((val) => (props.items.length === 25 ? ++val : val));
     window.scrollTo(scrollOption);
   };
-  // useEffect(() => {
-  //   if (props.search) history.push(`/getpage/${offset}?keyword=${search}`);
-  // }, [props.offset]);
+
   return (
     <Toolbar className={classes.changePage}>
       <Box className={classes.changePageLink}>

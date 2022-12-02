@@ -62,7 +62,7 @@ const Appbar = (props) => {
       sessionStorage.clear();
 
       states.login = false;
-      history.push("/");
+      history.push("/getpage");
       window.location.reload(false);
     }
     countDownHandler() {
@@ -103,7 +103,7 @@ const Appbar = (props) => {
     setLogin(false);
     states.login = false;
     setAnchorEl(null);
-    history.push(`/`);
+    history.push(`/getpage`);
     window.location.reload(false);
   };
   const accountHandler = () => {

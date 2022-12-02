@@ -37,13 +37,16 @@ const Listing = (props) => {
   };
 
   const handleTabChange = (event, newTab) => {
+    props.setTab(newTab);
+    props.setOffset(0);
     if (newTab === "mypost") {
       const userID = JSON.parse(sessionStorage.user).token.userID;
-      console.log(userID);
+      // console.log(userID);
       props.getArtistPosts(userID);
     }
-    //setOffset(0);
-    props.setTab(newTab);
+    if (newTab === "explore") {
+      props.getPosts();
+    }
   };
 
   // const favoriteHandler = (event) => {
@@ -60,7 +63,6 @@ const Listing = (props) => {
   if (!props.items) {
     return <h1>Loading</h1>;
   }
-  //console.log(props.items);
 
   return (
     <Grid>

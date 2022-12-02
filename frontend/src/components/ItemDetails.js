@@ -53,7 +53,7 @@ const ItemDetails = (props) => {
   };
   const artistPost = (userID, username) => {
     // console.log(userID);
-    console.log(username);
+    // console.log(username);
     props.setArtistItem([]);
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);

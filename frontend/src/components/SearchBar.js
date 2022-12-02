@@ -15,7 +15,6 @@ const SearchBar = (props) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   useEffect(() => {
-    history.push("/");
     props.setCurPath("/");
   }, []);
 
@@ -33,14 +32,6 @@ const SearchBar = (props) => {
   const handleSearchChange = (event) => {
     setSearch(event.target.value.toLowerCase());
     props.setSearch(event.target.value.toLowerCase());
-    // console.log(`search:${search}`);
-    // console.log(`items:`, props.items);
-
-    // const filteredSearch = props.items.filter((value) => {
-    //   return value.title.toLowerCase().includes(search.toLowerCase());
-    // });
-    // console.log(filteredSearch);
-    // setFilter(filteredSearch);
   };
 
   return (
@@ -62,32 +53,6 @@ const SearchBar = (props) => {
           name="search"
         />
       </div>
-      {/* {filter.length !== 0 && open && (
-        <div
-          className={classes.searchResult}
-          style={{
-            marginLeft: "30px",
-            marginTop: "-10px",
-            width: "20vw",
-          }}
-        >
-          <Button
-            onClick={() => setOpen(false)}
-            style={{
-              marginLeft: "230px",
-            }}
-          >
-            <Cancel />
-          </Button>
-          {filter.slice(0, 100).map((value) => {
-            return (
-              <MenuItem className={classes.searchItems} key={value.id}>
-                {value.title.slice(0, 30)}
-              </MenuItem>
-            );
-          })}
-        </div>
-      )} */}
     </Grid>
   );
 };

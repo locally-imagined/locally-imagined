@@ -19,16 +19,15 @@ const AccountPage = (props) => {
   const location = useLocation();
   const paraUserID = useParams();
   useEffect(() => {
-    console.log("path changed");
-
-    console.log(paraUserID.userID.slice(1));
+    // console.log("path changed");
+    // console.log(paraUserID.userID.slice(1));
     props.setCurPath(location.pathname);
     props.setUserID(paraUserID.userID.slice(1));
   }, [paraUserID]);
   const username = props.artistItem[0]
     ? props.artistItem[0].username
     : JSON.parse(sessionStorage.getItem("user")).userName;
-  console.log(username);
+  // console.log(username);
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
   const [msg, setMsg] = useState("");

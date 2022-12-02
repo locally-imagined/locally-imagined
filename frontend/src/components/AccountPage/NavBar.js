@@ -56,7 +56,7 @@ const NavBar = (props) => {
     setLogin(false);
     states.login = false;
     setAnchorEl(null);
-    history.push("/");
+    history.push("/getpage");
     window.location.reload(false);
   };
   return (

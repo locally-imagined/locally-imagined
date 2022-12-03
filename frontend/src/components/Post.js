@@ -10,6 +10,10 @@ import {
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@mui/material/Checkbox";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -27,6 +31,7 @@ const Post = (props) => {
   const [delivery, setDelivery] = React.useState("");
   const [url, setUrl] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
+  const [check, setCheck] = useState(false);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const maxiumImages = 10;
   const scrollOption = {
@@ -66,6 +71,10 @@ const Post = (props) => {
       content: [],
     });
     setUrl([]);
+    setCheck(false);
+  };
+  const handleCheck = () => {
+    check ? setCheck(false) : setCheck(true);
   };
   const prevHandler = () => {
     setOffset((val) => {
@@ -229,7 +238,6 @@ const Post = (props) => {
             </Select>
             <br />
             <br />
-
             <input
               accept="image/*"
               style={{ display: "none" }}
@@ -262,14 +270,18 @@ const Post = (props) => {
               </span>
             </label>
 
-            <Divider
-              className={classes.divider}
-              style={{ marginTop: "20px" }}
-            />
+            <div>
+              <Checkbox checked={check} onChange={handleCheck} />
+              <span style={{ fontSize: "12px" }}>
+                By checking this box, I agree to share my contact info to buyers
+              </span>
+            </div>
+            <Divider className={classes.divider} style={{ marginTop: "5px" }} />
             <Button
-              variant="text"
               type="submit"
               value="Submit"
+              variant={check ? "text" : "contained"}
+              disabled={!check}
               className={classes.postButton}
               style={{ color: "white", marginTop: "1rem" }}
             >

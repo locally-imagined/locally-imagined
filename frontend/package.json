@@ -12,6 +12,7 @@
     "@material-ui/icons": "^4.11.2",
     "@mui/icons-material": "*",
     "@mui/material": "*",
+    "@mui/x-data-grid": "5.17.14",
     "emoji-picker-react": "*",
     "prop-types": "*",
     "react": "^17.0.2",

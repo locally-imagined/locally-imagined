@@ -77,7 +77,7 @@ function FrontPage() {
             }
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
           });
       })
     );
@@ -101,7 +101,7 @@ function FrontPage() {
             }
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
           });
       })
     );
@@ -126,7 +126,7 @@ function FrontPage() {
         }
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.error(err.response.data);
       });
   };
 
@@ -155,7 +155,7 @@ function FrontPage() {
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
+        console.error(err);
       });
   };
   const getPosts = (filterQuery) => {
@@ -188,7 +188,7 @@ function FrontPage() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setLoading(false);
       });
   };
@@ -196,7 +196,6 @@ function FrontPage() {
     if (!userID) return;
     setLoading(true);
     const url = `https://locally-imagined.herokuapp.com/users/contactinfo?userID=${userID}`;
-
     axios
       .get(url, {})
       .then((res) => {
@@ -210,7 +209,7 @@ function FrontPage() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setLoading(false);
       });
   };

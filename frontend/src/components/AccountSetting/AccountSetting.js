@@ -62,7 +62,7 @@ const AccountSetting = (props) => {
     } else {
       setSetting({ ...setting, bio: event.target.value });
     }
-    console.log(setting);
+    // console.log(setting);
   };
   const submitSetting = (event) => {
     event.preventDefault();
@@ -72,12 +72,12 @@ const AccountSetting = (props) => {
       return;
     }
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
-    console.log("token:", token);
+    // console.log("token:", token);
     const body = JSON.stringify({
       token: token,
       bio: setting.bio,
     });
-    console.log("body:", body);
+    // console.log("body:", body);
     axios
       .post("https://locally-imagined.herokuapp.com/users/updatebio", body, {
         // prettier-ignore

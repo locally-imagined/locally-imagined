@@ -23,7 +23,7 @@ const ContactInfo = (props) => {
       {props.loading && (
         <Box
           className={classes.loading}
-          style={{ marginLeft: "30vw", height: "100vh" }}
+          style={{ marginLeft: "45vw", height: "100vh", marginTop: "10vh" }}
         >
           <ReactLoading type="bars" color="grey" height={100} width={100} />
         </Box>

@@ -39,7 +39,7 @@ const Post = (props) => {
   const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
   const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
   const handleSelectChange = (event) => {
-    console.log(event.target.name);
+    // console.log(event.target.name);
     event.target.name === "medium"
       ? setMedium(event.target.value)
       : setDelivery(event.target.value);
@@ -47,7 +47,7 @@ const Post = (props) => {
       ...props.art,
       [event.target.name]: event.target.value,
     });
-    console.log(props.art);
+    // console.log(props.art);
   };
   // const handleDeliveryChange = (event) => {
   //   console.log(event.target.name);
@@ -118,12 +118,12 @@ const Post = (props) => {
         [event.target.name]: event.target.value,
       });
     }
-    console.log(props.art);
+    // console.log(props.art);
   };
 
   const submitPost = (event) => {
     event.preventDefault();
-    console.log(props.art);
+    // console.log(props.art);
     //   console.log(`title:${props.art.title}
     //   description:${props.art.description}
     //   price:${props.art.price}
@@ -132,7 +132,7 @@ const Post = (props) => {
     //  `);
 
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
-    console.log("token:", token);
+    // console.log("token:", token);
     const body = JSON.stringify(props.art);
     axios
       .post("https://locally-imagined.herokuapp.com/posts/create", body, {
@@ -147,7 +147,7 @@ const Post = (props) => {
         if (res.status != 200 || !res.data) {
           throw res;
         } else {
-          console.log(`res:${res}`);
+          // console.log(`res:${res}`);
           props.setOpenPost(false);
           props.setSucess(true);
           setMedium("");

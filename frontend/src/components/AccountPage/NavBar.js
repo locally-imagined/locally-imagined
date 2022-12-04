@@ -79,6 +79,7 @@ const NavBar = (props) => {
           <img
             src="/logo.png"
             alt="Locally Imagine"
+            data-testid="nav-logo"
             onClick={() => {
               history.push(`/`);
               window.location.reload(false);

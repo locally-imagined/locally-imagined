@@ -54,6 +54,7 @@ const ItemDetails = (props) => {
   const artistPost = (userID, username) => {
     // console.log(userID);
     // console.log(username);
+    props.setImages([]);
     props.setArtistItem([]);
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);
@@ -61,6 +62,7 @@ const ItemDetails = (props) => {
     window.scrollTo(scrollOption);
   };
   const contactHandler = (userID, username) => {
+    props.setImages([]);
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);
     sessionStorage.setItem("currentUsername", username);

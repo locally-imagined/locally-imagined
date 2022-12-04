@@ -34,6 +34,8 @@ const Edit = (props) => {
   const [delivery, setDelivery] = React.useState("");
   const [sold, setSold] = React.useState(false);
   const [error, setError] = useState(false);
+  const [info, setInfo] = useState(false);
+  const [msg, setMsg] = useState("");
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const [check, setCheck] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -50,7 +52,6 @@ const Edit = (props) => {
     const updateArr = props.deleteCheck;
     updateArr[id] = updateArr[id] ? false : true;
     props.setDeleteCheck(updateArr);
-    console.log(updateArr);
   };
 
   const [deleteArt, setDeleteArt] = useState(false);
@@ -107,7 +108,7 @@ const Edit = (props) => {
       ...edit,
       [event.target.name]: event.target.value,
     });
-    console.log(edit);
+    // console.log(edit);
   };
 
   const handleEditChange = (event) => {
@@ -116,21 +117,21 @@ const Edit = (props) => {
       ...edit,
       [event.target.name]: event.target.value,
     });
-    console.log(event.target.value);
-    console.log(edit);
+    // console.log(event.target.value);
+    // console.log(edit);
   };
 
   const deleteArtHandler = () => {
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
-    console.log("delete:", props.items[props.editId].imageIDs[0]);
-    console.log("Token:", token);
+    // console.log("delete:", props.items[props.editId].imageIDs[0]);
+    // console.log("Token:", token);
     const deleteArr = [];
     props.deleteCheck.forEach((val, index) => {
       if (val) {
         deleteArr.push(props.images[index]);
       }
     });
-    console.log(deleteArr);
+    // console.log(deleteArr);
     axios
       .delete(
         `https://locally-imagined.herokuapp.com/posts/delete/${
@@ -147,7 +148,6 @@ const Edit = (props) => {
         if (res.status !== 204) {
           throw res;
         } else {
-          console.log(`res:${res}`);
           props.setSuccess(true);
           props.setMsg("deleted");
           props.setOpenEdit(false);
@@ -158,7 +158,7 @@ const Edit = (props) => {
       .catch((err) => {
         setError(true);
         setDeleteArt(false);
-        console.log(err);
+        console.error(err);
       });
   };
   const queryUrlFormater = (deleteArr) => {
@@ -175,21 +175,21 @@ const Edit = (props) => {
     const deliveryQuery = edit.deliverytype
       ? `deliverytype=${edit.deliverytype}`
       : "";
-    console.log(
-      baseUrl,
-      titleQuery,
-      priceQuery,
-      descriptionQuery,
-      deliveryQuery
-    );
-    console.log(edit);
+    // console.log(
+    //   baseUrl,
+    //   titleQuery,
+    //   priceQuery,
+    //   descriptionQuery,
+    //   deliveryQuery
+    // );
+    // console.log(edit);
     const imageQuery =
       deleteArr.length > 0
         ? deleteArr
             .map((img, index) => `${index > 0 ? "&" : ""}imageID=${img}`)
             .join("")
         : "";
-    console.log(imageQuery);
+    // console.log(imageQuery);
 
     const url = `${baseUrl}${titleQuery}${
       titleQuery && descriptionQuery ? `&${descriptionQuery}` : descriptionQuery
@@ -237,15 +237,21 @@ const Edit = (props) => {
         deleteArr.push(props.images[index].imageId);
       }
     });
-    console.log(deleteArr);
-    const url = queryUrlFormater(deleteArr);
-    if (!url) {
-      console.log("no changes");
+    if (deleteArr.length === props.images.length) {
+      setInfo(true);
+      setMsg("can not delete all pictures, delete post instead");
       return;
     }
-    console.log("Token:", token);
-    console.log("URL:", url);
-    console.log("URL Encoded:", encodeURIComponent(url));
+    // console.log(deleteArr);
+    const url = queryUrlFormater(deleteArr);
+    if (!url) {
+      setInfo(true);
+      setMsg("no changes");
+      return;
+    }
+    // console.log("Token:", token);
+    // console.log("URL:", url);
+    // console.log("URL Encoded:", encodeURIComponent(url));
     axios
       .put(
         url,
@@ -260,7 +266,7 @@ const Edit = (props) => {
         if (res.status != 200 || !res.data) {
           throw res;
         } else {
-          console.log(`res:${res}`);
+          // console.log(`res:${res}`);
           props.setSuccess(true);
           props.setMsg("edited");
           props.setOpenEdit(false);
@@ -271,7 +277,7 @@ const Edit = (props) => {
       })
       .catch((err) => {
         setError(true);
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -419,6 +425,9 @@ const Edit = (props) => {
                 msg={"error"}
               />
             )}
+            {info && (
+              <AlertMsg info={info} type={"info"} setInfo={setInfo} msg={msg} />
+            )}
             <Divider
               className={classes.divider}
               style={{ marginTop: "20px" }}
@@ -430,7 +439,6 @@ const Edit = (props) => {
                 value="Submit"
                 className={classes.postButton}
                 style={{ color: "white", marginTop: "1rem" }}
-                onClick={() => submitChange()}
               >
                 Save Changes
               </Button>

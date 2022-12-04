@@ -1,14 +1,11 @@
 import React from "react";
 import { Typography, Grid, IconButton, Avatar } from "@material-ui/core";
 import Box from "@mui/material/Box";
-
 import "react-lazy-load-image-component/src/effects/blur.css";
-
 import Items from "../Items";
 import styles from "../../styles";
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
-
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import ChangePage from "../ChangePage";
@@ -46,7 +43,7 @@ const AccountPage = (props) => {
   };
   const openEditHandler = (index) => {
     setEditId(index);
-    console.log(index);
+    // console.log(index);
     setOpenItemUrl(props.artistItem[index].url);
     props.getImagesSet(props.artistItem[index].postID);
   };

@@ -22,10 +22,11 @@ const AccountPage = (props) => {
     props.setCurPath(location.pathname);
     props.setUserID(paraUserID.userID.slice(1));
   }, [paraUserID]);
-  const username = props.artistItem[0]
-    ? props.artistItem[0].username
-    : JSON.parse(sessionStorage.getItem("user")).userName;
-  // console.log(username);
+  const username =
+    paraUserID === JSON.parse(sessionStorage.getItem("user")).token.userID
+      ? JSON.parse(sessionStorage.getItem("user")).userName
+      : props.artistItem[0]?.username;
+
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
   const [msg, setMsg] = useState("");

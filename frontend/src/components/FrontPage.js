@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
 
 import Listing from "./Listing";
-import { useHistory, useLocation, Redirect, Link } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import NavBar from "./AccountPage/NavBar";
 import AccountPage from "./AccountPage/AccountPage";
 import states from "../states";
@@ -19,7 +19,6 @@ import ContactInfo from "./ContactInfo";
  * @return {object} JSX
  */
 function FrontPage() {
-  const history = useHistory();
   const [tab, setTab] = React.useState("explore");
   const [items, setItems] = useState([]);
   const [artistItem, setArtistItem] = useState([]);

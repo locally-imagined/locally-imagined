@@ -8,16 +8,13 @@ import {
 } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-
 import "react-lazy-load-image-component/src/effects/blur.css";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
-
 import styles from "../../styles";
-import { useState, useEffect } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import AlertMsg from "../AlertMsg";
-import ReactLoading from "react-loading";
 
 const AccountSetting = (props) => {
   const location = useLocation();

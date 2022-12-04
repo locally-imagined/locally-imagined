@@ -7,8 +7,8 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import Items from "../Items";
 import styles from "../../styles";
 import { useState, useEffect } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import Card from "@mui/material/Card";
+import { useLocation, useParams } from "react-router-dom";
+
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import ChangePage from "../ChangePage";

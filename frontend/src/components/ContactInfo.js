@@ -1,26 +1,15 @@
 import React from "react";
-import {
-  Typography,
-  IconButton,
-  Avatar,
-  Button,
-  TextField,
-} from "@material-ui/core";
+import { Typography, Avatar } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-
 import "react-lazy-load-image-component/src/effects/blur.css";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import ReactLoading from "react-loading";
 import styles from "../styles";
-import { useState, useEffect } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import axios from "axios";
-import AlertMsg from "./AlertMsg";
+import { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
 const ContactInfo = (props) => {
   const classes = styles();
-  const location = useLocation();
   const paraUserID = useParams();
   const username = sessionStorage.getItem("currentUsername");
   useEffect(() => {

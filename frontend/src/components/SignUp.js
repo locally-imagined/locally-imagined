@@ -58,12 +58,11 @@ const SignUp = (props) => {
           sessionStorage.setItem("currentUserID", userID);
 
           props.setMsg(
-            "Sign Up Successfully, You will be directed to profile page in 3s"
+            "Sign Up Successfully, You will be directed to profile setting in 3s"
           );
           props.setSucess(true);
           setTimeout(() => {
-            history.push(`/posts/artistposts/userID:${userID}`);
-            window.location.reload(false);
+            history.push(`/setting`);
           }, 3000);
           //alert(`userName: ${states.user.userName}`);
           // history.push("/");

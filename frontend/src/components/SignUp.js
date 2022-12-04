@@ -15,14 +15,14 @@ const SignUp = (props) => {
     event.preventDefault();
     props.setSignup(false);
     //for testing
-    alert(`
-    email:${props.user.email}
-    userName: ${props.user.userName}
-    password:${props.user.password}
-    phone:${props.user.phone}
-    firstname and lastname:${
-      props.user.firstName + " " + props.user.lastName
-    }`);
+    // alert(`
+    // email:${props.user.email}
+    // userName: ${props.user.userName}
+    // password:${props.user.password}
+    // phone:${props.user.phone}
+    // firstname and lastname:${
+    //   props.user.firstName + " " + props.user.lastName
+    // }`);
     const body = JSON.stringify({
       firstName: props.user.firstName,
       lastName: props.user.lastName,
@@ -38,7 +38,7 @@ const SignUp = (props) => {
         },
       })
       .then((res) => {
-        if (res.status != 200 || !res.data) {
+        if (res.status != 200) {
           throw res;
         } else {
           props.setError(false);
@@ -50,10 +50,23 @@ const SignUp = (props) => {
           states.login = true;
           states.user.userName = props.user.userName;
           props.setLogin(states.login);
-          props.setMsg("Sign Up Successfully");
+          const userID = JSON.parse(sessionStorage.getItem("user")).token
+            .userID;
+          // console.log(username);
+          props.setUserID(userID);
+          sessionStorage.removeItem("currentUserID");
+          sessionStorage.setItem("currentUserID", userID);
+
+          props.setMsg(
+            "Sign Up Successfully, You will be directed to profile page in 3s"
+          );
           props.setSucess(true);
+          setTimeout(() => {
+            history.push(`/posts/artistposts/userID:${userID}`);
+            window.location.reload(false);
+          }, 3000);
           //alert(`userName: ${states.user.userName}`);
-          history.push("/");
+          // history.push("/");
         }
       })
       .catch((err) => {
@@ -74,6 +87,7 @@ const SignUp = (props) => {
             className={classes.signUpInput}
             placeholder="Username"
             inputProps={{
+              "data-testid": "input-username",
               onChange: props.handleInputChange,
               required: true,
             }}
@@ -84,6 +98,7 @@ const SignUp = (props) => {
             className={classes.signUpInput}
             placeholder="First Name"
             inputProps={{
+              "data-testid": "input-firstname",
               onChange: props.handleInputChange,
               required: true,
             }}
@@ -94,6 +109,7 @@ const SignUp = (props) => {
             className={classes.signUpInput}
             placeholder="Last Name"
             inputProps={{
+              "data-testid": "input-lastname",
               onChange: props.handleInputChange,
               required: true,
             }}
@@ -104,6 +120,7 @@ const SignUp = (props) => {
             className={classes.signUpInput}
             placeholder="Phone"
             inputProps={{
+              "data-testid": "input-phone",
               onChange: props.handleInputChange,
               required: true,
             }}
@@ -114,6 +131,7 @@ const SignUp = (props) => {
             className={classes.signUpInput}
             placeholder="Email address"
             inputProps={{
+              "data-testid": "input-email",
               onChange: props.handleInputChange,
               required: true,
             }}
@@ -125,6 +143,7 @@ const SignUp = (props) => {
             className={classes.signUpInput}
             placeholder="Password"
             inputProps={{
+              "data-testid": "input-password",
               onChange: props.handleInputChange,
               required: true,
             }}
@@ -137,6 +156,7 @@ const SignUp = (props) => {
             variant="text"
             type="submit"
             value="Submit"
+            data-testid="submit-signup"
             className={classes.signUpButton}
           >
             Sign Up

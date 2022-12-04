@@ -51,6 +51,18 @@ const NavBar = (props) => {
     sessionStorage.setItem("currentUserID", userID);
     history.push(`/posts/artistposts/userID:${userID}`);
   };
+  const accountSettingHandler = () => {
+    setAnchorEl(null);
+    props.setSearch("");
+    const userID = JSON.parse(sessionStorage.getItem("user")).token.userID;
+
+    //console.log(username);
+    props.setUserID(userID);
+    sessionStorage.removeItem("currentUserID");
+    sessionStorage.setItem("currentUserID", userID);
+    history.push(`/setting`);
+    window.location.reload(false);
+  };
   const handleLogout = () => {
     sessionStorage.clear();
     setLogin(false);
@@ -64,9 +76,15 @@ const NavBar = (props) => {
       <Toolbar className={classes.toolbar}>
         {/*title*/}
         <Typography style={{ flex: 1 }}>
-          <span className={classes.title} onClick={() => history.push(`/`)}>
-            Locally Imagined
-          </span>
+          <img
+            src="/logo.png"
+            alt="Locally Imagine"
+            onClick={() => {
+              history.push(`/`);
+              window.location.reload(false);
+            }}
+            className={classes.logo}
+          ></img>
         </Typography>
 
         {/*display avatar and username and log out button when login*/}
@@ -103,7 +121,10 @@ const NavBar = (props) => {
           >
             Profile
           </MenuItem>
-          <MenuItem onClick={handleClose} className={classes.accountMenuItem}>
+          <MenuItem
+            onClick={accountSettingHandler}
+            className={classes.accountMenuItem}
+          >
             Account Setting
           </MenuItem>
           <MenuItem onClick={handleLogout} className={classes.accountMenuItem}>

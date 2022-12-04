@@ -12,9 +12,7 @@ const styles = makeStyles((theme) => ({
   accountBoard: {
     width: "70vw",
     borderRadius: "10px",
-
     backgroundColor: "white",
-
     position: "absolute",
     marginLeft: "15vw",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
@@ -264,7 +262,7 @@ const styles = makeStyles((theme) => ({
   },
   errorMsg: {
     [theme.breakpoints.down("md")]: {
-      width: "20vw",
+      width: "100vw",
     },
   },
   image: {
@@ -380,6 +378,12 @@ const styles = makeStyles((theme) => ({
   listingPage: {
     zIndex: 0,
     margin: "0 auto",
+  },
+  logo: {
+    height: "2rem",
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   login: {
     color: "white",
@@ -606,6 +610,9 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+  },
+  settingCard: {
+    color: theme.palette.primary.main,
   },
   searchIcon: {
     left: "0px",

@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Grid, IconButton } from "@material-ui/core";
+import { Typography, Grid, IconButton, Avatar } from "@material-ui/core";
 import Box from "@mui/material/Box";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -8,6 +8,7 @@ import Items from "../Items";
 import styles from "../../styles";
 import { useState, useEffect } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import Card from "@mui/material/Card";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import ChangePage from "../ChangePage";
@@ -75,28 +76,32 @@ const AccountPage = (props) => {
             component={"span"}
             className={classes.accountBoardDetails}
           >
-            About {username} <br />
-            <p style={{ fontSize: "15px", color: "grey" }}>
-              Joined December 2022
-            </p>
+            <span
+              style={{
+                marginLeft: "10px",
+                marginTop: "-10px",
+                position: "absolute",
+              }}
+            >
+              <Avatar
+                className={classes.avatar}
+                style={{ width: 60, height: 60 }}
+              >
+                {username[0]}
+              </Avatar>
+            </span>
+            <span style={{ marginLeft: "100px" }}>{username}</span>
+            <br />
             <br />
             <span
-              style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
+              style={{
+                fontSize: "15px",
+                color: "grey",
+                paddingRight: "10px",
+              }}
             >
               Landscape/Abstract Artist • Illustrator
             </span>
-            {/* <span
-            style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
-          >
-            {" "}
-            0 Followings
-          </span>
-          <span
-            style={{ fontSize: "15px", color: "grey", paddingRight: "10px" }}
-          >
-            {" "}
-            0 Favorited
-          </span> */}
           </Typography>
         )}
 

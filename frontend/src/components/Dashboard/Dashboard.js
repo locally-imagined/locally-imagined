@@ -53,7 +53,7 @@ const Dashboard = (props) => {
         </Box>
         <Box className={classes.dashboardBoard}>
           <Typography variant="h5" className={classes.dashboardTitle}>
-            Edit Your Art
+            View Your Art
           </Typography>
 
           <Button
@@ -62,7 +62,7 @@ const Dashboard = (props) => {
             onClick={accountHandler}
           >
             <EditIcon />
-            Edit
+            Profile
           </Button>
         </Box>
       </Box>

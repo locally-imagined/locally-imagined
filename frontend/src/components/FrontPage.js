@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Dashboard from "./Dashboard/Dashboard";
 import ChangePage from "./ChangePage";
+import AccountSetting from "./AccountSetting/AccountSetting";
 
 /**
  *
@@ -298,7 +299,35 @@ function FrontPage() {
             setUserID={setUserID}
           />
         </Route>
-
+        <Route path="/setting">
+          <NavBar
+            login={states.login}
+            offset={offset}
+            setUser={setUser}
+            user={user}
+            setArtistItem={setArtistItem}
+            setSearch={setSearch}
+            setUserID={setUserID}
+          />
+          <AccountSetting
+            artistItem={artistItem}
+            items={items}
+            images={images}
+            deleteCheck={deleteCheck}
+            loading={loading}
+            noResult={noResult}
+            offset={offset}
+            user={user}
+            getImagesSet={getImagesSet}
+            getSrc={getSrc}
+            setImages={setImages}
+            setOffset={setOffset}
+            setDeleteCheck={setDeleteCheck}
+            setCurPath={setCurPath}
+            setArtistItem={setArtistItem}
+            setUserID={setUserID}
+          />
+        </Route>
         <Route path="/dashboard">
           <NavBar
             login={states.login}

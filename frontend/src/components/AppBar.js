@@ -110,12 +110,25 @@ const Appbar = (props) => {
     setAnchorEl(null);
     props.setSearch("");
     const userID = JSON.parse(sessionStorage.getItem("user")).token.userID;
-    const username = JSON.parse(sessionStorage.getItem("user")).userName;
+
     //console.log(username);
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
     history.push(`/posts/artistposts/userID:${userID}`);
+    window.location.reload(false);
+  };
+  const accountSettingHandler = () => {
+    setAnchorEl(null);
+    props.setSearch("");
+    const userID = JSON.parse(sessionStorage.getItem("user")).token.userID;
+
+    //console.log(username);
+    props.setUserID(userID);
+    sessionStorage.removeItem("currentUserID");
+    sessionStorage.setItem("currentUserID", userID);
+    history.push(`/setting`);
+    window.location.reload(false);
   };
   useEffect(() => {
     props.setCurPath(location.pathname);
@@ -126,15 +139,15 @@ const Appbar = (props) => {
       <Toolbar className={classes.toolbar}>
         {/*title*/}
         <Typography style={{ flex: 1 }}>
-          <span
+          <img
+            src="/logo.png"
+            alt="Locally Imagine"
             onClick={() => {
               history.push(`/`);
               window.location.reload(false);
             }}
-            className={classes.title}
-          >
-            Locally Imagined
-          </span>
+            className={classes.logo}
+          ></img>
         </Typography>
         <SearchBar
           tab={props.tab}
@@ -226,14 +239,19 @@ const Appbar = (props) => {
         >
           <MenuItem
             onClick={accountHandler}
+            data-testid="button-profile"
             className={classes.accountMenuItem}
           >
             Profile
           </MenuItem>
-          <MenuItem onClick={handleClose} className={classes.accountMenuItem}>
+          <MenuItem
+            onClick={accountSettingHandler}
+            data-testid="button-setting"
+            className={classes.accountMenuItem}
+          >
             Account Setting
           </MenuItem>
-          <MenuItem onClick={handleLogout} className={classes.accountMenuItem}>
+          <MenuItem onClick={handleLogout} className={classes.accountMenuItem}   data-testid="button-logout">
             Logout
           </MenuItem>
         </Menu>
@@ -267,6 +285,7 @@ const Appbar = (props) => {
         setSucess={setSucess}
         setUser={props.setUser}
         user={props.user}
+        setUserID={props.setUserID}
       />
     </AppBar>
   );

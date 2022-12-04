@@ -23,7 +23,7 @@ const AccountPage = (props) => {
     props.setUserID(paraUserID.userID.slice(1));
   }, [paraUserID]);
   const username =
-    paraUserID === JSON.parse(sessionStorage.getItem("user")).token.userID
+    paraUserID === JSON.parse(sessionStorage.getItem("user"))?.token.userID
       ? JSON.parse(sessionStorage.getItem("user")).userName
       : props.artistItem[0]?.username;
 

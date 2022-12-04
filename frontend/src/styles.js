@@ -261,8 +261,10 @@ const styles = makeStyles((theme) => ({
     height: "70.7vh",
   },
   errorMsg: {
+    width: "100",
+    marginLeft: "-10px",
     [theme.breakpoints.down("md")]: {
-      width: "100vw",
+      width: "60",
     },
   },
   image: {

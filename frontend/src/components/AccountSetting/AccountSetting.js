@@ -21,19 +21,19 @@ import ReactLoading from "react-loading";
 
 const AccountSetting = (props) => {
   const location = useLocation();
-
+  const classes = styles();
   // console.log(username);
   const user = JSON.parse(sessionStorage.getItem("user"));
   // console.log(user);
   const [msg, setMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [info, setInfo] = useState(false);
   const [url, setUrl] = React.useState("");
   const [setting, setSetting] = useState({
     avatar: "",
     bio: "",
   });
-  const classes = styles();
 
   const getBase64 = (file) => {
     return new Promise((resolve) => {
@@ -69,7 +69,11 @@ const AccountSetting = (props) => {
   };
   const submitSetting = (event) => {
     event.preventDefault();
-    if (!setting.bio) return;
+    if (!setting.bio) {
+      setMsg("no changes were made");
+      setInfo(true);
+      return;
+    }
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
     console.log("token:", token);
     const body = JSON.stringify({
@@ -78,7 +82,7 @@ const AccountSetting = (props) => {
     });
     console.log("body:", body);
     axios
-      .post("https://locally-imagined.herokuapp.com/users/update_bio", body, {
+      .post("https://locally-imagined.herokuapp.com/users/updatebio", body, {
         // prettier-ignore
         "content-type": "application/json",
         headers: {
@@ -91,12 +95,14 @@ const AccountSetting = (props) => {
         } else {
           console.log(`res:${res}`);
           setSuccess(true);
+          setMsg("updated");
           alert("success");
         }
       })
       .catch((err) => {
         setError(true);
-        console.log(err.response.data);
+        setMsg("something went wrong");
+        console.log(err);
       });
   };
   return (
@@ -104,11 +110,22 @@ const AccountSetting = (props) => {
       <br />
       <br />
       <br />
+      {info && (
+        <AlertMsg success={info} type={"info"} setInfo={setInfo} msg={msg} />
+      )}
       {success && (
         <AlertMsg
           success={success}
           type={"success"}
           setSucess={setSuccess}
+          msg={msg}
+        />
+      )}
+      {error && (
+        <AlertMsg
+          success={error}
+          type={"error"}
+          setError={setError}
           msg={msg}
         />
       )}

@@ -12,6 +12,7 @@ import axios from "axios";
 import Dashboard from "./Dashboard/Dashboard";
 import ChangePage from "./ChangePage";
 import AccountSetting from "./AccountSetting/AccountSetting";
+import ContactInfo from "./ContactInfo";
 
 /**
  *
@@ -26,7 +27,7 @@ function FrontPage() {
   const [images, setImages] = React.useState([]);
   const [search, setSearch] = useState("");
   const [userID, setUserID] = useState("");
-
+  const [contact, setContact] = useState({});
   const [filterQuery, setFilterQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [noResult, setNoResult] = useState(false);
@@ -192,6 +193,28 @@ function FrontPage() {
         setLoading(false);
       });
   };
+  const getContactInfo = (userID) => {
+    if (!userID) return;
+    setLoading(true);
+    const url = `https://locally-imagined.herokuapp.com/users/contactinfo?userID=${userID}`;
+
+    axios
+      .get(url, {})
+      .then((res) => {
+        if (res.status != 200) {
+          throw res;
+        } else {
+          const data = res.data;
+          // console.log(JSON.parse(JSON.stringify(data)));
+          setContact(JSON.parse(JSON.stringify(data)));
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -261,6 +284,9 @@ function FrontPage() {
             filterOption={filterOption}
             getPosts={getPosts}
             setUserID={setUserID}
+            setUser={setUser}
+            getContactInfo={getContactInfo}
+            setContact={setContact}
           />
           <ChangePage
             items={tab === "explore" ? items : artistItem}
@@ -297,6 +323,9 @@ function FrontPage() {
             setCurPath={setCurPath}
             setArtistItem={setArtistItem}
             setUserID={setUserID}
+            setUser={setUser}
+            getContactInfo={getContactInfo}
+            setContact={setContact}
           />
         </Route>
         <Route path="/setting">
@@ -326,6 +355,23 @@ function FrontPage() {
             setCurPath={setCurPath}
             setArtistItem={setArtistItem}
             setUserID={setUserID}
+          />
+        </Route>
+        <Route path="/contact/userID:userID">
+          <NavBar
+            login={states.login}
+            offset={offset}
+            setUser={setUser}
+            user={user}
+            setArtistItem={setArtistItem}
+            setSearch={setSearch}
+            setUserID={setUserID}
+          />
+          <ContactInfo
+            contact={contact}
+            loading={loading}
+            user={user}
+            getContactInfo={getContactInfo}
           />
         </Route>
         <Route path="/dashboard">

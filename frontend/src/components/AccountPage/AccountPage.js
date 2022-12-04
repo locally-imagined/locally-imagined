@@ -185,6 +185,8 @@ const AccountPage = (props) => {
           images={props.images}
           setImages={props.setImages}
           disableLink={true}
+          setUserID={props.setUserID}
+          getContactInfo={props.getContactInfo}
         />
       </Box>
     </Box>

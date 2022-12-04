@@ -128,12 +128,15 @@ const Listing = (props) => {
         openItemUrl={openItemUrl}
         curItemId={curItemId}
         items={props.items}
+        setUser={props.setUser}
         setUserID={props.setUserID}
         images={props.images}
         getArtistPosts={props.getArtistPosts}
         setImages={props.setImages}
         setArtistItem={props.setArtistItem}
+        setContact={props.setContact}
         disableLink={false}
+        getContactInfo={props.getContactInfo}
       />
     </Grid>
   );

@@ -60,6 +60,13 @@ const ItemDetails = (props) => {
     history.push(`/posts/artistposts/userID:${userID}`);
     window.scrollTo(scrollOption);
   };
+  const contactHandler = (userID, username) => {
+    sessionStorage.setItem("currentUserID", userID);
+    props.setUserID(userID);
+    sessionStorage.setItem("currentUsername", username);
+    props.getContactInfo(userID);
+    history.push(`/contact/userID:${userID}`);
+  };
   return (
     <Modal open={props.openItem}>
       <Paper className={classes.itemModal}>
@@ -181,6 +188,22 @@ const ItemDetails = (props) => {
               </p>
             </div>
           )}
+          <Link
+            style={{
+              position: "absolute",
+              bottom: "0",
+              "&:hover": { cursor: "pointer" },
+            }}
+            onClick={() =>
+              contactHandler(
+                props.items[props.curItemId]?.userID,
+                props.items[props.curItemId]?.username
+              )
+            }
+            herf="/contact"
+          >
+            contact this seller
+          </Link>
           {/*
           <Button
             variant="text"

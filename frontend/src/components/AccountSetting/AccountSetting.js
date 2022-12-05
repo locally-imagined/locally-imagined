@@ -71,41 +71,74 @@ const AccountSetting = (props) => {
   };
   const submitSetting = (event) => {
     event.preventDefault();
-    if (!setting.avatar) {
+
+    if (!setting.avatar && setting.bio.length === 0) {
       setMsg("no changes were made");
       setInfo(true);
       return;
     }
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
-    axios
-      .put(
-        "https://locally-imagined.herokuapp.com/users/updateprofilepic",
-        {
-          content: setting.avatar,
-        },
-        {
-          "content-type": "application/json",
-          headers: {
-            Authorization: `Bearer ${token}`,
+    if (setting.avatar) {
+      axios
+        .put(
+          "https://locally-imagined.herokuapp.com/users/updateprofilepic",
+          {
+            content: setting.avatar,
           },
-        }
-      )
-      .then((res) => {
-        if (res.status != 200 || !res.data) {
-          throw res;
-        } else {
-          console.log(`res:${JSON.stringify(res.data.imageID)}`);
-          sessionStorage.setItem("myAvatar", res.data.imageID);
-          setSuccess(true);
-          setMsg("updated");
-          alert("success");
-        }
-      })
-      .catch((err) => {
-        setError(true);
-        setMsg("something went wrong");
-        console.log(err);
-      });
+          {
+            "content-type": "application/json",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status != 200 || !res.data) {
+            throw res;
+          } else {
+            console.log(`res:${JSON.stringify(res.data.imageID)}`);
+            sessionStorage.setItem("myAvatar", res.data.imageID);
+            setSuccess(true);
+            setMsg("updated");
+            // alert("success");
+          }
+        })
+        .catch((err) => {
+          setError(true);
+          setMsg("something went wrong");
+          console.log(err);
+        });
+    }
+    if (setting.bio.length > 0) {
+      axios
+        .put(
+          "https://locally-imagined.herokuapp.com/users/updatebio",
+          {
+            bio: setting.bio,
+          },
+          {
+            "content-type": "application/json",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status != 200 || !res.data) {
+            throw res;
+          } else {
+            console.log(`res:${JSON.stringify(res.data)}`);
+            setSuccess(true);
+            setMsg("updated");
+            // alert("success");
+          }
+        })
+        .catch((err) => {
+          setError(true);
+          setMsg("something went wrong");
+          console.log(err);
+        });
+    }
   };
   return (
     <Box className={classes.accountBox}>

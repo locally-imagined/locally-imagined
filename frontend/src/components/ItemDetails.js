@@ -70,7 +70,7 @@ const ItemDetails = (props) => {
   const closeHandler = () => {
     props.setOpenItem(false);
     setOffset(0);
-    props.setAvatar("");
+
     resetPadding();
     props.setImages([]);
   };

@@ -15,15 +15,17 @@ import ReactLoading from "react-loading";
 import ItemDetails from "../ItemDetails";
 const AccountPage = (props) => {
   const location = useLocation();
-  const paraUserID = useParams();
+  const paraUser = useParams();
   useEffect(() => {
     // console.log("path changed");
     // console.log(paraUserID.userID.slice(1));
+    // console.log(location.pathname);
     props.setCurPath(location.pathname);
-    props.setUserID(paraUserID.userID.slice(1));
-  }, [paraUserID]);
+    props.setUserID(location.state.userID);
+    // console.log(location.state.userID);
+  }, [paraUser]);
   const username =
-    paraUserID === JSON.parse(sessionStorage.getItem("user"))?.token.userID
+    paraUser === JSON.parse(sessionStorage.getItem("user"))?.userName
       ? JSON.parse(sessionStorage.getItem("user")).userName
       : props.artistItem[0]?.username;
 

@@ -10,10 +10,11 @@ import { useLocation, useParams } from "react-router-dom";
 
 const ContactInfo = (props) => {
   const classes = styles();
+  const location = useLocation();
   const paraUserID = useParams();
   const username = sessionStorage.getItem("currentUsername");
   useEffect(() => {
-    props.getContactInfo(paraUserID.userID.slice(1));
+    props.getContactInfo(location.state?.userID);
   }, []);
   return (
     <Box className={classes.accountBox}>

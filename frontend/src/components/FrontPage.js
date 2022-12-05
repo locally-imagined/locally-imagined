@@ -216,7 +216,7 @@ function FrontPage() {
 
   useEffect(() => {
     setLoading(true);
-    if (curPath.includes("/getpage")) {
+    if (curPath === "/") {
       // console.log(`current path:`, curPath);
       tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
     }
@@ -238,9 +238,6 @@ function FrontPage() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <Redirect from="/" to={`/getpage`}></Redirect>
-        </Route>
-        <Route path="/getpage">
           <Appbar
             items={tab === "explore" ? items : artistItem}
             login={states.login}
@@ -294,7 +291,7 @@ function FrontPage() {
           />
         </Route>
 
-        <Route path="/posts/artistposts/userID:userID">
+        <Route path="/posts/artistposts/user:username">
           <NavBar
             login={states.login}
             offset={offset}
@@ -355,7 +352,7 @@ function FrontPage() {
             setUserID={setUserID}
           />
         </Route>
-        <Route path="/contact/userID:userID">
+        <Route path="/contact/user:username">
           <NavBar
             login={states.login}
             offset={offset}

@@ -62,7 +62,7 @@ const Appbar = (props) => {
       sessionStorage.clear();
 
       states.login = false;
-      history.push("/getpage");
+      history.push("/");
       window.location.reload(false);
     }
     countDownHandler() {
@@ -103,19 +103,19 @@ const Appbar = (props) => {
     setLogin(false);
     states.login = false;
     setAnchorEl(null);
-    history.push(`/getpage`);
+    history.push(`/`);
     window.location.reload(false);
   };
   const accountHandler = () => {
     setAnchorEl(null);
     props.setSearch("");
     const userID = JSON.parse(sessionStorage.getItem("user")).token.userID;
-
+    const username = JSON.parse(sessionStorage.getItem("user")).userName;
     //console.log(username);
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    history.push(`/posts/artistposts/userID:${userID}`);
+    history.push(`/posts/artistposts/user:${username}`, { userID: userID });
     window.location.reload(false);
   };
   const accountSettingHandler = () => {
@@ -251,7 +251,11 @@ const Appbar = (props) => {
           >
             Account Setting
           </MenuItem>
-          <MenuItem onClick={handleLogout} className={classes.accountMenuItem}   data-testid="button-logout">
+          <MenuItem
+            onClick={handleLogout}
+            className={classes.accountMenuItem}
+            data-testid="button-logout"
+          >
             Logout
           </MenuItem>
         </Menu>

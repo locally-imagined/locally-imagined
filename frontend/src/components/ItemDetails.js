@@ -58,7 +58,7 @@ const ItemDetails = (props) => {
     props.setArtistItem([]);
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);
-    history.push(`/posts/artistposts/userID:${userID}`);
+    history.push(`/posts/artistposts/user:${username}`, { userID: userID });
     window.scrollTo(scrollOption);
   };
   const contactHandler = (userID, username) => {
@@ -67,7 +67,7 @@ const ItemDetails = (props) => {
     props.setUserID(userID);
     sessionStorage.setItem("currentUsername", username);
     props.getContactInfo(userID);
-    history.push(`/contact/userID:${userID}`);
+    history.push(`/contact/user:${username}`,{ userID: userID });
   };
   return (
     <Modal open={props.openItem}>

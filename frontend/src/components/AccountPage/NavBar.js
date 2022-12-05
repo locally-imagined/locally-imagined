@@ -49,7 +49,7 @@ const NavBar = (props) => {
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    history.push(`/posts/artistposts/userID:${userID}`);
+    history.push(`/posts/artistposts/user:${username}`, { userID: userID });
   };
   const accountSettingHandler = () => {
     setAnchorEl(null);
@@ -68,7 +68,7 @@ const NavBar = (props) => {
     setLogin(false);
     states.login = false;
     setAnchorEl(null);
-    history.push("/getpage");
+    history.push("/");
     window.location.reload(false);
   };
   return (

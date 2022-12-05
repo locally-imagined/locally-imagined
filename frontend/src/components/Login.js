@@ -41,11 +41,11 @@ const Login = (props) => {
           states.login = true;
           states.user.userName = props.user.userName;
           props.setLogin(states.login);
-          props.setMsg("Log in Successfully");
+          props.setMsg("Successfully Logged In");
           props.setSucess(true);
           const timer = new props.sessionTimer(2); //2 hours session timer
           //alert(`userName: ${states.user.userName}`);
-          history.push("/getpage");
+          history.push("/");
           // window.location.reload(false);
         }
       })

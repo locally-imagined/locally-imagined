@@ -70,6 +70,7 @@ const ItemDetails = (props) => {
   const closeHandler = () => {
     props.setOpenItem(false);
     setOffset(0);
+    props.setAvatar("");
     resetPadding();
     props.setImages([]);
   };
@@ -93,13 +94,15 @@ const ItemDetails = (props) => {
       return val;
     });
   };
-  const artistPost = (userID, username) => {
+  const artistPost = (userID, username, profpicID) => {
     // console.log(userID);
     // console.log(username);
     props.setImages([]);
     props.setArtistItem([]);
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);
+    // console.log(profpicID);
+    props.getAvatar(profpicID);
     history.push(`/profile/${username}`, {
       userID: userID,
       username: username,
@@ -112,7 +115,10 @@ const ItemDetails = (props) => {
     props.setUserID(userID);
     sessionStorage.setItem("currentUsername", username);
     props.getContactInfo(userID);
-    history.push(`/contact/user:${username}`, { userID: userID });
+    history.push(`/contact/${username}`, {
+      userID: userID,
+      username: username,
+    });
   };
   return (
     <Modal open={props.openItem}>
@@ -178,7 +184,7 @@ const ItemDetails = (props) => {
           {/* <Link href={`/account/#${props.items[props.curItemId]?.userID}`}> */}
           {props.disableLink && (
             <IconButton>
-              <Avatar></Avatar>
+              <Avatar src={props.avatar}></Avatar>
             </IconButton>
           )}
           {!props.disableLink && (
@@ -186,11 +192,12 @@ const ItemDetails = (props) => {
               onClick={() =>
                 artistPost(
                   props.items[props.curItemId]?.userID,
-                  props.items[props.curItemId]?.username
+                  props.items[props.curItemId]?.username,
+                  props.items[props.curItemId]?.profpicID
                 )
               }
             >
-              <Avatar></Avatar>
+              <Avatar src={props.avatar}></Avatar>
             </IconButton>
           )}
 

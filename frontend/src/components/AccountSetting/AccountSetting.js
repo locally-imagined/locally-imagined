@@ -11,7 +11,7 @@ import Card from "@mui/material/Card";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import styles from "../../styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import AlertMsg from "../AlertMsg";
@@ -23,6 +23,7 @@ const AccountSetting = (props) => {
   const user = JSON.parse(sessionStorage.getItem("user"));
   // console.log(user);
   const [msg, setMsg] = useState("");
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [info, setInfo] = useState(false);
@@ -32,6 +33,10 @@ const AccountSetting = (props) => {
     bio: "",
   });
 
+  useEffect(() => {
+    // console.log(JSON.parse(sessionStorage.getItem("avatar")));
+    props.getAvatar(sessionStorage.getItem("myAvatar"));
+  }, []);
   const getBase64 = (file) => {
     return new Promise((resolve) => {
       let baseURL = "";
@@ -62,35 +67,35 @@ const AccountSetting = (props) => {
     } else {
       setSetting({ ...setting, bio: event.target.value });
     }
-    // console.log(setting);
+    console.log(setting);
   };
   const submitSetting = (event) => {
     event.preventDefault();
-    if (!setting.bio) {
+    if (!setting.avatar) {
       setMsg("no changes were made");
       setInfo(true);
       return;
     }
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
-    // console.log("token:", token);
-    const body = JSON.stringify({
-      token: token,
-      bio: setting.bio,
-    });
-    // console.log("body:", body);
     axios
-      .post("https://locally-imagined.herokuapp.com/users/updatebio", body, {
-        // prettier-ignore
-        "content-type": "application/json",
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .put(
+        "https://locally-imagined.herokuapp.com/users/updateprofilepic",
+        {
+          content: setting.avatar,
         },
-      })
+        {
+          "content-type": "application/json",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         if (res.status != 200 || !res.data) {
           throw res;
         } else {
-          console.log(`res:${res}`);
+          console.log(`res:${JSON.stringify(res.data.imageID)}`);
+          sessionStorage.setItem("myAvatar", res.data.imageID);
           setSuccess(true);
           setMsg("updated");
           alert("success");
@@ -146,7 +151,7 @@ const AccountSetting = (props) => {
                 <Avatar
                   className={classes.avatar}
                   style={{ width: 100, height: 100 }}
-                  src={url}
+                  src={url ? url : props.myAvatar}
                 >
                   {user.userName[0]}
                 </Avatar>

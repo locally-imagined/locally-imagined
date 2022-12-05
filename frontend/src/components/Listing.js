@@ -23,12 +23,19 @@ const Listing = (props) => {
 
   const [openItemUrl, setOpenItemUrl] = React.useState("");
 
-  const openItemHandler = (id) => {
+  const openItemHandler = (id, username) => {
     setOpenItem(true);
+
     props.getImagesSet(
       props.tab === "explore"
         ? props.items[id].postID
         : props.artistItem[id].postID
+    );
+    props.getAvatar(
+      props.tab === "explore"
+        ? props.items[id].profpicID
+        : props.artistItem[id].profpicID,
+      username
     );
     setOpenItemUrl(
       props.tab === "explore" ? props.items[id].url : props.artistItem[id].url
@@ -136,7 +143,10 @@ const Listing = (props) => {
         setArtistItem={props.setArtistItem}
         setContact={props.setContact}
         disableLink={false}
+        setAvatar={props.setAvatar}
+        avatar={props.avatar}
         getContactInfo={props.getContactInfo}
+        getAvatar={props.getAvatar}
       />
     </Grid>
   );

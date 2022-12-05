@@ -16,19 +16,28 @@ import ItemDetails from "../ItemDetails";
 const AccountPage = (props) => {
   const location = useLocation();
   const paraUser = useParams();
+
+  const username =
+    paraUser === JSON.parse(sessionStorage.getItem("user"))?.userName
+      ? JSON.parse(sessionStorage.getItem("user")).userName
+      : props.artistItem[0]?.username;
+
   useEffect(() => {
     // console.log("path changed");
     // console.log(paraUserID.userID.slice(1));
     // console.log(location.pathname);
     props.setCurPath(location.pathname);
     props.setUserID(location.state.userID);
-    console.log(location.state.userID);
-    console.log(location.state.username);
+    if (
+      location.state.username ===
+      JSON.parse(sessionStorage.getItem("user"))?.userName
+    )
+      props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+    else props.getAvatar(sessionStorage.getItem("currAvatar"));
+
+    // console.log(location.state.userID);
+    // console.log(location.state.username);
   }, [location.state.username]);
-  const username =
-    paraUser === JSON.parse(sessionStorage.getItem("user"))?.userName
-      ? JSON.parse(sessionStorage.getItem("user")).userName
-      : props.artistItem[0]?.username;
 
   const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
@@ -44,6 +53,7 @@ const AccountPage = (props) => {
     props.getImagesSet(props.artistItem[id].postID);
     setOpenItemUrl(props.artistItem[id].url);
     setCurItemId(id);
+    props.getAvatar(props.artistItem[id].profpicID);
   };
   const openEditHandler = (index) => {
     setEditId(index);
@@ -87,6 +97,12 @@ const AccountPage = (props) => {
               <Avatar
                 className={classes.avatar}
                 style={{ width: 60, height: 60 }}
+                src={
+                  location.state.username ===
+                  JSON.parse(sessionStorage.getItem("user"))?.userName
+                    ? props.myAvatar
+                    : props.avatar
+                }
               >
                 {username[0]}
               </Avatar>
@@ -188,6 +204,8 @@ const AccountPage = (props) => {
           disableLink={true}
           setUserID={props.setUserID}
           getContactInfo={props.getContactInfo}
+          avatar={props.avatar}
+          setAvatar={props.setAvatar}
         />
       </Box>
     </Box>

@@ -10,7 +10,7 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../../styles";
 import states from "../../states";
 
@@ -25,7 +25,9 @@ const NavBar = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openAccountMenu = Boolean(anchorEl);
   const [login, setLogin] = useState(props.login);
-
+  useEffect(() => {
+    props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+  }, []);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,6 +51,7 @@ const NavBar = (props) => {
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
+    props.getMyAvatar(sessionStorage.getItem("myAvatar"));
     history.push(`/profile/${username}`, {
       userID: userID,
       username: username,
@@ -102,7 +105,7 @@ const NavBar = (props) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar className={classes.avatar}>
+              <Avatar className={classes.avatar} src={props.myAvatar}>
                 {props.user.userName[0]}
               </Avatar>
             </IconButton>

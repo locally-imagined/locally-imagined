@@ -32,6 +32,8 @@ function FrontPage() {
   const [noResult, setNoResult] = useState(false);
   const [offset, setOffset] = useState(0);
   const [deleteCheck, setDeleteCheck] = useState([]);
+  const [avatar, setAvatar] = React.useState("");
+  const [myAvatar, setMyAvatar] = React.useState("");
   const [user, setUser] = useState({
     userName: "",
     password: "",
@@ -55,6 +57,65 @@ function FrontPage() {
   };
   const filterHandler = (filteredItems) => {
     setItems(filteredItems);
+  };
+  const getAvatar = (imageID) => {
+    // console.log(imageID);
+    if (!imageID) return;
+    const noImageID = "00000000-0000-0000-0000-000000000000";
+    if (imageID === noImageID) {
+      setAvatar("");
+      sessionStorage.setItem("currAvatar", noImageID);
+      return;
+    }
+    const url = `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${imageID}`;
+    // console.log(url);
+
+    return axios
+      .get(url, {})
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          let src = "data:image/jpeg;base64,";
+          src += res.data;
+          setAvatar(encodeURI(src));
+          sessionStorage.setItem("currAvatar", imageID);
+          // console.log("avatar src:", encodeURI(src));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const getMyAvatar = (imageID) => {
+    // console.log(imageID);
+    if (!imageID) return;
+    const noImageID = "00000000-0000-0000-0000-000000000000";
+    if (imageID === noImageID) {
+      setAvatar("");
+      sessionStorage.setItem("myAvatar", noImageID);
+      return;
+    }
+    const url = `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${imageID}`;
+    // console.log(url);
+
+    return axios
+      .get(url, {})
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          let src = "data:image/jpeg;base64,";
+          src += res.data;
+          setMyAvatar(encodeURI(src));
+          sessionStorage.setItem("myAvatar", imageID);
+          // console.log("avatar src:", encodeURI(src));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const getImagesSetSrc = (datas) => {
@@ -216,6 +277,7 @@ function FrontPage() {
 
   useEffect(() => {
     setLoading(true);
+
     if (curPath === "/") {
       // console.log(`current path:`, curPath);
       tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
@@ -259,6 +321,12 @@ function FrontPage() {
             setCurPath={setCurPath}
             setUserID={setUserID}
             getPosts={getPosts}
+            setAvatar={setAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
+            getMyAvatar={getMyAvatar}
           />
           <Listing
             items={tab === "explore" ? items : artistItem}
@@ -282,6 +350,11 @@ function FrontPage() {
             setUser={setUser}
             getContactInfo={getContactInfo}
             setContact={setContact}
+            setAvatar={setAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
           />
           <ChangePage
             items={tab === "explore" ? items : artistItem}
@@ -300,6 +373,12 @@ function FrontPage() {
             setArtistItem={setArtistItem}
             setSearch={setSearch}
             setUserID={setUserID}
+            setAvatar={setAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
+            getMyAvatar={getMyAvatar}
           />
           <AccountPage
             artistItem={artistItem}
@@ -321,6 +400,12 @@ function FrontPage() {
             setUser={setUser}
             getContactInfo={getContactInfo}
             setContact={setContact}
+            setAvatar={setAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
+            getMyAvatar={getMyAvatar}
           />
         </Route>
         <Route path="/settings">
@@ -332,6 +417,12 @@ function FrontPage() {
             setArtistItem={setArtistItem}
             setSearch={setSearch}
             setUserID={setUserID}
+            setAvatar={setAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
+            getMyAvatar={getMyAvatar}
           />
           <AccountSetting
             artistItem={artistItem}
@@ -350,9 +441,14 @@ function FrontPage() {
             setCurPath={setCurPath}
             setArtistItem={setArtistItem}
             setUserID={setUserID}
+            setAvatar={setAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
           />
         </Route>
-        <Route path="/contact/user:username">
+        <Route path="/contact">
           <NavBar
             login={states.login}
             offset={offset}
@@ -361,12 +457,23 @@ function FrontPage() {
             setArtistItem={setArtistItem}
             setSearch={setSearch}
             setUserID={setUserID}
+            setAvatar={setAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
+            getMyAvatar={getMyAvatar}
           />
           <ContactInfo
             contact={contact}
             loading={loading}
             user={user}
             getContactInfo={getContactInfo}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            getMyAvatar={getMyAvatar}
           />
         </Route>
         <Route path="/dashboard">
@@ -378,6 +485,12 @@ function FrontPage() {
             setArtistItem={setArtistItem}
             setSearch={setSearch}
             setUserID={setUserID}
+            setAvatar={setAvatar}
+            avatar={avatar}
+            getAvatar={getAvatar}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
+            getMyAvatar={getMyAvatar}
           />
           <Dashboard
             art={art}
@@ -385,6 +498,8 @@ function FrontPage() {
             setCurPath={setCurPath}
             setSearch={setSearch}
             setUserID={setUserID}
+            setMyAvatar={setMyAvatar}
+            myAvatar={myAvatar}
           />
         </Route>
       </Switch>

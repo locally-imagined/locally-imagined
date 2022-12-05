@@ -51,20 +51,6 @@ const Dashboard = (props) => {
             Create
           </Button>
         </Box>
-        <Box className={classes.dashboardBoard}>
-          <Typography variant="h5" className={classes.dashboardTitle}>
-            View Your Art
-          </Typography>
-
-          <Button
-            className={classes.dashboardButton}
-            style={{ color: "white" }}
-            onClick={accountHandler}
-          >
-            <EditIcon />
-            Profile
-          </Button>
-        </Box>
       </Box>
 
       {/*Post modal*/}

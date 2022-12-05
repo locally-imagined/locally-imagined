@@ -15,6 +15,14 @@ const ContactInfo = (props) => {
   const username = sessionStorage.getItem("currentUsername");
   useEffect(() => {
     props.getContactInfo(location.state?.userID);
+    if (
+      location.state.username ===
+      JSON.parse(sessionStorage.getItem("user"))?.userName
+    )
+      props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+    else {
+      props.getAvatar(sessionStorage.getItem("currAvatar"));
+    }
   }, []);
   return (
     <Box className={classes.accountBox}>
@@ -48,6 +56,12 @@ const ContactInfo = (props) => {
               <Avatar
                 className={classes.avatar}
                 style={{ width: 50, height: 50 }}
+                src={
+                  location.state.username ===
+                  JSON.parse(sessionStorage.getItem("user"))?.userName
+                    ? props.myAvatar
+                    : props.avatar
+                }
               >
                 {username[0]}
               </Avatar>

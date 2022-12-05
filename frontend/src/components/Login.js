@@ -42,6 +42,13 @@ const Login = (props) => {
           states.user.userName = props.user.userName;
           props.setLogin(states.login);
           props.setMsg("Successfully Logged In");
+
+          console.log(
+            JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
+          );
+          props.getMyAvatar(
+            JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
+          );
           props.setSucess(true);
           const timer = new props.sessionTimer(2); //2 hours session timer
           //alert(`userName: ${states.user.userName}`);

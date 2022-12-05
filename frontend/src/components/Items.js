@@ -40,7 +40,9 @@ const Items = (props) => {
         </IconButton>
       )}
 
-      <CardActionArea onClick={() => props.openItemHandler(index)}>
+      <CardActionArea
+        onClick={() => props.openItemHandler(index, item.username)}
+      >
         <LazyLoadImage
           className={classes.image}
           src={item.url}

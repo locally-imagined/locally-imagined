@@ -113,6 +113,9 @@ const Appbar = (props) => {
     const username = JSON.parse(sessionStorage.getItem("user")).userName;
     //console.log(username);
     props.setUserID(userID);
+    props.getMyAvatar(
+      JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
+    );
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
     history.push(`/profile/${username}`, {
@@ -135,6 +138,11 @@ const Appbar = (props) => {
   };
   useEffect(() => {
     props.setCurPath(location.pathname);
+    props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+    props.getAvatar(
+      JSON.parse(sessionStorage.getItem("avatar")),
+      JSON.parse(sessionStorage.getItem("user"))?.username
+    );
   }, []);
 
   return (
@@ -178,7 +186,10 @@ const Appbar = (props) => {
             setUser={props.setUser}
             user={props.user}
             setSignup={setSignup}
+            setMyAvatar={props.setMyAvatar}
+            getAvatar={props.getAvatar}
             sessionTimer={sessionTimer}
+            getMyAvatar={props.getMyAvatar}
           />
         )}
         {/*Dashboard button*/}
@@ -224,7 +235,7 @@ const Appbar = (props) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar className={classes.avatar}>
+              <Avatar className={classes.avatar} src={props.myAvatar}>
                 {props.user.userName[0]}
               </Avatar>
             </IconButton>

@@ -37,20 +37,26 @@ const ItemDetails = (props) => {
   };
   const onImgLoad = ({ target: img }) => {
     // console.log(img.naturalWidth, img.naturalHeight);
-    let width = "50vw",
-      height = "100%";
+    let width = "720px",
+      height = "680px";
+    const middleHeightPx = 340;
+    const middleWidthPx = 360;
+
     if (img.naturalHeight / img.naturalWidth > 1.1) {
       const ratio = img.naturalWidth / img.naturalHeight;
-      console.log("ratio:", ratio);
-      width = 50 * ratio + "vw";
-      // console.log("width:", width);
-      setPaddingLeft((50 * ratio) / 4 + "vw");
+      // console.log("ratio:", ratio);
+      width = 720 * ratio + "px";
+      const imgMiddleWidthPx = (720 * ratio) / 2;
+      // console.log("imgMiddleWidthPx:", imgMiddleWidthPx);
+      setPaddingLeft(`${middleWidthPx - imgMiddleWidthPx}px`);
     }
     if (img.naturalWidth / img.naturalHeight > 1.1) {
       const ratio = img.naturalHeight / img.naturalWidth;
-      console.log("ratio:", ratio);
-      height = 100 * ratio + "%";
-      // console.log("height:", height);
+      // console.log("ratio:", ratio);
+      height = 680 * ratio + "px";
+      const imgMiddleHeightPx = (680 * ratio) / 2;
+      // console.log("imgMiddleHeightPx:", imgMiddleHeightPx);
+      setPaddingTop(`${middleHeightPx - imgMiddleHeightPx}px`);
     }
     setDimension({
       width: width,
@@ -112,7 +118,7 @@ const ItemDetails = (props) => {
     <Modal open={props.openItem}>
       <Paper
         className={classes.itemModal}
-        style={{ width: "80vw", height: "80vh" }}
+        style={{ width: "1150px", height: "680px" }}
       >
         <IconButton className={classes.cancelIcon} onClick={closeHandler}>
           <CancelIcon />
@@ -136,8 +142,8 @@ const ItemDetails = (props) => {
         <Box
           className={classes.imageBox}
           style={{
-            width: "50vw",
-            height: "100%",
+            width: "720px",
+            height: "680px",
 
             borderRadius: "10px",
           }}

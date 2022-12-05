@@ -78,7 +78,8 @@ const AccountSetting = (props) => {
       setInfo(true);
       return;
     }
-    const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
+    let token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
+    if (!token) token = JSON.parse(sessionStorage.getItem("user")).token;
     console.log(token);
     if (setting.avatar) {
       axios

@@ -565,7 +565,7 @@ const styles = makeStyles((theme) => ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
-    height: "70%",
+    height: "80%",
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
@@ -597,14 +597,12 @@ const styles = makeStyles((theme) => ({
     display: "block",
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: "15px",
     marginTop: theme.spacing(3),
 
     padding: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
-      width: "60%",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "30%",
+      width: "70%",
     },
   },
   search: {

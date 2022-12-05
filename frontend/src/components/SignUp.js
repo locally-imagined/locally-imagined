@@ -150,12 +150,17 @@ const SignUp = (props) => {
             name="password"
           />
 
-          <Divider className={classes.divider} />
           <Button
             variant="text"
             type="submit"
             value="Submit"
             data-testid="submit-signup"
+            style={{
+              color: "white",
+              width: "90%",
+              marginTop: "40px",
+              marginLeft: "15px",
+            }}
             className={classes.signUpButton}
           >
             Sign Up

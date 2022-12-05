@@ -42,11 +42,40 @@ const Edit = (props) => {
   const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
   const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
   const soldOptions = ["true", "false"];
-
+  const [dimension, setDimension] = useState({ width: 0, height: 0 });
+  const [paddingLeft, setPaddingLeft] = useState(0);
+  const [paddingTop, setPaddingTop] = useState(0);
   const scrollOption = {
     top: 60,
     left: 100,
     behavior: "smooth",
+  };
+  const onImgLoad = ({ target: img }) => {
+    // console.log(img.naturalWidth, img.naturalHeight);
+    let width = "50vw",
+      height = "100%";
+    if (img.naturalHeight / img.naturalWidth > 1.1) {
+      const ratio = img.naturalWidth / img.naturalHeight;
+      // console.log("ratio:", ratio);
+      width = 50 * ratio + "vw";
+      // console.log("width:", width);
+      setPaddingLeft((50 * ratio) / 4 + "vw");
+    }
+    if (img.naturalWidth / img.naturalHeight > 1.1) {
+      const ratio = img.naturalHeight / img.naturalWidth;
+      // console.log("ratio:", ratio);
+      height = 100 * ratio + "%";
+      // console.log("height:", height);
+      setPaddingTop((100 * ratio) / 4 + "%");
+    }
+    setDimension({
+      width: width,
+      height: height,
+    });
+  };
+  const resetPadding = () => {
+    setPaddingLeft(0);
+    setPaddingTop(0);
   };
   const handleDeleteCheckChange = (id) => {
     const updateArr = props.deleteCheck;
@@ -67,6 +96,7 @@ const Edit = (props) => {
   const closeEditHandler = () => {
     props.setOpenEdit(false);
     setOffset(0);
+    resetPadding();
     props.setImages([]);
     setEdit({ title: "", description: "", price: "", delete: "" });
     setCheck(false);
@@ -78,7 +108,10 @@ const Edit = (props) => {
   };
   const prevHandler = () => {
     setOffset((val) => {
-      if (val > 0) val--;
+      if (val > 0) {
+        resetPadding();
+        val--;
+      }
       curOffset = val;
       setCurrSlideStyle({ opacity: "100%" });
       return val;
@@ -88,7 +121,10 @@ const Edit = (props) => {
   };
   const nextHandler = () => {
     setOffset((val) => {
-      if (val < props.images.length - 1) val++;
+      if (val < props.images.length - 1) {
+        resetPadding();
+        val++;
+      }
       curOffset = val;
       setCurrSlideStyle({ opacity: "100%" });
       return val;
@@ -239,7 +275,7 @@ const Edit = (props) => {
     });
     if (deleteArr.length === props.images.length) {
       setInfo(true);
-      setMsg("can not delete all pictures, delete post instead");
+      setMsg("can not delete");
       return;
     }
     // console.log(deleteArr);
@@ -304,10 +340,20 @@ const Edit = (props) => {
         <Box className={classes.imageBox}>
           {props.images.length > 0 && (
             <LazyLoadImage
-              className={classes.itemModalPicture}
               src={props.images[offset].src}
               alt="Image Alt"
               id={props.editId}
+              onLoad={onImgLoad}
+              style={{
+                width: dimension.width,
+                height: dimension.height,
+                paddingLeft: paddingLeft,
+                paddingTop: paddingTop,
+                borderRadius: "10px",
+                boxShadow: 24,
+
+                p: 4,
+              }}
             ></LazyLoadImage>
           )}
           <SliderDot

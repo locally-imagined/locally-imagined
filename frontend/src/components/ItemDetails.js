@@ -27,26 +27,63 @@ const ItemDetails = (props) => {
   const history = useHistory();
   const [offset, setOffset] = useState(0);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
+  const [dimension, setDimension] = useState({ width: 0, height: 0 });
+  const [paddingLeft, setPaddingLeft] = useState(0);
+  const [paddingTop, setPaddingTop] = useState(0);
   const scrollOption = {
     top: 60,
     left: 100,
     behavior: "smooth",
   };
+  const onImgLoad = ({ target: img }) => {
+    // console.log(img.naturalWidth, img.naturalHeight);
+    let width = "50vw",
+      height = "100%";
+    if (img.naturalHeight / img.naturalWidth > 1.1) {
+      const ratio = img.naturalWidth / img.naturalHeight;
+      console.log("ratio:", ratio);
+      width = 50 * ratio + "vw";
+      // console.log("width:", width);
+      setPaddingLeft((50 * ratio) / 4 + "vw");
+    }
+    if (img.naturalWidth / img.naturalHeight > 1.1) {
+      const ratio = img.naturalHeight / img.naturalWidth;
+      console.log("ratio:", ratio);
+      height = 100 * ratio + "%";
+      // console.log("height:", height);
+      setPaddingTop((100 * ratio) / 6 + "%");
+    }
+    setDimension({
+      width: width,
+      height: height,
+    });
+  };
+  const resetPadding = () => {
+    setPaddingLeft(0);
+    setPaddingTop(0);
+  };
   const closeHandler = () => {
     props.setOpenItem(false);
     setOffset(0);
+    resetPadding();
     props.setImages([]);
   };
   const prevHandler = () => {
     setOffset((val) => {
-      if (val > 0) val--;
+      if (val > 0) {
+        resetPadding();
+        val--;
+      }
       setCurrSlideStyle({ opacity: "100%" });
       return val;
     });
   };
   const nextHandler = () => {
     setOffset((val) => {
-      if (val < props.images.length - 1) val++;
+      if (val < props.images.length - 1) {
+        resetPadding();
+        val++;
+      }
       setCurrSlideStyle({ opacity: "100%" });
       return val;
     });
@@ -67,11 +104,14 @@ const ItemDetails = (props) => {
     props.setUserID(userID);
     sessionStorage.setItem("currentUsername", username);
     props.getContactInfo(userID);
-    history.push(`/contact/user:${username}`,{ userID: userID });
+    history.push(`/contact/user:${username}`, { userID: userID });
   };
   return (
     <Modal open={props.openItem}>
-      <Paper className={classes.itemModal}>
+      <Paper
+        className={classes.itemModal}
+        style={{ width: "80vw", height: "80vh" }}
+      >
         <IconButton className={classes.cancelIcon} onClick={closeHandler}>
           <CancelIcon />
         </IconButton>
@@ -91,13 +131,32 @@ const ItemDetails = (props) => {
           </Box>
         )}
 
-        <Box className={classes.imageBox}>
+        <Box
+          className={classes.imageBox}
+          style={{
+            width: "50vw",
+            height: "100%",
+
+            borderRadius: "10px",
+          }}
+        >
           {props.images.length > 0 && (
             <LazyLoadImage
               className={classes.itemModalPicture}
               src={props.images[offset].src}
               alt="Image Alt"
               id={props.curItemId}
+              onLoad={onImgLoad}
+              style={{
+                width: dimension.width,
+                height: dimension.height,
+                paddingLeft: paddingLeft,
+                paddingTop: paddingTop,
+                borderRadius: "10px",
+                boxShadow: 24,
+
+                p: 4,
+              }}
             ></LazyLoadImage>
           )}
           <SliderDot

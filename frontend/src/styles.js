@@ -67,10 +67,12 @@ const styles = makeStyles((theme) => ({
   },
   arrow: {
     color: "black",
-
+    backgroundColor: "#e6e6e6",
+    opacity: 0.5,
     "&:hover": {
       opacity: 0.3,
       color: "grey",
+      backgroundColor: "#e6e6e6",
       cursor: "pointer",
     },
   },

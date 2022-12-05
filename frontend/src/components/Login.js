@@ -58,7 +58,8 @@ const Login = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        props.setMsg("Incorrect username or password");
+        if (err.response.status === 400) props.setMsg("Something went wrong");
+        else props.setMsg("Incorrect username or password");
         props.setError(true);
       });
   };

@@ -145,7 +145,7 @@ const Listing = (props) => {
         disableLink={false}
         setAvatar={props.setAvatar}
         avatar={props.avatar}
-        getContactInfo={props.getContactInfo}
+        getInfo={props.getInfo}
         getAvatar={props.getAvatar}
       />
     </Grid>

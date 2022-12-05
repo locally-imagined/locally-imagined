@@ -14,7 +14,7 @@ const ContactInfo = (props) => {
   const paraUserID = useParams();
   const username = sessionStorage.getItem("currentUsername");
   useEffect(() => {
-    props.getContactInfo(location.state?.userID);
+    props.getInfo(location.state?.userID);
     if (
       location.state.username ===
       JSON.parse(sessionStorage.getItem("user"))?.userName

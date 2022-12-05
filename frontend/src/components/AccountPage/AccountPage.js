@@ -23,10 +23,8 @@ const AccountPage = (props) => {
       : props.artistItem[0]?.username;
 
   useEffect(() => {
-    // console.log("path changed");
-    // console.log(paraUserID.userID.slice(1));
-    // console.log(location.pathname);
     props.setCurPath(location.pathname);
+    props.getInfo(location.state.userID);
     props.setUserID(location.state.userID);
     if (
       location.state.username ===
@@ -34,9 +32,6 @@ const AccountPage = (props) => {
     )
       props.getMyAvatar(sessionStorage.getItem("myAvatar"));
     else props.getAvatar(sessionStorage.getItem("currAvatar"));
-
-    // console.log(location.state.userID);
-    // console.log(location.state.username);
   }, [location.state.username]);
 
   const [edit, setEdit] = useState("");
@@ -117,7 +112,7 @@ const AccountPage = (props) => {
                 paddingRight: "10px",
               }}
             >
-              Landscape/Abstract Artist • Illustrator
+              {props.contact.bio}
             </span>
           </Typography>
         )}
@@ -203,7 +198,7 @@ const AccountPage = (props) => {
           setImages={props.setImages}
           disableLink={true}
           setUserID={props.setUserID}
-          getContactInfo={props.getContactInfo}
+          getInfo={props.getInfo}
           avatar={props.avatar}
           setAvatar={props.setAvatar}
         />

@@ -101,6 +101,7 @@ const ItemDetails = (props) => {
     props.setArtistItem([]);
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);
+    props.getInfo(userID);
     // console.log(profpicID);
     props.getAvatar(profpicID);
     history.push(`/profile/${username}`, {
@@ -114,7 +115,7 @@ const ItemDetails = (props) => {
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);
     sessionStorage.setItem("currentUsername", username);
-    props.getContactInfo(userID);
+    props.getInfo(userID);
     history.push(`/contact/${username}`, {
       userID: userID,
       username: username,

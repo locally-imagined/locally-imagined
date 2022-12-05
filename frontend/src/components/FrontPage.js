@@ -25,6 +25,7 @@ function FrontPage() {
   const [curPath, setCurPath] = useState("");
   const [images, setImages] = React.useState([]);
   const [search, setSearch] = useState("");
+  const [bio, setBio] = useState("");
   const [userID, setUserID] = useState("");
   const [contact, setContact] = useState({});
   const [filterQuery, setFilterQuery] = useState("");
@@ -253,10 +254,10 @@ function FrontPage() {
         setLoading(false);
       });
   };
-  const getContactInfo = (userID) => {
+  const getInfo = (userID) => {
     if (!userID) return;
     setLoading(true);
-    const url = `https://locally-imagined.herokuapp.com/users/contactinfo?userID=${userID}`;
+    const url = `https://locally-imagined.herokuapp.com/users/info?userID=${userID}`;
     axios
       .get(url, {})
       .then((res) => {
@@ -264,7 +265,7 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          // console.log(JSON.parse(JSON.stringify(data)));
+          console.log(JSON.parse(JSON.stringify(data)));
           setContact(JSON.parse(JSON.stringify(data)));
           setLoading(false);
         }
@@ -327,6 +328,7 @@ function FrontPage() {
             setMyAvatar={setMyAvatar}
             myAvatar={myAvatar}
             getMyAvatar={getMyAvatar}
+            getInfo={getInfo}
           />
           <Listing
             items={tab === "explore" ? items : artistItem}
@@ -348,13 +350,15 @@ function FrontPage() {
             getPosts={getPosts}
             setUserID={setUserID}
             setUser={setUser}
-            getContactInfo={getContactInfo}
+            getInfo={getInfo}
             setContact={setContact}
             setAvatar={setAvatar}
             avatar={avatar}
             getAvatar={getAvatar}
             setMyAvatar={setMyAvatar}
             myAvatar={myAvatar}
+            bio={bio}
+            setBio={setBio}
           />
           <ChangePage
             items={tab === "explore" ? items : artistItem}
@@ -398,7 +402,8 @@ function FrontPage() {
             setArtistItem={setArtistItem}
             setUserID={setUserID}
             setUser={setUser}
-            getContactInfo={getContactInfo}
+            getInfo={getInfo}
+            contact={contact}
             setContact={setContact}
             setAvatar={setAvatar}
             avatar={avatar}
@@ -423,6 +428,7 @@ function FrontPage() {
             setMyAvatar={setMyAvatar}
             myAvatar={myAvatar}
             getMyAvatar={getMyAvatar}
+            getInfo={getInfo}
           />
           <AccountSetting
             artistItem={artistItem}
@@ -443,9 +449,11 @@ function FrontPage() {
             setUserID={setUserID}
             setAvatar={setAvatar}
             avatar={avatar}
+            contact={contact}
             getAvatar={getAvatar}
             setMyAvatar={setMyAvatar}
             myAvatar={myAvatar}
+            getInfo={getInfo}
           />
         </Route>
         <Route path="/contact">
@@ -468,7 +476,7 @@ function FrontPage() {
             contact={contact}
             loading={loading}
             user={user}
-            getContactInfo={getContactInfo}
+            getInfo={getInfo}
             setMyAvatar={setMyAvatar}
             myAvatar={myAvatar}
             avatar={avatar}

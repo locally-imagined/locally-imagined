@@ -66,7 +66,9 @@ const NavBar = (props) => {
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    history.push(`/settings`);
+    history.push(`/settings`, {
+      userID: userID,
+    });
     window.location.reload(false);
   };
   const handleLogout = () => {

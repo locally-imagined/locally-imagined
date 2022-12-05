@@ -116,6 +116,7 @@ const Appbar = (props) => {
     props.getMyAvatar(
       JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
     );
+    props.getInfo(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
     history.push(`/profile/${username}`, {
@@ -131,14 +132,18 @@ const Appbar = (props) => {
 
     //console.log(username);
     props.setUserID(userID);
+    props.getInfo(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    history.push(`/settings`);
+    history.push(`/settings`, {
+      userID: userID,
+    });
     window.location.reload(false);
   };
   useEffect(() => {
     props.setCurPath(location.pathname);
     props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+
     props.getAvatar(
       JSON.parse(sessionStorage.getItem("avatar")),
       JSON.parse(sessionStorage.getItem("user"))?.username

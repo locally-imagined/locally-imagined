@@ -36,6 +36,7 @@ const AccountSetting = (props) => {
   useEffect(() => {
     // console.log(JSON.parse(sessionStorage.getItem("avatar")));
     props.getAvatar(sessionStorage.getItem("myAvatar"));
+    props.getInfo(location.state.userID);
   }, []);
   const getBase64 = (file) => {
     return new Promise((resolve) => {
@@ -253,7 +254,7 @@ const AccountSetting = (props) => {
                   multiline
                   minRows={4}
                   disabled={setting.bio.length >= 300}
-                  defaultValue="Landscape/Abstract Artist • Illustrator"
+                  defaultValue={props.contact.bio}
                   variant="standard"
                   name="bio"
                   onChange={handleSettingChange}

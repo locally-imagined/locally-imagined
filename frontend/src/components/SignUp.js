@@ -44,7 +44,7 @@ const SignUp = (props) => {
           props.setError(false);
           console.log(res);
           props.user.token = res.data;
-          //sessionStorage.setItem("token", res.data);
+
           sessionStorage.setItem("user", JSON.stringify(props.user));
           console.log(sessionStorage.getItem("user"));
           states.login = true;
@@ -52,7 +52,7 @@ const SignUp = (props) => {
           props.setLogin(states.login);
           const userID = JSON.parse(sessionStorage.getItem("user")).token
             .userID;
-          // console.log(username);
+
           props.setUserID(userID);
           sessionStorage.removeItem("currentUserID");
           sessionStorage.setItem("currentUserID", userID);
@@ -64,13 +64,11 @@ const SignUp = (props) => {
           setTimeout(() => {
             history.push(`/setting`);
           }, 3000);
-          //alert(`userName: ${states.user.userName}`);
-          // history.push("/");
         }
       })
       .catch((err) => {
-        // do nothing.
-        props.setMsg("Username is already taken");
+        if (err.response.status === 400) props.setMsg("Something went wrong");
+        else props.setMsg("Username is already taken");
         props.setError(true);
         console.log(err);
       });

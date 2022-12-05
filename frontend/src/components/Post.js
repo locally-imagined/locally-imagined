@@ -29,6 +29,7 @@ const Post = (props) => {
   const [url, setUrl] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [check, setCheck] = useState(false);
+
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const maxiumImages = 10;
   const scrollOption = {
@@ -36,6 +37,7 @@ const Post = (props) => {
     left: 100,
     behavior: "smooth",
   };
+
   const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
   const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
   const handleSelectChange = (event) => {
@@ -333,14 +335,16 @@ const Post = (props) => {
             style={{
               boxShadow: 3,
 
-              marginLeft: "5rem",
+              marginLeft: "3rem",
               position: "relative",
               height: "35rem",
             }}
           >
             <LazyLoadImage
               style={{
-                height: `35rem`,
+                width: "100%",
+                height: "100%",
+                maxHeight: "35rem",
                 borderRadius: "5px",
                 boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
               }}

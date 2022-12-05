@@ -115,7 +115,10 @@ const Appbar = (props) => {
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    history.push(`/posts/artistposts/user:${username}`, { userID: userID });
+    history.push(`/profile/${username}`, {
+      userID: userID,
+      username: username,
+    });
     window.location.reload(false);
   };
   const accountSettingHandler = () => {
@@ -127,7 +130,7 @@ const Appbar = (props) => {
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    history.push(`/setting`);
+    history.push(`/settings`);
     window.location.reload(false);
   };
   useEffect(() => {
@@ -249,7 +252,7 @@ const Appbar = (props) => {
             data-testid="button-setting"
             className={classes.accountMenuItem}
           >
-            Account Setting
+            Account Settings
           </MenuItem>
           <MenuItem
             onClick={handleLogout}

@@ -22,8 +22,9 @@ const AccountPage = (props) => {
     // console.log(location.pathname);
     props.setCurPath(location.pathname);
     props.setUserID(location.state.userID);
-    // console.log(location.state.userID);
-  }, [paraUser]);
+    console.log(location.state.userID);
+    console.log(location.state.username);
+  }, [location.state.username]);
   const username =
     paraUser === JSON.parse(sessionStorage.getItem("user"))?.userName
       ? JSON.parse(sessionStorage.getItem("user")).userName

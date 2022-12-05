@@ -49,7 +49,10 @@ const NavBar = (props) => {
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    history.push(`/posts/artistposts/user:${username}`, { userID: userID });
+    history.push(`/profile/${username}`, {
+      userID: userID,
+      username: username,
+    });
   };
   const accountSettingHandler = () => {
     setAnchorEl(null);
@@ -60,7 +63,7 @@ const NavBar = (props) => {
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    history.push(`/setting`);
+    history.push(`/settings`);
     window.location.reload(false);
   };
   const handleLogout = () => {
@@ -126,7 +129,7 @@ const NavBar = (props) => {
             onClick={accountSettingHandler}
             className={classes.accountMenuItem}
           >
-            Account Setting
+            Account Settings
           </MenuItem>
           <MenuItem onClick={handleLogout} className={classes.accountMenuItem}>
             Logout

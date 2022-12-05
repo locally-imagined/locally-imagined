@@ -220,7 +220,7 @@ function FrontPage() {
       // console.log(`current path:`, curPath);
       tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
     }
-    if (curPath.includes("/posts/artistposts")) {
+    if (curPath.includes("profile")) {
       // console.log(curPath);
       getArtistPosts(userID);
     }
@@ -291,7 +291,7 @@ function FrontPage() {
           />
         </Route>
 
-        <Route path="/posts/artistposts/user:username">
+        <Route path="/profile">
           <NavBar
             login={states.login}
             offset={offset}
@@ -323,7 +323,7 @@ function FrontPage() {
             setContact={setContact}
           />
         </Route>
-        <Route path="/setting">
+        <Route path="/settings">
           <NavBar
             login={states.login}
             offset={offset}

@@ -51,7 +51,6 @@ const ItemDetails = (props) => {
       console.log("ratio:", ratio);
       height = 100 * ratio + "%";
       // console.log("height:", height);
-      setPaddingTop((100 * ratio) / 6 + "%");
     }
     setDimension({
       width: width,
@@ -95,7 +94,10 @@ const ItemDetails = (props) => {
     props.setArtistItem([]);
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);
-    history.push(`/posts/artistposts/user:${username}`, { userID: userID });
+    history.push(`/profile/${username}`, {
+      userID: userID,
+      username: username,
+    });
     window.scrollTo(scrollOption);
   };
   const contactHandler = (userID, username) => {
@@ -154,7 +156,6 @@ const ItemDetails = (props) => {
                 paddingTop: paddingTop,
                 borderRadius: "10px",
                 boxShadow: 24,
-
                 p: 4,
               }}
             ></LazyLoadImage>

@@ -58,11 +58,13 @@ const SignUp = (props) => {
           sessionStorage.setItem("currentUserID", userID);
 
           props.setMsg(
-            "Sign Up Successfully, You will be directed to profile setting in 3s"
+            "Successfully Sign Up, You will be directed to profile setting in 3s"
           );
           props.setSucess(true);
           setTimeout(() => {
-            history.push(`/setting`);
+            history.push(`/settings`, {
+              userID: userID,
+            });
           }, 3000);
         }
       })

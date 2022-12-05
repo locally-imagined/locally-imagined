@@ -1,9 +1,16 @@
 import React from "react";
-import { Typography, Grid, IconButton, Avatar } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  IconButton,
+  Avatar,
+  Divider,
+} from "@material-ui/core";
 import Box from "@mui/material/Box";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Items from "../Items";
 import styles from "../../styles";
+import Card from "@mui/material/Card";
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
@@ -76,46 +83,49 @@ const AccountPage = (props) => {
           msg={msg}
         />
       )}
-      <Box className={classes.accountBoard}>
-        {username && (
-          <Typography
-            component={"span"}
-            className={classes.accountBoardDetails}
+      <Box
+        className={classes.accountBoard}
+        style={{
+          width: "80vw",
+          borderRadius: "10px",
+          position: "absolute",
+          marginLeft: "10vw",
+        }}
+      >
+        <Typography component={"span"} className={classes.accountBoardDetails}>
+          <span
+            style={{
+              marginLeft: "10px",
+              marginTop: "-10px",
+              position: "absolute",
+            }}
           >
-            <span
-              style={{
-                marginLeft: "10px",
-                marginTop: "-10px",
-                position: "absolute",
-              }}
+            <Avatar
+              className={classes.avatar}
+              style={{ width: 60, height: 60 }}
+              src={
+                location.state.username ===
+                JSON.parse(sessionStorage.getItem("user"))?.userName
+                  ? props.myAvatar
+                  : props.avatar
+              }
             >
-              <Avatar
-                className={classes.avatar}
-                style={{ width: 60, height: 60 }}
-                src={
-                  location.state.username ===
-                  JSON.parse(sessionStorage.getItem("user"))?.userName
-                    ? props.myAvatar
-                    : props.avatar
-                }
-              >
-                {username[0]}
-              </Avatar>
-            </span>
-            <span style={{ marginLeft: "100px" }}>{username}</span>
-            <br />
-            <br />
-            <span
-              style={{
-                fontSize: "15px",
-                color: "grey",
-                paddingRight: "10px",
-              }}
-            >
-              {props.contact.bio}
-            </span>
-          </Typography>
-        )}
+              {location.state.username[0]}
+            </Avatar>
+          </span>
+          <span style={{ marginLeft: "100px" }}>{location.state.username}</span>
+          <br />
+          <br />
+          <span
+            style={{
+              fontSize: "15px",
+              color: "grey",
+              paddingRight: "10px",
+            }}
+          >
+            {props.contact.bio}
+          </span>
+        </Typography>
 
         {props.user.userName === props.artistItem[0]?.username && edit === "" && (
           <IconButton className={classes.accountIcons} onClick={editHandler}>
@@ -131,78 +141,81 @@ const AccountPage = (props) => {
               <ClearIcon />
             </IconButton>
           )}
-        <Box className={classes.accountItems}>
-          {props.artistItem[0] && (
-            <h3 style={{ color: "#494a91" }}>{username}'s artworks</h3>
-          )}
-          {props.loading && (
-            <Box
-              className={classes.loading}
-              style={{ marginLeft: "30vw", height: "100vh" }}
-            >
-              <ReactLoading type="bars" color="grey" height={100} width={100} />
-            </Box>
-          )}
-          {props.noResult && (
-            <Typography
-              variant="h5"
-              style={{
-                marginLeft: "45%",
-                color: " grey",
-                paddingTop: "10vw",
-                paddingBottom: "100vh",
-              }}
-            >
-              No result
-            </Typography>
-          )}
-          <Items
-            items={props.artistItem}
-            setOpenEdit={setOpenEdit}
-            icon={edit}
-            openEditHandler={openEditHandler}
-            openItemHandler={openItemHandler}
-            iconHandler={iconHandler}
-            setEditId={setEditId}
-          />
+      </Box>
 
-          <ChangePage
-            setOffset={props.setOffset}
-            offset={props.offset}
-            items={props.artistItem}
-          />
-        </Box>
-        <Edit
+      <Box className={classes.accountItems}>
+        {props.artistItem[0] && (
+          <h3 style={{ color: "#494a91" }}>{username}'s artworks</h3>
+        )}
+        {props.loading && (
+          <Box
+            className={classes.loading}
+            style={{ marginLeft: "30vw", height: "100vh" }}
+          >
+            <ReactLoading type="bars" color="grey" height={100} width={100} />
+          </Box>
+        )}
+
+        {props.noResult && (
+          <Typography
+            variant="h5"
+            style={{
+              marginLeft: "45%",
+              color: " grey",
+              paddingTop: "10vw",
+              paddingBottom: "100vh",
+            }}
+          >
+            No result
+          </Typography>
+        )}
+
+        <Items
+          items={props.artistItem}
           setOpenEdit={setOpenEdit}
-          openEdit={openEdit}
-          openItemUrl={openItemUrl}
-          editId={editId}
-          items={props.artistItem}
-          icon={"favorite"}
-          images={props.images}
-          setImages={props.setImages}
-          deleteCheck={props.deleteCheck}
-          setDeleteCheck={props.setDeleteCheck}
-          setSuccess={setSuccess}
-          success={success}
-          setMsg={setMsg}
-          msg={msg}
+          icon={edit}
+          openEditHandler={openEditHandler}
+          openItemHandler={openItemHandler}
+          iconHandler={iconHandler}
+          setEditId={setEditId}
         />
-        <ItemDetails
-          openItem={openItem}
-          setOpenItem={setOpenItem}
-          openItemUrl={openItemUrl}
-          curItemId={curItemId}
+
+        <ChangePage
+          setOffset={props.setOffset}
+          offset={props.offset}
           items={props.artistItem}
-          images={props.images}
-          setImages={props.setImages}
-          disableLink={true}
-          setUserID={props.setUserID}
-          getInfo={props.getInfo}
-          avatar={props.avatar}
-          setAvatar={props.setAvatar}
         />
       </Box>
+      <Edit
+        setOpenEdit={setOpenEdit}
+        openEdit={openEdit}
+        openItemUrl={openItemUrl}
+        editId={editId}
+        items={props.artistItem}
+        icon={"favorite"}
+        images={props.images}
+        setImages={props.setImages}
+        deleteCheck={props.deleteCheck}
+        setDeleteCheck={props.setDeleteCheck}
+        setSuccess={setSuccess}
+        success={success}
+        setMsg={setMsg}
+        msg={msg}
+      />
+      <ItemDetails
+        openItem={openItem}
+        setOpenItem={setOpenItem}
+        openItemUrl={openItemUrl}
+        curItemId={curItemId}
+        items={props.artistItem}
+        images={props.images}
+        setImages={props.setImages}
+        disableLink={true}
+        setUserID={props.setUserID}
+        getInfo={props.getInfo}
+        avatar={props.avatar}
+        setAvatar={props.setAvatar}
+      />
     </Box>
   );
 };

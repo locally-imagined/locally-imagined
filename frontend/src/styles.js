@@ -10,12 +10,10 @@ const styles = makeStyles((theme) => ({
     marginTop: "50px",
   },
   accountBoard: {
-    width: "70vw",
+    width: "80vw",
     borderRadius: "10px",
-    backgroundColor: "white",
     position: "absolute",
-    marginLeft: "15vw",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
+    marginLeft: "10vw",
   },
   accountBoardTitle: {
     marginLeft: "15vw",
@@ -37,10 +35,15 @@ const styles = makeStyles((theme) => ({
     marginRight: "1rem",
   },
   accountItems: {
+    borderColor: "grey",
+
+    borderTop: "solid 1px #D0d0d0",
+    borderColor: "#D0d0d0",
     marginTop: "20rem",
-    marginLeft: "4vw",
+    marginLeft: "9rem",
+
     position: "absolute",
-    width: "70vw",
+    width: "79%",
   },
   accountBoardDetails: {
     marginLeft: "10vw",

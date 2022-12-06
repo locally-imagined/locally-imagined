@@ -94,8 +94,11 @@ const Listing = (props) => {
 
       <Box
         elevation={0}
-        style={{ paddingTop: "20px" }}
         className={classes.listingPage}
+        style={{
+          paddingTop: "20px",
+          paddingLeft: "100px",
+        }}
       >
         <Container>
           {props.loading && (

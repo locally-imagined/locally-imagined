@@ -151,12 +151,11 @@ const ItemDetails = (props) => {
           style={{
             width: "720px",
             height: "680px",
-
             borderRadius: "10px",
           }}
         >
           {props.images.length > 0 && (
-            <LazyLoadImage
+            <img
               className={classes.itemModalPicture}
               src={props.images[offset].src}
               alt="Image Alt"
@@ -171,7 +170,7 @@ const ItemDetails = (props) => {
                 boxShadow: 24,
                 p: 4,
               }}
-            ></LazyLoadImage>
+            ></img>
           )}
           <SliderDot
             offset={offset}
@@ -284,14 +283,6 @@ const ItemDetails = (props) => {
             >
               contact this seller
             </Link>
-            {/*
-          <Button
-            variant="text"
-            className={classes.postButton}
-            style={{ color: "white" }}
-          >
-            Add to Chart
-          </Button> */}
           </Box>
         )}
       </Paper>

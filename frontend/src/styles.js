@@ -312,9 +312,8 @@ const styles = makeStyles((theme) => ({
   },
   itemModal: {
     position: "relative",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    marginLeft: "10%",
+    marginTop: "5%",
     display: "inline-block",
     width: "80vw",
     height: "80vh",

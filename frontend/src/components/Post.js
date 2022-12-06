@@ -297,7 +297,7 @@ const Post = (props) => {
           <label htmlFor="icon-button-file">
             <IconButton
               color="primary"
-              aria-label="upload picture"
+              aria-label="upload pictures"
               component="span"
               disabled={url.length === maxiumImages}
             >
@@ -311,7 +311,7 @@ const Post = (props) => {
             >
               {url.length === maxiumImages
                 ? "reached maxium images"
-                : "upload image"}
+                : "upload images"}
             </span>
           </label>
 

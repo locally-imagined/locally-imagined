@@ -44,7 +44,7 @@ const SignUp = (props) => {
           props.setError(false);
           console.log(res);
           props.user.token = res.data;
-
+          delete props.user.password;
           sessionStorage.setItem("user", JSON.stringify(props.user));
           console.log(sessionStorage.getItem("user"));
           states.login = true;

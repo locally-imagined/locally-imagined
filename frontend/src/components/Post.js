@@ -42,7 +42,15 @@ const Post = (props) => {
     behavior: "smooth",
   };
 
-  const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
+  const mediumOptions = [
+    "Drawing",
+    "Painting",
+    "Photography",
+    "Print",
+    "Sculpture",
+    "Digital",
+    "Other",
+  ];
   const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
   const handleSelectChange = (event) => {
     // console.log(event.target.name);
@@ -241,7 +249,7 @@ const Post = (props) => {
               "data-id": "title",
               onChange: handlePostChange,
               required: true,
-              maxLength: 50,
+              maxLength: 30,
             }}
             type="text"
             name="title"

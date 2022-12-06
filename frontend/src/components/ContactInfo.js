@@ -6,13 +6,18 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import ReactLoading from "react-loading";
 import styles from "../styles";
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useHistory } from "react-router-dom";
+import { IconButton } from "@material-ui/core";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const ContactInfo = (props) => {
   const classes = styles();
   const location = useLocation();
+
+  const history = useHistory();
   const paraUserID = useParams();
   const username = sessionStorage.getItem("currentUsername");
+
   useEffect(() => {
     props.getInfo(location.state?.userID);
     if (
@@ -29,6 +34,13 @@ const ContactInfo = (props) => {
       <br />
       <br />
       <br />
+      <IconButton
+        onClick={() => history.goBack()}
+        className={classes.arrow}
+        style={{ position: "absolute", marginTop: "10px", marginLeft: "10px" }}
+      >
+        <ArrowBackIcon className={classes.arrow} />
+      </IconButton>
       {props.loading && (
         <Box
           className={classes.loading}

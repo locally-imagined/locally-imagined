@@ -39,7 +39,6 @@ function FrontPage() {
   const [myAvatar, setMyAvatar] = React.useState("");
   const [user, setUser] = useState({
     userName: "",
-    password: "",
     firstName: "",
     lastName: "",
     phone: "",
@@ -229,6 +228,7 @@ function FrontPage() {
   };
   const getPosts = (filterQuery) => {
     let url = "";
+
     setLoading(true);
     if (!filterQuery && !search) {
       const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpage/`;
@@ -240,7 +240,7 @@ function FrontPage() {
       }${search ? `&${filterQuery}` : filterQuery}`;
     }
 
-    // console.log(url);
+    console.log(url);
     axios
       .get(url, {})
       .then((res) => {

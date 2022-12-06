@@ -27,7 +27,7 @@ const Items = (props) => {
           <FavoriteIcon />
         </IconButton>
       )} */}
-      {props.icon === "edit" && (
+      {props.icon === "edit" && props.user.userName === item?.username && (
         <IconButton
           className={classes.favoriteIcon}
           onClick={() => {

@@ -64,6 +64,9 @@ const AccountPage = (props) => {
     props.getImagesSet(props.artistItem[index].postID);
   };
   const iconHandler = (event) => {};
+  const editHandler = () => {
+    setEdit("edit");
+  };
 
   const classes = styles();
 
@@ -127,7 +130,7 @@ const AccountPage = (props) => {
 
       <Box className={classes.accountItems}>
         {props.artistItem[0] && (
-          <h3 style={{ color: "#494a91" }}>{username}'s artworks</h3>
+          <h3 style={{ color: "#494a91" }}>{username}'s Art</h3>
         )}
         {props.loading && (
           <Box
@@ -148,7 +151,7 @@ const AccountPage = (props) => {
               paddingBottom: "100vh",
             }}
           >
-            No result
+            No Results
           </Typography>
         )}
 
@@ -160,6 +163,8 @@ const AccountPage = (props) => {
           openItemHandler={openItemHandler}
           iconHandler={iconHandler}
           setEditId={setEditId}
+          contact={props.contact}
+          user={props.user}
         />
 
         <ChangePage

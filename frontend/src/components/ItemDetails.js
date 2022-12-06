@@ -180,7 +180,7 @@ const ItemDetails = (props) => {
           />
         </Box>
         {props.images.length > 0 && (
-          <Box class={classes.editForm}>
+          <Box className={classes.editForm}>
             {/* <Link href={`/account/#${props.items[props.curItemId]?.userID}`}> */}
             {props.disableLink && (
               <IconButton>
@@ -203,14 +203,34 @@ const ItemDetails = (props) => {
             )}
 
             <span style={{ textTransform: "none" }}>
-              <span className={classes.itemModalInfoTitle}>
-                {props.items[props.curItemId]?.title}
-              </span>
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "-2rem",
+                  marginLeft: "4rem",
+                  width: "80%",
+                  height: "8rem",
+                  wordWrap: "break-word",
+                }}
+              >
+                <span
+                  className={classes.itemModalInfoTitle}
+                  style={{
+                    MozHyphens: "auto",
+                    msHyphens: "auto",
+                    hyphens: "auto",
+                  }}
+                >
+                  {props.items[props.curItemId]?.title}
+                </span>
+              </div>
+
               <span
                 style={{
                   paddingLeft: "100px",
                   fontSize: "15px",
                   color: "grey",
+                  float: "right",
                 }}
               >
                 {props.items[props.curItemId]?.medium}
@@ -246,9 +266,11 @@ const ItemDetails = (props) => {
               )}
               <span
                 style={{
-                  paddingLeft: "80px",
+                  paddingLeft: "10px",
+                  paddingTop: "2px",
                   color: "grey",
                   position: "absolute",
+                  fontSize: "12px",
                 }}
               >
                 {`on  ${new Date(

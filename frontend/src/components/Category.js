@@ -16,45 +16,71 @@ const Category = (props) => {
   const classes = styles();
   const history = useHistory();
   const mediumOptions = [
-    "all",
+    "All",
+    "Drawing",
     "Painting",
-    "Oil",
-    "Watercolour",
+    "Photography",
+    "Print",
+    "Sculpture",
     "Digital",
     "Other",
   ];
 
-  const delivaryOptions = ["all", "Local Delivery", "Shipping", "Pickup"];
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  console.log(yesterday);
+  let lastweek = new Date();
+  lastweek.setDate(lastweek.getDate() - 7);
+  let lastmonth = new Date();
+  lastmonth.setMonth(lastmonth.getMonth() - 1);
+  let last3 = new Date();
+  last3.setMonth(last3.getMonth() - 3);
+  let lastyear = new Date();
+  lastyear.setFullYear(lastyear.getFullYear() - 1);
+  "2022-01-01"
+  const dateOptions = [
+    {"Range": "All"},
+    {"Range": "Last 24 Hours", "Date": yesterday.toISOString().slice(0, 10)},
+    {"Range": "Last Week", "Date": lastweek.toISOString().slice(0, 10)},
+    {"Range": "Last Month", "Date": lastmonth.toISOString().slice(0, 10)},
+    {"Range": "Last 3 Months", "Date": last3.toISOString().slice(0, 10)},
+    {"Range": "Last Year", "Date": lastyear.toISOString().slice(0, 10)},
+  ];
 
   const [anchorMed, setAnchorMed] = React.useState(null);
-  const [anchorDel, setAnchorDel] = React.useState(null);
+  const [anchorDate, setAnchorDate] = React.useState(null);
+  const [anchorMedDel, setAnchorMedDel] = React.useState(null);
+  const [anchorDateDel, setAnchorDateDel] = React.useState(null);
   const [medium, setMedium] = React.useState("");
-  const [deliverytype, setDeliverytype] = React.useState("");
+  const [date, setDate] = React.useState("");
   const [selectedMedIndex, setSelectedMedIndex] = React.useState(0);
+  const [selectedDateIndex, setSelectedDateIndex] = React.useState(0);
   const [selectedDelIndex, setSelectedDelIndex] = React.useState(0);
 
   const openMed = Boolean(anchorMed);
-  const openDel = Boolean(anchorDel);
+  const openDate = Boolean(anchorDate);
+  const openMedDel = Boolean(anchorMedDel);
+  const openDateDel = Boolean(anchorDateDel);
 
   const handleClickItem = (event) => {
     if (event.currentTarget.id === "medium-list")
       setAnchorMed(event.currentTarget);
-    // if (event.currentTarget.id === "delivery-list")
-    //   setAnchorDel(event.currentTarget);
+    if (event.currentTarget.id === "date-list")
+      setAnchorDate(event.currentTarget);
   };
-  const queryFormater = (filterOption) => {
+  const queryMedFormater = (filterOption) => {
     const mediumQuery =
-      filterOption.medium === "all" ? "" : `medium=${filterOption.medium}`;
+      filterOption.medium === "All" ? "" : `medium=${filterOption.medium}`;
     if (!mediumQuery) props.setFilterQuery(``);
-    // const deliveryQuery =
-    //   filterOption.deliverytype === "all"
-    //     ? ""
-    //     : mediumQuery
-    //     ? `&deliverytype=${filterOption.deliverytype}`
-    //     : `deliverytype=${filterOption.deliverytype}`;
     return mediumQuery;
   };
-  const handleItemClick = (event, index) => {
+  const queryDateFormater = (filterOption) => {
+    const dateQuery =
+      filterOption.date === "All" ? "" : `startdate=${filterOption.date}`;
+    if (!dateQuery) props.setFilterQuery(``);
+    return dateQuery;
+  };
+  const handleMediumClick = (event, index) => {
     if (event.currentTarget.id.includes("medium-menu-item")) {
       props.setOffset(0);
       setSelectedMedIndex(index);
@@ -62,27 +88,36 @@ const Category = (props) => {
       setMedium(mediumOptions[index]);
       props.filterOption.medium = mediumOptions[index];
       console.log(props.filterOption);
-      console.log(queryFormater(props.filterOption));
-      const query = queryFormater(props.filterOption);
+      console.log(queryMedFormater(props.filterOption));
+      const query = queryMedFormater(props.filterOption);
       props.getPosts(query, 0);
       props.setFilterQuery(query);
     }
-    // if (event.currentTarget.id.includes("delivery-menu-item")) {
-    //   setSelectedDelIndex(index);
-    //   setAnchorDel(null);
-    //   setDeliverytype(delivaryOptions[index]);
-    //   props.filterOption.deliverytype = delivaryOptions[index];
-    //   console.log(props.filterOption);
-    //   console.log(queryFormater(props.filterOption));
-    //   props.getFilterPosts(queryFormater(props.filterOption));
-    // }
   };
 
-  const handleClose = (event) => {
+  const handleDateClick = (event, index) => {
+    if (event.currentTarget.id.includes("date-menu-item")) {
+      props.setOffset(0);
+      setSelectedDateIndex(index);
+      setAnchorDate(null);
+      setDate(dateOptions[index]);
+      props.filterOption.date = dateOptions[index].Date;
+      console.log(props.filterOption);
+      console.log(queryDateFormater(props.filterOption));
+      const query = queryDateFormater(props.filterOption);
+      props.getPosts(query, 0);
+      props.setFilterQuery(query);
+    }
+  };
+
+  const handleMedClose = (event) => {
     setAnchorMed(null);
-    setAnchorDel(null);
+    setAnchorMedDel(null);
   };
-
+  const handleDateClose = (event) => {
+    setAnchorDate(null);
+    setAnchorDateDel(null);
+  };
   return (
     <Box sx={{ flexGrow: 1 }} className={classes.categoryBox}>
       <Toolbar position="static" className={classes.categoryBar}>
@@ -111,7 +146,7 @@ const Category = (props) => {
           id="medium-menu"
           anchorEl={anchorMed}
           open={openMed}
-          onClose={(event) => handleClose(event)}
+          onClose={(event) => handleMedClose(event)}
           MenuListProps={{
             "aria-labelledby": "lock-button",
             role: "listbox",
@@ -122,55 +157,54 @@ const Category = (props) => {
               key={option}
               id={"medium-menu-item-" + option}
               selected={index === selectedMedIndex}
-              onClick={(event) => handleItemClick(event, index)}
+              onClick={(event) => handleMediumClick(event, index)}
             >
               {option}
             </MenuItem>
           ))}
         </Menu>
-
-        {/* <List
+        <List
           component="nav"
-          aria-label="Delivery settings"
+          aria-label="Date settings"
           sx={{ bgcolor: "background.paper" }}
         >
           <ListItem
             button
-            id="delivery-list"
+            id="date-list"
             aria-haspopup="listbox"
             aria-controls="lock-menu"
-            aria-label="Delivery"
-            aria-expanded={openDel ? "true" : undefined}
+            aria-label="Date"
+            aria-expanded={openDate ? "true" : undefined}
             onClick={handleClickItem}
             className={classes.categoryBarItem}
           >
             <ListItemText
-              primary="Delivery"
-              secondary={delivaryOptions[selectedDelIndex]}
+              primary="Date"
+              secondary={dateOptions[selectedDateIndex].Range}
             />
           </ListItem>
         </List>
         <Menu
-          id="delivery-menu"
-          anchorEl={anchorDel}
-          open={openDel}
-          onClose={(event) => handleClose(event)}
+          id="date-menu"
+          anchorEl={anchorDate}
+          open={openDate}
+          onClose={(event) => handleDateClose(event)}
           MenuListProps={{
             "aria-labelledby": "lock-button",
             role: "listbox",
           }}
         >
-          {delivaryOptions.map((option, index) => (
+          {dateOptions.map((option, index) => (
             <MenuItem
-              key={option}
-              id={"delivery-menu-item-" + option}
-              selected={index === selectedDelIndex}
-              onClick={(event) => handleItemClick(event, index)}
+              key={option.Range}
+              id={"date-menu-item-" + option.Range}
+              selected={index === selectedDateIndex}
+              onClick={(event) => handleDateClick(event, index)}
             >
-              {option}
+              {option.Range}
             </MenuItem>
           ))}
-        </Menu> */}
+        </Menu>      
       </Toolbar>
     </Box>
   );

@@ -34,6 +34,7 @@ const Items = (props) => {
             props.openEditHandler(index);
             props.setOpenEdit(true);
           }}
+          size="medium"
           id={index}
           data-testid={`edit-image-${index}`}
         >

@@ -39,7 +39,7 @@ const Edit = (props) => {
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const [check, setCheck] = useState(false);
   const [offset, setOffset] = useState(0);
-  const mediumOptions = ["Painting", "Oil", "Watercolour", "Digital", "Other"];
+  const mediumOptions = ["Drawing", "Painting", "Photography", "Print", "Sculpture", "Digital", "Other"];
   const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
   const soldOptions = ["true", "false"];
   const [dimension, setDimension] = useState({ width: 0, height: 0 });

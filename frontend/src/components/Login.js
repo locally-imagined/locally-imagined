@@ -57,8 +57,10 @@ const Login = (props) => {
         }
       })
       .catch((err) => {
-        props.setMsg(`error:${err}`);
-        console.error(err);
+        if (err.response.status === 401)
+          props.setMsg(`Incorrect Username or Password `);
+        else props.setMsg(`error:${err}`);
+        // console.error(err);
         props.setError(true);
       });
   };

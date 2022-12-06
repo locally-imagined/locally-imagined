@@ -127,7 +127,7 @@ const Listing = (props) => {
                 paddingBottom: "100vh",
               }}
             >
-              No result
+              No Results
             </Typography>
           )}
         </Container>

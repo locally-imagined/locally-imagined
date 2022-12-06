@@ -41,7 +41,7 @@ const AccountPage = (props) => {
     else props.getAvatar(sessionStorage.getItem("currAvatar"));
   }, [location.state.username]);
 
-  const [edit, setEdit] = useState("edit");
+  const [edit, setEdit] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
   const [msg, setMsg] = useState("");
   const [editId, setEditId] = useState(0);
@@ -64,6 +64,9 @@ const AccountPage = (props) => {
     props.getImagesSet(props.artistItem[index].postID);
   };
   const iconHandler = (event) => {};
+  const editHandler = () => {
+    setEdit("edit");
+  };
 
   const classes = styles();
 
@@ -123,11 +126,26 @@ const AccountPage = (props) => {
             {props.contact.bio}
           </span>
         </Typography>
+
+        {props.user.userName === props.artistItem[0]?.username && edit === "" && (
+          <IconButton className={classes.accountIcons} onClick={editHandler}>
+            <EditIcon />
+          </IconButton>
+        )}
+        {props.user.userName === props.artistItem[0]?.username &&
+          edit === "edit" && (
+            <IconButton
+              className={classes.accountIcons}
+              onClick={() => setEdit("")}
+            >
+              <ClearIcon />
+            </IconButton>
+          )}
       </Box>
 
       <Box className={classes.accountItems}>
         {props.artistItem[0] && (
-          <h3 style={{ color: "#494a91" }}>{username}'s artworks</h3>
+          <h3 style={{ color: "#494a91" }}>{username}'s Art</h3>
         )}
         {props.loading && (
           <Box
@@ -148,7 +166,7 @@ const AccountPage = (props) => {
               paddingBottom: "100vh",
             }}
           >
-            No result
+            No Results
           </Typography>
         )}
 

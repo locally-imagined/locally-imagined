@@ -3,9 +3,7 @@ import { Toolbar, List, ListItem, ListItemText } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-
 import { useHistory } from "react-router-dom";
-
 import styles from "../styles";
 
 /**
@@ -28,7 +26,7 @@ const Category = (props) => {
 
   let yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  console.log(yesterday);
+  // console.log(yesterday);
   let lastweek = new Date();
   lastweek.setDate(lastweek.getDate() - 7);
   let lastmonth = new Date();
@@ -37,14 +35,13 @@ const Category = (props) => {
   last3.setMonth(last3.getMonth() - 3);
   let lastyear = new Date();
   lastyear.setFullYear(lastyear.getFullYear() - 1);
-  "2022-01-01"
   const dateOptions = [
-    {"Range": "All"},
-    {"Range": "Last 24 Hours", "Date": yesterday.toISOString().slice(0, 10)},
-    {"Range": "Last Week", "Date": lastweek.toISOString().slice(0, 10)},
-    {"Range": "Last Month", "Date": lastmonth.toISOString().slice(0, 10)},
-    {"Range": "Last 3 Months", "Date": last3.toISOString().slice(0, 10)},
-    {"Range": "Last Year", "Date": lastyear.toISOString().slice(0, 10)},
+    { Range: "All" },
+    { Range: "Last 24 Hours", Date: yesterday.toISOString().slice(0, 10) },
+    { Range: "Last Week", Date: lastweek.toISOString().slice(0, 10) },
+    { Range: "Last Month", Date: lastmonth.toISOString().slice(0, 10) },
+    { Range: "Last 3 Months", Date: last3.toISOString().slice(0, 10) },
+    { Range: "Last Year", Date: lastyear.toISOString().slice(0, 10) },
   ];
 
   const [anchorMed, setAnchorMed] = React.useState(null);
@@ -52,15 +49,12 @@ const Category = (props) => {
   const [anchorMedDel, setAnchorMedDel] = React.useState(null);
   const [anchorDateDel, setAnchorDateDel] = React.useState(null);
   const [medium, setMedium] = React.useState("All");
-  const [date, setDate] = React.useState({"Range": "All"});
+  const [date, setDate] = React.useState({ Range: "All" });
   const [selectedMedIndex, setSelectedMedIndex] = React.useState(0);
   const [selectedDateIndex, setSelectedDateIndex] = React.useState(0);
-  const [selectedDelIndex, setSelectedDelIndex] = React.useState(0);
 
   const openMed = Boolean(anchorMed);
   const openDate = Boolean(anchorDate);
-  const openMedDel = Boolean(anchorMedDel);
-  const openDateDel = Boolean(anchorDateDel);
 
   const handleClickItem = (event) => {
     if (event.currentTarget.id === "medium-list")
@@ -75,8 +69,9 @@ const Category = (props) => {
     return mediumQuery;
   };
   const queryDateFormater = (filterOption) => {
-    const dateQuery =
-      filterOption.date === "All" ? "" : `startDate=${filterOption.date}`;
+    const dateQuery = !filterOption.date
+      ? ""
+      : `startDate=${filterOption.date}`;
     if (!dateQuery) props.setFilterQuery(``);
     return dateQuery;
   };
@@ -87,13 +82,13 @@ const Category = (props) => {
       setAnchorMed(null);
       setMedium(mediumOptions[index]);
       props.filterOption.medium = mediumOptions[index];
-      console.log(props.filterOption);
-      console.log(queryMedFormater(props.filterOption));
+      // console.log(props.filterOption);
+      // console.log(queryMedFormater(props.filterOption));
       let query = queryMedFormater(props.filterOption);
       if (date.Range !== "All") {
         query += "&startDate=" + date.Date;
       }
-      props.getPosts(query, 0);
+      props.getPosts(query);
       props.setFilterQuery(query);
     }
   };
@@ -105,13 +100,13 @@ const Category = (props) => {
       setAnchorDate(null);
       setDate(dateOptions[index]);
       props.filterOption.date = dateOptions[index].Date;
-      console.log(props.filterOption);
-      console.log(queryDateFormater(props.filterOption));
+      // console.log(props.filterOption);
+      // console.log(queryDateFormater(props.filterOption));
       let query = queryDateFormater(props.filterOption);
       if (medium !== "All") {
         query += "&medium=" + medium;
       }
-      props.getPosts(query, 0);
+      props.getPosts(query);
       props.setFilterQuery(query);
     }
   };
@@ -138,6 +133,7 @@ const Category = (props) => {
             aria-haspopup="listbox"
             aria-controls="lock-menu"
             aria-label="Medium"
+            disabled={props.tab === "mypost"}
             aria-expanded={openMed ? "true" : undefined}
             onClick={handleClickItem}
             className={classes.categoryBarItem}
@@ -180,6 +176,7 @@ const Category = (props) => {
             aria-haspopup="listbox"
             aria-controls="lock-menu"
             aria-label="Date"
+            disabled={props.tab === "mypost"}
             aria-expanded={openDate ? "true" : undefined}
             onClick={handleClickItem}
             className={classes.categoryBarItem}
@@ -210,7 +207,7 @@ const Category = (props) => {
               {option.Range}
             </MenuItem>
           ))}
-        </Menu>      
+        </Menu>
       </Toolbar>
     </Box>
   );

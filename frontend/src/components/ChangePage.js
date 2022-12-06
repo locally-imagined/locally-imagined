@@ -1,16 +1,13 @@
 import React from "react";
 import { Toolbar, Box } from "@material-ui/core";
-
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-
 import styles from "../styles";
 
 const ChangePage = (props) => {
   const classes = styles();
-  const history = useHistory();
   const scrollOption = {
     top: 100,
     left: 100,

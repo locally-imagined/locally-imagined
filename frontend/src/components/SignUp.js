@@ -1,12 +1,13 @@
 import React from "react";
 import { Button, InputBase, Modal, Paper, Divider } from "@material-ui/core";
-
 import { useHistory } from "react-router-dom";
-
 import styles from "../styles";
 import states from "../states";
 import axios from "axios";
-
+/**
+ * SignUp
+ * @return {object} JSX
+ */
 const SignUp = (props) => {
   const classes = styles();
   const history = useHistory();
@@ -44,7 +45,7 @@ const SignUp = (props) => {
           props.setError(false);
           console.log(res);
           props.user.token = res.data;
-
+          delete props.user.password;
           sessionStorage.setItem("user", JSON.stringify(props.user));
           console.log(sessionStorage.getItem("user"));
           states.login = true;

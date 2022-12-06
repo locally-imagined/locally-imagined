@@ -1,9 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
-
 import Listing from "./Listing";
-import { useHistory, Redirect } from "react-router-dom";
 import NavBar from "./AccountPage/NavBar";
 import AccountPage from "./AccountPage/AccountPage";
 import states from "../states";
@@ -39,7 +37,6 @@ function FrontPage() {
   const [myAvatar, setMyAvatar] = React.useState("");
   const [user, setUser] = useState({
     userName: "",
-    password: "",
     firstName: "",
     lastName: "",
     phone: "",
@@ -126,7 +123,7 @@ function FrontPage() {
   const getImagesSetSrc = (datas) => {
     return axios.all(
       datas.map(async (id) => {
-        console.log(id);
+        // console.log(id);
         return await axios
           .get(
             `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${id}`,
@@ -184,11 +181,11 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          console.log(data);
+          // console.log(data);
           getImagesSetSrc(data).then(() => {
             setImages(imageSet);
             setDeleteCheck(Array(imageSet.length).fill(false));
-            console.log(imageSet);
+            // console.log(imageSet);
           });
         }
       })
@@ -212,7 +209,7 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          console.log(data);
+          // console.log(data);
           getSrc(data).then(() => {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setArtistItem(data);
@@ -227,8 +224,14 @@ function FrontPage() {
         setMsg(`error:${err}`);
       });
   };
-  const getPosts = (filterQuery) => {
+  const getPosts = (_filterQuery) => {
     let url = "";
+    let filterQuery;
+    filterQuery = _filterQuery ? _filterQuery : "";
+
+    // console.log(`filter query:`, _filterQuery);
+
+    // console.log(`search query:`, search);
     setLoading(true);
     if (!filterQuery && !search) {
       const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpage/`;
@@ -252,7 +255,7 @@ function FrontPage() {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setItems(data);
             setLoading(false);
-            console.log(JSON.parse(JSON.stringify(data)));
+            //console.log(JSON.parse(JSON.stringify(data)));
           });
         }
       })
@@ -273,7 +276,7 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          console.log(JSON.parse(JSON.stringify(data)));
+          // console.log(JSON.parse(JSON.stringify(data)));
           setContact(JSON.parse(JSON.stringify(data)));
           setLoading(false);
         }
@@ -338,6 +341,7 @@ function FrontPage() {
             myAvatar={myAvatar}
             getMyAvatar={getMyAvatar}
             getInfo={getInfo}
+            filterQuery={filterQuery}
           />
           <span
             style={{

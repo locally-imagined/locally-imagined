@@ -1,10 +1,10 @@
 import React from "react";
 import { Grid, InputBase } from "@material-ui/core";
-import { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import styles from "../styles";
 import { Search } from "@material-ui/icons";
-import axios from "axios";
+
 /**
  * SearchBar
  * @return {object} JSX
@@ -14,19 +14,18 @@ const SearchBar = (props) => {
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-  useEffect(() => {
-    props.setCurPath("/");
-  }, []);
+  // useEffect(() => {
+  //   props.setCurPath("/");
+  // }, []);
 
   const enterHandler = (event) => {
     if (event.key === "Enter") {
-      if (search === "") {
-        props.setFilter([]);
-        history.push(`/`);
+      // props.setFilter([]);
+      if (!props.filterQuery && !search) {
         window.location.reload(false);
-      } else {
-        props.getPosts();
+        return;
       }
+      props.getPosts(props.filterQuery);
     }
   };
   const handleSearchChange = (event) => {

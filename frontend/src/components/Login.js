@@ -4,6 +4,10 @@ import styles from "../styles";
 import states from "../states";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+/**
+ * Login
+ * @return {object} JSX
+ */
 const Login = (props) => {
   const classes = styles();
   const history = useHistory();
@@ -35,7 +39,7 @@ const Login = (props) => {
           props.setError(false);
           // console.log(res);
           props.user.token = res.data;
-          //sessionStorage.setItem("token", res.data);
+          delete props.user.password;
           sessionStorage.setItem("user", JSON.stringify(props.user));
           // console.log(sessionStorage.getItem("user"));
           states.login = true;
@@ -57,8 +61,10 @@ const Login = (props) => {
         }
       })
       .catch((err) => {
-        props.setMsg(`error:${err}`);
-        console.error(err);
+        if (err.response.status === 401)
+          props.setMsg(`Incorrect Username or Password `);
+        else props.setMsg(`error:${err}`);
+        // console.error(err);
         props.setError(true);
       });
   };

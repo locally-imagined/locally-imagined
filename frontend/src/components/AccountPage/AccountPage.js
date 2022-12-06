@@ -1,25 +1,21 @@
 import React from "react";
-import {
-  Typography,
-  Grid,
-  IconButton,
-  Avatar,
-  Divider,
-} from "@material-ui/core";
+import { Typography, Avatar } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Items from "../Items";
 import styles from "../../styles";
-import Card from "@mui/material/Card";
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import EditIcon from "@mui/icons-material/Edit";
-import ClearIcon from "@mui/icons-material/Clear";
 import ChangePage from "../ChangePage";
 import Edit from "./Edit";
 import AlertMsg from "../AlertMsg";
 import ReactLoading from "react-loading";
 import ItemDetails from "../ItemDetails";
+/**
+ * AccountPage
+ *
+ * @return {object} JSX
+ */
 const AccountPage = (props) => {
   const location = useLocation();
   const paraUser = useParams();
@@ -99,6 +95,7 @@ const AccountPage = (props) => {
               marginTop: "-10px",
               position: "absolute",
             }}
+            data-testid="account-detail"
           >
             <Avatar
               className={classes.avatar}
@@ -178,6 +175,8 @@ const AccountPage = (props) => {
           openItemHandler={openItemHandler}
           iconHandler={iconHandler}
           setEditId={setEditId}
+          contact={props.contact}
+          user={props.user}
         />
 
         <ChangePage

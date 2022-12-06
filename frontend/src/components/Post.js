@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  InputBase,
-  Modal,
-  Divider,
-  IconButton,
-  Box,
-} from "@material-ui/core";
+import { Button, InputBase, Divider, IconButton, Box } from "@material-ui/core";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,11 +10,14 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import AlertMsg from "./AlertMsg";
 import styles from "../styles";
 import SliderDot from "./UI/SliderDot";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
+/**
+ * Post
+ * @return {object} JSX
+ */
 const Post = (props) => {
   const classes = styles();
   const history = useHistory();
@@ -36,13 +32,16 @@ const Post = (props) => {
   const [paddingTop, setPaddingTop] = useState(0);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const maxiumImages = 10;
-  const scrollOption = {
-    top: 100,
-    left: 100,
-    behavior: "smooth",
-  };
 
-  const mediumOptions = ["Drawing", "Painting", "Photography", "Print", "Sculpture", "Digital", "Other"];
+  const mediumOptions = [
+    "Drawing",
+    "Painting",
+    "Photography",
+    "Print",
+    "Sculpture",
+    "Digital",
+    "Other",
+  ];
   const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
   const handleSelectChange = (event) => {
     // console.log(event.target.name);
@@ -67,31 +66,22 @@ const Post = (props) => {
       // console.log("ratio:", ratio);
       width = "560px";
       height = `${560 * ratio}px`;
-      // console.log("width:", width, "height:", height);
       const imgMiddleWidthPx = 560 / 2;
-      // console.log("imgMiddleWidthPx:", imgMiddleWidthPx);
       setPaddingLeft(`${middleWidthPx - imgMiddleWidthPx}px`);
-      // console.log(`padding left:${middleWidthPx - imgMiddleWidthPx}`);
     }
     if (img.naturalHeight / img.naturalWidth > 1.1) {
       const ratio = img.naturalWidth / img.naturalHeight;
-      // console.log("ratio:", ratio);
       width = 560 * ratio + "px";
       height = "560px";
       const imgMiddleWidthPx = (560 * ratio) / 2;
-      // console.log("imgMiddleWidthPx:", imgMiddleWidthPx);
       setPaddingLeft(`${middleWidthPx - imgMiddleWidthPx}px`);
-      // console.log(`padding left:${middleWidthPx - imgMiddleWidthPx}`);
     }
     if (img.naturalWidth / img.naturalHeight > 1.1) {
       const ratio = img.naturalHeight / img.naturalWidth;
-      // console.log("ratio:", ratio);
       height = 560 * ratio + "px";
       width = "560px";
       const imgMiddleHeightPx = (560 * ratio) / 2;
-      // console.log("imgMiddleHeightPx:", imgMiddleHeightPx);
       setPaddingTop(`${middleHeightPx - imgMiddleHeightPx}px`);
-      // console.log(`padding Top:${middleHeightPx - imgMiddleHeightPx}`);
     }
     setDimension({
       width: width,
@@ -241,7 +231,7 @@ const Post = (props) => {
               "data-id": "title",
               onChange: handlePostChange,
               required: true,
-              maxLength: 50,
+              maxLength: 30,
             }}
             type="text"
             name="title"

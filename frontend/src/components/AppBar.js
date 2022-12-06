@@ -10,9 +10,7 @@ import {
   MenuItem,
 } from "@material-ui/core";
 
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddIcon from "@mui/icons-material/Add";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useHistory, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "../styles";
@@ -25,8 +23,7 @@ import AlertMsg from "./AlertMsg";
 import ChangePage from "./ChangePage";
 
 /**
- * AppBar
- *
+ * Appbar
  * @return {object} JSX
  */
 const Appbar = (props) => {
@@ -181,6 +178,7 @@ const Appbar = (props) => {
           setNoResult={props.setNoResult}
           setTab={props.setTab}
           getPosts={props.getPosts}
+          filterQuery={props.filterQuery}
         />
         {/*display fast login input fields while not login*/}
         {!login && (

@@ -18,16 +18,7 @@ const Items = (props) => {
 
   return props.items.map((item, index) => (
     <Card className={classes.item} key={index}>
-      {/* {props.icon === "favorite" && (
-        <IconButton
-          className={classes.favoriteIcon}
-          onClick={(event) => props.favoriteHandler(event)}
-          id={index}
-        >
-          <FavoriteIcon />
-        </IconButton>
-      )} */}
-      {props.icon === "edit" && (
+      {props.icon === "edit" && props.user.userName === item?.username && (
         <IconButton
           className={classes.favoriteIcon}
           onClick={() => {
@@ -41,24 +32,20 @@ const Items = (props) => {
           <EditIcon />
         </IconButton>
       )}
-
       <CardActionArea
         onClick={() => props.openItemHandler(index, item.username)}
-        data-testid={`open-image-${index}`}
       >
         <LazyLoadImage
           className={classes.image}
           src={item.url}
           alt="Image Alt"
           effect="blur"
-          data-testid={`image-${index}`}
         />
-
         <CardContent>
           <Typography
             className={classes.itemTitle}
             varient="body"
-            data-testid={`image-${index}-title`}
+            data-testid={`image-title`}
           >
             {item.title}
           </Typography>

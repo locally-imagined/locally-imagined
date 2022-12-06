@@ -13,23 +13,25 @@ import Checkbox from "@mui/material/Checkbox";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import { useHistory } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../../styles";
 import { useState } from "react";
 import ReactLoading from "react-loading";
 import CancelIcon from "@mui/icons-material/Cancel";
-
 import DeleteIcon from "@mui/icons-material/Delete";
 import AlertMsg from "../AlertMsg";
 import axios from "axios";
 import SliderArrow from "../UI/SliderArrow";
 import SliderDot from "../UI/SliderDot";
+/**
+ * Edit
+ *
+ * @return {object} JSX
+ */
 
 const Edit = (props) => {
   const classes = styles();
-
   const [medium, setMedium] = React.useState("");
   const [delivery, setDelivery] = React.useState("");
   const [sold, setSold] = React.useState(false);
@@ -39,7 +41,15 @@ const Edit = (props) => {
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const [check, setCheck] = useState(false);
   const [offset, setOffset] = useState(0);
-  const mediumOptions = ["Drawing", "Painting", "Photography", "Print", "Sculpture", "Digital", "Other"];
+  const mediumOptions = [
+    "Drawing",
+    "Painting",
+    "Photography",
+    "Print",
+    "Sculpture",
+    "Digital",
+    "Other",
+  ];
   const delivaryOptions = ["Local Delivery", "Shipping", "Pickup"];
   const soldOptions = ["true", "false"];
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
@@ -105,6 +115,8 @@ const Edit = (props) => {
     props.setImages([]);
     setEdit({ title: "", description: "", price: "", delete: "" });
     setCheck(false);
+    setMedium("");
+    setSold(false);
     props.setDeleteCheck([]);
   };
   const checkHandler = () => {
@@ -153,7 +165,7 @@ const Edit = (props) => {
   };
 
   const handleEditChange = (event) => {
-    console.log(event.target.name);
+    // console.log(event.target.name);
     setEdit({
       ...edit,
       [event.target.name]: event.target.value,
@@ -166,12 +178,6 @@ const Edit = (props) => {
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
     // console.log("delete:", props.items[props.editId].imageIDs[0]);
     // console.log("Token:", token);
-    const deleteArr = [];
-    props.deleteCheck.forEach((val, index) => {
-      if (val) {
-        deleteArr.push(props.images[index]);
-      }
-    });
     // console.log(deleteArr);
     axios
       .delete(
@@ -189,9 +195,10 @@ const Edit = (props) => {
         if (res.status !== 204) {
           throw res;
         } else {
-          props.setSuccess(true);
           props.setMsg("deleted");
+          props.setSuccess(true);
           props.setOpenEdit(false);
+          closeEditHandler();
           window.location.reload(false);
           window.scrollTo(scrollOption);
         }
@@ -199,6 +206,7 @@ const Edit = (props) => {
       .catch((err) => {
         setError(true);
         setDeleteArt(false);
+        closeEditHandler();
         console.error(err);
       });
   };
@@ -311,13 +319,14 @@ const Edit = (props) => {
           props.setSuccess(true);
           props.setMsg("edited");
           props.setOpenEdit(false);
-
+          closeEditHandler();
           window.scrollTo(scrollOption);
           //window.location.reload(false);
         }
       })
       .catch((err) => {
         setError(true);
+        closeEditHandler();
         console.error(err);
       });
   };
@@ -332,7 +341,11 @@ const Edit = (props) => {
           <CancelIcon />
         </IconButton>
         {props.images.length > 1 && (
-          <SliderArrow prevHandler={prevHandler} nextHandler={nextHandler} />
+          <SliderArrow
+            prevHandler={prevHandler}
+            nextHandler={nextHandler}
+            marginLeft={"620px"}
+          />
         )}
         {props.images.length === 0 && (
           <Box className={classes.loading}>
@@ -394,6 +407,7 @@ const Edit = (props) => {
               inputProps={{
                 "data-id": "title",
                 onChange: handleEditChange,
+                maxLength: 30,
               }}
               type="text"
               name="title"
@@ -405,6 +419,7 @@ const Edit = (props) => {
               inputProps={{
                 "data-id": "description",
                 onChange: handleEditChange,
+                maxLength: 300,
               }}
               type="text"
               name="description"
@@ -416,6 +431,7 @@ const Edit = (props) => {
               inputProps={{
                 "data-id": "price",
                 onChange: handleEditChange,
+                maxLength: 6,
               }}
               type="number"
               name="price"

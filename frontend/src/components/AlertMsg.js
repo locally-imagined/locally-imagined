@@ -4,9 +4,10 @@ import { Alert } from "@mui/material/";
 import CloseIcon from "@mui/icons-material/Close";
 
 import styles from "../styles";
-/*
-props: error, success, type,
-*/
+/**
+ * Alert message
+ * @return {object} JSX
+ */
 const AlertMsg = (props) => {
   const classes = styles();
   return (

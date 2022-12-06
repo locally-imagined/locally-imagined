@@ -181,7 +181,18 @@ const ItemDetails = (props) => {
           />
         </Box>
         {props.images.length > 0 && (
-          <Box className={classes.editForm}>
+          <Box
+            className={classes.editForm}
+            style={{
+              position: "absolute",
+              right: "0px",
+              width: "395px",
+              paddingLeft: "3rem",
+              paddingRight: "1rem",
+              paddingTop: "2rem",
+              height: "600px",
+            }}
+          >
             {/* <Link href={`/account/#${props.items[props.curItemId]?.userID}`}> */}
             {props.disableLink && (
               <IconButton>
@@ -271,7 +282,7 @@ const ItemDetails = (props) => {
             <Link
               style={{
                 position: "absolute",
-                bottom: "0",
+                bottom: "10px",
                 "&:hover": { cursor: "pointer" },
               }}
               onClick={() =>

@@ -257,13 +257,7 @@ const styles = makeStyles((theme) => ({
     },
   },
   editForm: {
-    position: "absolute",
-    right: "0px",
-    width: "27vw",
-    paddingLeft: "2rem",
-    paddingRight: "1rem",
-    paddingTop: "2rem",
-    height: "70.7vh",
+
   },
   errorMsg: {
     width: "100",

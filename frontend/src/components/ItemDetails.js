@@ -251,10 +251,9 @@ const ItemDetails = (props) => {
                   position: "absolute",
                 }}
               >
-                {`on  ${props.items[props.curItemId]?.uploadDate.slice(
-                  0,
-                  props.items[props.curItemId]?.uploadDate.indexOf("T")
-                )}`}
+                {`on  ${new Date(
+                  props.items[props.curItemId]?.uploadDate
+                ).toDateString()}`}
               </span>
               <span className={classes.price}>
                 ${props.items[props.curItemId]?.price}
@@ -263,9 +262,28 @@ const ItemDetails = (props) => {
             <Divider className={classes.divider} />
 
             <h4> Description:</h4>
-            <p style={{ paddingRight: "10px", color: "grey" }}>
-              {props.items[props.curItemId]?.description}
-            </p>
+            <div
+              style={{
+                position: "absolute",
+                marginTop: "-1rem",
+                width: "80%",
+                height: "8rem",
+                wordWrap: "break-word;",
+              }}
+            >
+              <p
+                style={{
+                  paddingLeft: "10px",
+                  color: "grey",
+                  MozHyphens: "auto",
+                  msHyphens: "auto",
+                  hyphens: "auto",
+                }}
+              >
+                {props.items[props.curItemId]?.description}
+              </p>
+            </div>
+
             <Divider
               className={classes.divider}
               style={{ marginTop: "10rem" }}

@@ -241,6 +241,7 @@ const Post = (props) => {
               "data-id": "title",
               onChange: handlePostChange,
               required: true,
+              maxLength: 50,
             }}
             type="text"
             name="title"
@@ -252,6 +253,7 @@ const Post = (props) => {
               "data-id": "description",
               onChange: handlePostChange,
               required: true,
+              maxLength: 300,
             }}
             type="text"
             name="description"
@@ -263,6 +265,7 @@ const Post = (props) => {
               "data-id": "price",
               onChange: handlePostChange,
               required: true,
+              maxLength: 6,
             }}
             type="number"
             name="price"

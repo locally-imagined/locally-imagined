@@ -181,18 +181,7 @@ const ItemDetails = (props) => {
           />
         </Box>
         {props.images.length > 0 && (
-          <Box
-            className={classes.editForm}
-            style={{
-              position: "absolute",
-              right: "0px",
-              width: "395px",
-              paddingLeft: "3rem",
-              paddingRight: "1rem",
-              paddingTop: "2rem",
-              height: "600px",
-            }}
-          >
+          <Box class={classes.editForm}>
             {/* <Link href={`/account/#${props.items[props.curItemId]?.userID}`}> */}
             {props.disableLink && (
               <IconButton>

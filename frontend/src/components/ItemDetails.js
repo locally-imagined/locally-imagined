@@ -244,6 +244,17 @@ const ItemDetails = (props) => {
               {props.disableLink && (
                 <span>{props.items[props.curItemId]?.username}</span>
               )}
+              <span
+                style={{
+                  paddingLeft: "80px",
+                  color: "grey",
+                  position: "absolute",
+                }}
+              >
+                {`on  ${new Date(
+                  props.items[props.curItemId]?.uploadDate
+                ).toDateString()}`}
+              </span>
               <span className={classes.price}>
                 ${props.items[props.curItemId]?.price}
               </span>
@@ -251,9 +262,28 @@ const ItemDetails = (props) => {
             <Divider className={classes.divider} />
 
             <h4> Description:</h4>
-            <p style={{ paddingRight: "10px", color: "grey" }}>
-              {props.items[props.curItemId]?.description}
-            </p>
+            <div
+              style={{
+                position: "absolute",
+                marginTop: "-1rem",
+                width: "80%",
+                height: "8rem",
+                wordWrap: "break-word;",
+              }}
+            >
+              <p
+                style={{
+                  paddingLeft: "10px",
+                  color: "grey",
+                  MozHyphens: "auto",
+                  msHyphens: "auto",
+                  hyphens: "auto",
+                }}
+              >
+                {props.items[props.curItemId]?.description}
+              </p>
+            </div>
+
             <Divider
               className={classes.divider}
               style={{ marginTop: "10rem" }}

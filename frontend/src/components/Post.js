@@ -17,12 +17,14 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import AlertMsg from "./AlertMsg";
 import styles from "../styles";
 import SliderDot from "./UI/SliderDot";
+import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Post = (props) => {
   const classes = styles();
+  const history = useHistory();
   const [error, setError] = useState(false);
   const [medium, setMedium] = React.useState("");
   const [delivery, setDelivery] = React.useState("");
@@ -202,12 +204,28 @@ const Post = (props) => {
           setUrl([]);
           setDelivery("");
           closeHandler();
-          window.scrollTo(scrollOption);
+          const userID = JSON.parse(sessionStorage.getItem("user")).token
+            .userID;
+          console.log(userID);
+          const username = JSON.parse(sessionStorage.getItem("user")).userName;
+          console.log(username);
+          props.setUserID(userID);
+          props.getMyAvatar(
+            JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
+          );
+          props.getInfo(userID);
+          sessionStorage.removeItem("currentUserID");
+          sessionStorage.setItem("currentUserID", userID);
+          history.push(`/profile/${username}`, {
+            userID: userID,
+            username: username,
+          });
+          window.location.reload(false);
         }
       })
       .catch((err) => {
+        console.log(err);
         setError(true);
-        console.log(err.response.data);
       });
   };
   return (
@@ -223,6 +241,7 @@ const Post = (props) => {
               "data-id": "title",
               onChange: handlePostChange,
               required: true,
+              maxLength: 50,
             }}
             type="text"
             name="title"
@@ -234,6 +253,7 @@ const Post = (props) => {
               "data-id": "description",
               onChange: handlePostChange,
               required: true,
+              maxLength: 300,
             }}
             type="text"
             name="description"
@@ -245,11 +265,12 @@ const Post = (props) => {
               "data-id": "price",
               onChange: handlePostChange,
               required: true,
+              maxLength: 6,
             }}
             type="number"
             name="price"
           />
-          <InputLabel>Medium</InputLabel>
+          <InputLabel style={{ marginLeft: "15px" }}>Medium</InputLabel>
           <Select
             value={medium}
             defaultValue=""
@@ -257,7 +278,7 @@ const Post = (props) => {
             label="Medium"
             name="medium"
             required
-            style={{ width: "150px", height: "40px" }}
+            style={{ width: "150px", height: "40px", marginLeft: "15px" }}
           >
             {mediumOptions.map((name, index) => (
               <MenuItem key={index} value={name}>
@@ -265,7 +286,9 @@ const Post = (props) => {
               </MenuItem>
             ))}
           </Select>
-          <InputLabel>Delivery Options</InputLabel>
+          <InputLabel style={{ marginLeft: "15px" }}>
+            Delivery Options
+          </InputLabel>
           <Select
             value={delivery}
             defaultValue=""
@@ -273,7 +296,7 @@ const Post = (props) => {
             label="Delivery"
             name="deliverytype"
             required
-            style={{ width: "150px", height: "40px" }}
+            style={{ width: "150px", height: "40px", marginLeft: "15px" }}
           >
             {delivaryOptions.map((name, index) => (
               <MenuItem key={index} value={name}>

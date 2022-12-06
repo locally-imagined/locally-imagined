@@ -53,7 +53,10 @@ const Dashboard = (props) => {
           setOpenPost={setOpenPost}
           art={props.art}
           setArt={props.setArt}
+          setUserID={props.setUserID}
           setSucess={setSucess}
+          getInfo={props.getInfo}
+          getMyAvatar={props.getMyAvatar}
         />
       </Box>
     </Grid>

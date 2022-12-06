@@ -198,9 +198,9 @@ const Appbar = (props) => {
             getMyAvatar={props.getMyAvatar}
           />
         )}
-        {/*Dashboard button*/}
+        {/*Create post button*/}
         {login && (
-          <Tooltip title="Dashboard">
+          <Tooltip title="Create Posts">
             <IconButton
               size="small"
               sx={{ ml: 2 }}
@@ -209,27 +209,14 @@ const Appbar = (props) => {
               aria-expanded={open ? "true" : undefined}
               onClick={() => {
                 props.setSearch("");
-                history.push("/dashboard");
+                history.push("/create");
               }}
             >
               <AddIcon></AddIcon>
             </IconButton>
           </Tooltip>
         )}
-        {/*Notifications button*/}
-        {/* {login && (
-          <Tooltip title="Notifications">
-            <IconButton
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? "notifications" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              <NotificationsIcon></NotificationsIcon>
-            </IconButton>
-          </Tooltip>
-        )} */}
+
         {/*display avatar and username and log out button when login*/}
         {login && (
           <Tooltip title="Account settings">

@@ -156,7 +156,7 @@ const ItemDetails = (props) => {
           }}
         >
           {props.images.length > 0 && (
-            <LazyLoadImage
+            <img
               className={classes.itemModalPicture}
               src={props.images[offset].src}
               alt="Image Alt"
@@ -171,7 +171,7 @@ const ItemDetails = (props) => {
                 boxShadow: 24,
                 p: 4,
               }}
-            ></LazyLoadImage>
+            ></img>
           )}
           <SliderDot
             offset={offset}

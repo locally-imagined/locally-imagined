@@ -126,7 +126,8 @@ function FrontPage() {
   const getImagesSetSrc = (datas) => {
     return axios.all(
       datas.map(async (id) => {
-        return axios
+        console.log(id);
+        return await axios
           .get(
             `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${id}`,
             {}
@@ -137,14 +138,12 @@ function FrontPage() {
             } else {
               let src = "data:image/jpeg;base64,";
               src += res.data;
-              // console.log(src);
-
-              imageSet.push({ src: encodeURI(src), imageId: id });
+              let index = datas.indexOf(id);
+              imageSet[index] = { src: encodeURI(src), imageId: id };
             }
           })
           .catch((err) => {
-            setError(true);
-            setMsg(`error:${err}`);
+            console.error(err);
           });
       })
     );
@@ -185,7 +184,7 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          // console.log(data);
+          console.log(data);
           getImagesSetSrc(data).then(() => {
             setImages(imageSet);
             setDeleteCheck(Array(imageSet.length).fill(false));

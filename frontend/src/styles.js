@@ -383,7 +383,6 @@ const styles = makeStyles((theme) => ({
   },
   listingPage: {
     zIndex: 0,
-    margin: "0 auto",
   },
   logo: {
     height: "2rem",

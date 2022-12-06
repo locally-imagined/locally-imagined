@@ -113,6 +113,8 @@ const Edit = (props) => {
     props.setImages([]);
     setEdit({ title: "", description: "", price: "", delete: "" });
     setCheck(false);
+    setMedium("");
+    setSold(false);
     props.setDeleteCheck([]);
   };
   const checkHandler = () => {
@@ -161,7 +163,7 @@ const Edit = (props) => {
   };
 
   const handleEditChange = (event) => {
-    console.log(event.target.name);
+    // console.log(event.target.name);
     setEdit({
       ...edit,
       [event.target.name]: event.target.value,
@@ -174,12 +176,6 @@ const Edit = (props) => {
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
     // console.log("delete:", props.items[props.editId].imageIDs[0]);
     // console.log("Token:", token);
-    const deleteArr = [];
-    props.deleteCheck.forEach((val, index) => {
-      if (val) {
-        deleteArr.push(props.images[index]);
-      }
-    });
     // console.log(deleteArr);
     axios
       .delete(
@@ -197,9 +193,10 @@ const Edit = (props) => {
         if (res.status !== 204) {
           throw res;
         } else {
-          props.setSuccess(true);
           props.setMsg("deleted");
+          props.setSuccess(true);
           props.setOpenEdit(false);
+          closeEditHandler();
           window.location.reload(false);
           window.scrollTo(scrollOption);
         }
@@ -207,6 +204,7 @@ const Edit = (props) => {
       .catch((err) => {
         setError(true);
         setDeleteArt(false);
+        closeEditHandler();
         console.error(err);
       });
   };
@@ -319,13 +317,14 @@ const Edit = (props) => {
           props.setSuccess(true);
           props.setMsg("edited");
           props.setOpenEdit(false);
-
+          closeEditHandler();
           window.scrollTo(scrollOption);
           //window.location.reload(false);
         }
       })
       .catch((err) => {
         setError(true);
+        closeEditHandler();
         console.error(err);
       });
   };
@@ -340,7 +339,11 @@ const Edit = (props) => {
           <CancelIcon />
         </IconButton>
         {props.images.length > 1 && (
-          <SliderArrow prevHandler={prevHandler} nextHandler={nextHandler} />
+          <SliderArrow
+            prevHandler={prevHandler}
+            nextHandler={nextHandler}
+            marginLeft={"620px"}
+          />
         )}
         {props.images.length === 0 && (
           <Box className={classes.loading}>

@@ -131,7 +131,11 @@ const ItemDetails = (props) => {
           <CancelIcon />
         </IconButton>
         {props.images.length > 1 && (
-          <SliderArrow prevHandler={prevHandler} nextHandler={nextHandler} />
+          <SliderArrow
+            marginLeft={"620px"}
+            prevHandler={prevHandler}
+            nextHandler={nextHandler}
+          />
         )}
 
         {props.images.length === 0 && (
@@ -145,7 +149,6 @@ const ItemDetails = (props) => {
             />
           </Box>
         )}
-
         <Box
           className={classes.imageBox}
           style={{
@@ -290,7 +293,7 @@ const ItemDetails = (props) => {
                 marginTop: "-1rem",
                 width: "80%",
                 height: "8rem",
-                wordWrap: "break-word;",
+                wordWrap: "break-word",
               }}
             >
               <p

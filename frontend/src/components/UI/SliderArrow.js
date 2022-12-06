@@ -12,9 +12,9 @@ const SliderArrow = (props) => {
         <ArrowBackIcon className={classes.arrow} />
       </IconButton>
       <IconButton
-        style={{ marginLeft: "43vw" }}
         className={classes.arrow}
         onClick={props.nextHandler}
+        style={{ marginLeft: props.marginLeft }}
       >
         <ArrowForwardIcon />
       </IconButton>

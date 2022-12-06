@@ -29,7 +29,7 @@ const Category = (props) => {
 
   let yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  console.log(yesterday);
+  // console.log(yesterday);
   let lastweek = new Date();
   lastweek.setDate(lastweek.getDate() - 7);
   let lastmonth = new Date();
@@ -89,8 +89,8 @@ const Category = (props) => {
       setAnchorMed(null);
       setMedium(mediumOptions[index]);
       props.filterOption.medium = mediumOptions[index];
-      console.log(props.filterOption);
-      console.log(queryMedFormater(props.filterOption));
+      // console.log(props.filterOption);
+      // console.log(queryMedFormater(props.filterOption));
       let query = queryMedFormater(props.filterOption);
       if (date.Range !== "All") {
         query += "&startDate=" + date.Date;
@@ -107,8 +107,8 @@ const Category = (props) => {
       setAnchorDate(null);
       setDate(dateOptions[index]);
       props.filterOption.date = dateOptions[index].Date;
-      console.log(props.filterOption);
-      console.log(queryDateFormater(props.filterOption));
+      // console.log(props.filterOption);
+      // console.log(queryDateFormater(props.filterOption));
       let query = queryDateFormater(props.filterOption);
       if (medium !== "All") {
         query += "&medium=" + medium;

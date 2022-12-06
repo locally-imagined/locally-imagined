@@ -125,7 +125,7 @@ function FrontPage() {
   const getImagesSetSrc = (datas) => {
     return axios.all(
       datas.map(async (id) => {
-        console.log(id);
+        // console.log(id);
         return await axios
           .get(
             `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${id}`,
@@ -183,11 +183,11 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          console.log(data);
+          // console.log(data);
           getImagesSetSrc(data).then(() => {
             setImages(imageSet);
             setDeleteCheck(Array(imageSet.length).fill(false));
-            console.log(imageSet);
+            // console.log(imageSet);
           });
         }
       })
@@ -211,7 +211,7 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          console.log(data);
+          // console.log(data);
           getSrc(data).then(() => {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setArtistItem(data);
@@ -240,7 +240,7 @@ function FrontPage() {
       }${search ? `&${filterQuery}` : filterQuery}`;
     }
 
-    console.log(url);
+    // console.log(url);
     axios
       .get(url, {})
       .then((res) => {
@@ -252,7 +252,7 @@ function FrontPage() {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setItems(data);
             setLoading(false);
-            console.log(JSON.parse(JSON.stringify(data)));
+            // console.log(JSON.parse(JSON.stringify(data)));
           });
         }
       })
@@ -273,7 +273,7 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          console.log(JSON.parse(JSON.stringify(data)));
+          // console.log(JSON.parse(JSON.stringify(data)));
           setContact(JSON.parse(JSON.stringify(data)));
           setLoading(false);
         }

@@ -252,7 +252,7 @@ function FrontPage() {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setItems(data);
             setLoading(false);
-            // console.log(JSON.parse(JSON.stringify(data)));
+            console.log(JSON.parse(JSON.stringify(data)));
           });
         }
       })

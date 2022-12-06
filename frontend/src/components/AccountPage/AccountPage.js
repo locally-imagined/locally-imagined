@@ -99,6 +99,7 @@ const AccountPage = (props) => {
               marginTop: "-10px",
               position: "absolute",
             }}
+            data-testid="account-detail"
           >
             <Avatar
               className={classes.avatar}

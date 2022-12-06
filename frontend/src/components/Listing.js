@@ -67,9 +67,6 @@ const Listing = (props) => {
   //     console.log(liked);
   //   }
   // };
-  if (!props.items) {
-    return <h1>Loading</h1>;
-  }
 
   return (
     <Grid>
@@ -95,6 +92,7 @@ const Listing = (props) => {
       <Box
         elevation={0}
         className={classes.listingPage}
+        data-testid="image-page"
         style={{
           paddingTop: "20px",
           paddingLeft: "100px",
@@ -109,13 +107,14 @@ const Listing = (props) => {
               <ReactLoading type="bars" color="grey" height={100} width={100} />
             </Box>
           )}
-
-          <Items
-            // favoriteHandler={favoriteHandler}
-            openItemHandler={openItemHandler}
-            items={props.items}
-            icon={"favorite"}
-          />
+          {!props.loading && (
+            <Items
+              // favoriteHandler={favoriteHandler}
+              openItemHandler={openItemHandler}
+              items={props.items}
+              icon={"favorite"}
+            />
+          )}
 
           {props.noResult && (
             <Typography

@@ -44,21 +44,19 @@ const Items = (props) => {
 
       <CardActionArea
         onClick={() => props.openItemHandler(index, item.username)}
-        data-testid={`open-image-${index}`}
       >
         <LazyLoadImage
           className={classes.image}
           src={item.url}
           alt="Image Alt"
           effect="blur"
-          data-testid={`image-${index}`}
         />
 
         <CardContent>
           <Typography
             className={classes.itemTitle}
             varient="body"
-            data-testid={`image-${index}-title`}
+            data-testid={`image-title`}
           >
             {item.title}
           </Typography>

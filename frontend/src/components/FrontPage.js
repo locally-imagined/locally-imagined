@@ -24,6 +24,7 @@ function FrontPage() {
   const [artistItem, setArtistItem] = useState([]);
   const [curPath, setCurPath] = useState("");
   const [images, setImages] = React.useState([]);
+
   const [search, setSearch] = useState("");
   const [bio, setBio] = useState("");
   const [userID, setUserID] = useState("");
@@ -226,9 +227,14 @@ function FrontPage() {
         setMsg(`error:${err}`);
       });
   };
-  const getPosts = (filterQuery) => {
+  const getPosts = (_filterQuery) => {
     let url = "";
+    let filterQuery;
+    filterQuery = _filterQuery ? _filterQuery : "";
 
+    // console.log(`filter query:`, _filterQuery);
+
+    // console.log(`search query:`, search);
     setLoading(true);
     if (!filterQuery && !search) {
       const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpage/`;
@@ -240,7 +246,7 @@ function FrontPage() {
       }${search ? `&${filterQuery}` : filterQuery}`;
     }
 
-    // console.log(url);
+    console.log(url);
     axios
       .get(url, {})
       .then((res) => {
@@ -252,7 +258,7 @@ function FrontPage() {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setItems(data);
             setLoading(false);
-            console.log(JSON.parse(JSON.stringify(data)));
+            //console.log(JSON.parse(JSON.stringify(data)));
           });
         }
       })
@@ -338,6 +344,7 @@ function FrontPage() {
             myAvatar={myAvatar}
             getMyAvatar={getMyAvatar}
             getInfo={getInfo}
+            filterQuery={filterQuery}
           />
           <span
             style={{

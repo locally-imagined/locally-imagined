@@ -181,6 +181,7 @@ const Appbar = (props) => {
           setNoResult={props.setNoResult}
           setTab={props.setTab}
           getPosts={props.getPosts}
+          filterQuery={props.filterQuery}
         />
         {/*display fast login input fields while not login*/}
         {!login && (

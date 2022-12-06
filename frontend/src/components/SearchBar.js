@@ -14,19 +14,18 @@ const SearchBar = (props) => {
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-  useEffect(() => {
-    props.setCurPath("/");
-  }, []);
+  // useEffect(() => {
+  //   props.setCurPath("/");
+  // }, []);
 
   const enterHandler = (event) => {
     if (event.key === "Enter") {
-      if (search === "") {
-        props.setFilter([]);
-        history.push(`/`);
+      // props.setFilter([]);
+      if (!props.filterQuery) {
         window.location.reload(false);
-      } else {
-        props.getPosts();
+        return;
       }
+      props.getPosts(props.filterQuery);
     }
   };
   const handleSearchChange = (event) => {

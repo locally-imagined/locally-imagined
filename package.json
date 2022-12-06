@@ -11,7 +11,8 @@
   "scripts": {
     "install": "cd frontend && npm install",
     "start-frontend": "cd frontend && npm start",
-    "start": "npm run start-frontend"
+    "start": "npm run start-frontend",
+    "test": "cd frontend&&npm run test"
   },
   "dependencies": {
     "@ramonak/react-progress-bar": "^5.0.3",

@@ -1,10 +1,10 @@
 import React from "react";
 import { Grid, InputBase } from "@material-ui/core";
-import { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import styles from "../styles";
 import { Search } from "@material-ui/icons";
-import axios from "axios";
+
 /**
  * SearchBar
  * @return {object} JSX

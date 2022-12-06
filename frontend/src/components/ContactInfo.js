@@ -13,9 +13,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const ContactInfo = (props) => {
   const classes = styles();
   const location = useLocation();
-
   const history = useHistory();
-  const paraUserID = useParams();
   const username = sessionStorage.getItem("currentUsername");
 
   useEffect(() => {

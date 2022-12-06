@@ -1,9 +1,8 @@
 import React from "react";
-import { Typography, Container, Grid, Link } from "@material-ui/core";
+import { Typography, Container, Grid } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { useHistory } from "react-router-dom";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";
 import Category from "./Category";
@@ -55,19 +54,6 @@ const Listing = (props) => {
       props.getPosts();
     }
   };
-
-  // const favoriteHandler = (event) => {
-  //   //setCurItemId(0);
-  //   event.currentTarget.classList.toggle(classes.favorited);
-  //   if (!liked.includes(event.currentTarget.id)) {
-  //     liked.push(event.currentTarget.id);
-  //     console.log(liked);
-  //   } else {
-  //     liked.splice(liked.indexOf(event.currentTarget.id), 1);
-  //     console.log(liked);
-  //   }
-  // };
-
   return (
     <Grid>
       <Category

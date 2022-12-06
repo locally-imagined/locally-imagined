@@ -13,23 +13,25 @@ import Checkbox from "@mui/material/Checkbox";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import { useHistory } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../../styles";
 import { useState } from "react";
 import ReactLoading from "react-loading";
 import CancelIcon from "@mui/icons-material/Cancel";
-
 import DeleteIcon from "@mui/icons-material/Delete";
 import AlertMsg from "../AlertMsg";
 import axios from "axios";
 import SliderArrow from "../UI/SliderArrow";
 import SliderDot from "../UI/SliderDot";
+/**
+ * Edit
+ *
+ * @return {object} JSX
+ */
 
 const Edit = (props) => {
   const classes = styles();
-
   const [medium, setMedium] = React.useState("");
   const [delivery, setDelivery] = React.useState("");
   const [sold, setSold] = React.useState(false);

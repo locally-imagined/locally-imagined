@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Paper,
   Modal,
   Avatar,
@@ -9,12 +8,8 @@ import {
   Link,
 } from "@material-ui/core";
 import Box from "@mui/material/Box";
-
 import { useHistory } from "react-router-dom";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-
 import CancelIcon from "@mui/icons-material/Cancel";
-
 import { useState } from "react";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import styles from "../styles";

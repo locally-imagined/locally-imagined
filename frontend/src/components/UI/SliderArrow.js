@@ -4,6 +4,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import styles from "../../styles";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Box from "@mui/material/Box";
+/**
+ * SliderArrow
+ * @return {object} JSX
+ */
 const SliderArrow = (props) => {
   const classes = styles();
   return (

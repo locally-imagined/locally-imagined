@@ -4,6 +4,10 @@ import styles from "../styles";
 import states from "../states";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+/**
+ * Login
+ * @return {object} JSX
+ */
 const Login = (props) => {
   const classes = styles();
   const history = useHistory();

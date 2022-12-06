@@ -1,9 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Appbar from "./AppBar";
-
 import Listing from "./Listing";
-import { useHistory, Redirect } from "react-router-dom";
 import NavBar from "./AccountPage/NavBar";
 import AccountPage from "./AccountPage/AccountPage";
 import states from "../states";
@@ -24,7 +22,6 @@ function FrontPage() {
   const [artistItem, setArtistItem] = useState([]);
   const [curPath, setCurPath] = useState("");
   const [images, setImages] = React.useState([]);
-
   const [search, setSearch] = useState("");
   const [bio, setBio] = useState("");
   const [userID, setUserID] = useState("");

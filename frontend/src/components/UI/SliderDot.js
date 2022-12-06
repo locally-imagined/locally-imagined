@@ -1,5 +1,8 @@
 import styles from "../../styles";
-
+/**
+ * SliderDot
+ * @return {object} JSX
+ */
 const SliderDot = (props) => {
   const classes = styles();
   return (

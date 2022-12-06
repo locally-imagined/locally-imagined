@@ -3,10 +3,7 @@ import { Toolbar, List, ListItem, ListItemText } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-
 import { useHistory } from "react-router-dom";
-import { IconButton } from "@material-ui/core";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import styles from "../styles";
 
 /**
@@ -56,12 +53,9 @@ const Category = (props) => {
   const [date, setDate] = React.useState({ Range: "All" });
   const [selectedMedIndex, setSelectedMedIndex] = React.useState(0);
   const [selectedDateIndex, setSelectedDateIndex] = React.useState(0);
-  const [selectedDelIndex, setSelectedDelIndex] = React.useState(0);
 
   const openMed = Boolean(anchorMed);
   const openDate = Boolean(anchorDate);
-  const openMedDel = Boolean(anchorMedDel);
-  const openDateDel = Boolean(anchorDateDel);
 
   const handleClickItem = (event) => {
     if (event.currentTarget.id === "medium-list")

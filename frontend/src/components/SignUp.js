@@ -1,12 +1,13 @@
 import React from "react";
 import { Button, InputBase, Modal, Paper, Divider } from "@material-ui/core";
-
 import { useHistory } from "react-router-dom";
-
 import styles from "../styles";
 import states from "../states";
 import axios from "axios";
-
+/**
+ * SignUp
+ * @return {object} JSX
+ */
 const SignUp = (props) => {
   const classes = styles();
   const history = useHistory();

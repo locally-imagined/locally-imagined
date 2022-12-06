@@ -15,15 +15,15 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import AlertMsg from "../AlertMsg";
-
+/**
+ * AccountSetting
+ * @return {object} JSX
+ */
 const AccountSetting = (props) => {
   const location = useLocation();
   const classes = styles();
-  // console.log(username);
   const user = JSON.parse(sessionStorage.getItem("user"));
-  // console.log(user);
   const [msg, setMsg] = useState("");
-
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [info, setInfo] = useState(false);

@@ -15,7 +15,7 @@ import styles from "../../styles";
 import states from "../../states";
 
 /**
- * AppBar
+ * NavBar
  *
  * @return {object} JSX
  */

@@ -244,6 +244,18 @@ const ItemDetails = (props) => {
               {props.disableLink && (
                 <span>{props.items[props.curItemId]?.username}</span>
               )}
+              <span
+                style={{
+                  paddingLeft: "80px",
+                  color: "grey",
+                  position: "absolute",
+                }}
+              >
+                {`on  ${props.items[props.curItemId]?.uploadDate.slice(
+                  0,
+                  props.items[props.curItemId]?.uploadDate.indexOf("T")
+                )}`}
+              </span>
               <span className={classes.price}>
                 ${props.items[props.curItemId]?.price}
               </span>

@@ -212,7 +212,7 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          // console.log(data);
+          console.log(data);
           getSrc(data).then(() => {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setArtistItem(data);
@@ -252,7 +252,7 @@ function FrontPage() {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
             setItems(data);
             setLoading(false);
-            // console.log(JSON.parse(JSON.stringify(data)));
+            console.log(JSON.parse(JSON.stringify(data)));
           });
         }
       })
@@ -273,7 +273,7 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          // console.log(JSON.parse(JSON.stringify(data)));
+          console.log(JSON.parse(JSON.stringify(data)));
           setContact(JSON.parse(JSON.stringify(data)));
           setLoading(false);
         }
@@ -514,7 +514,7 @@ function FrontPage() {
             getMyAvatar={getMyAvatar}
           />
         </Route>
-        <Route path="/dashboard">
+        <Route path="/create">
           <NavBar
             login={states.login}
             offset={offset}
@@ -535,10 +535,15 @@ function FrontPage() {
             art={art}
             setArt={setArt}
             setCurPath={setCurPath}
+            setArtistItem={setArtistItem}
             setSearch={setSearch}
+            setAvatar={setAvatar}
             setUserID={setUserID}
             setMyAvatar={setMyAvatar}
+            getAvatar={getAvatar}
+            getMyAvatar={getMyAvatar}
             myAvatar={myAvatar}
+            getInfo={getInfo}
           />
         </Route>
       </Switch>

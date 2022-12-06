@@ -420,14 +420,14 @@ const Edit = (props) => {
               type="number"
               name="price"
             />
-            <InputLabel>Medium</InputLabel>
+            <InputLabel style={{ marginLeft: "15px" }}>Medium</InputLabel>
             <Select
               value={medium}
               defaultValue={props.items[props.editId]?.medium}
               onChange={handleSelectChange}
               label="Medium"
               name="medium"
-              style={{ width: "150px", height: "40px" }}
+              style={{ width: "150px", height: "40px", marginLeft: "15px" }}
             >
               {mediumOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>
@@ -435,14 +435,16 @@ const Edit = (props) => {
                 </MenuItem>
               ))}
             </Select>
-            <InputLabel>Delivery Options</InputLabel>
+            <InputLabel style={{ marginLeft: "15px" }}>
+              Delivery Options
+            </InputLabel>
             <Select
               value={delivery}
               defaultValue=""
               onChange={handleSelectChange}
               label="Delivery"
               name="deliverytype"
-              style={{ width: "150px", height: "40px" }}
+              style={{ width: "150px", height: "40px", marginLeft: "15px" }}
             >
               {delivaryOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>
@@ -456,7 +458,7 @@ const Edit = (props) => {
                 <Checkbox checked={check} onChange={checkHandler}></Checkbox>
               </span>
             )}
-            <InputLabel>Sold</InputLabel>
+            <InputLabel style={{ marginLeft: "15px" }}>Sold</InputLabel>
             <Select
               value={sold}
               defaultValue={
@@ -467,7 +469,7 @@ const Edit = (props) => {
               onChange={handleSelectChange}
               label="Sold"
               name="sold"
-              style={{ width: "150px", height: "40px" }}
+              style={{ width: "150px", height: "40px", marginLeft: "15px" }}
             >
               {soldOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>

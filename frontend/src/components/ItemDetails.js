@@ -156,7 +156,7 @@ const ItemDetails = (props) => {
           }}
         >
           {props.images.length > 0 && (
-            <img
+            <LazyLoadImage
               className={classes.itemModalPicture}
               src={props.images[offset].src}
               alt="Image Alt"
@@ -171,7 +171,7 @@ const ItemDetails = (props) => {
                 boxShadow: 24,
                 p: 4,
               }}
-            ></img>
+            ></LazyLoadImage>
           )}
           <SliderDot
             offset={offset}
@@ -180,108 +180,111 @@ const ItemDetails = (props) => {
             color={"white"}
           />
         </Box>
-
-        <Box className={classes.editForm}>
-          {/* <Link href={`/account/#${props.items[props.curItemId]?.userID}`}> */}
-          {props.disableLink && (
-            <IconButton>
-              <Avatar src={props.avatar}></Avatar>
-            </IconButton>
-          )}
-          {!props.disableLink && (
-            <IconButton
-              data-testid={`user-avatar`}
-              onClick={() =>
-                artistPost(
-                  props.items[props.curItemId]?.userID,
-                  props.items[props.curItemId]?.username,
-                  props.items[props.curItemId]?.profpicID
-                )
-              }
-            >
-              <Avatar src={props.avatar}></Avatar>
-            </IconButton>
-          )}
-
-          <span style={{ textTransform: "none" }}>
-            <span className={classes.itemModalInfoTitle}>
-              {props.items[props.curItemId]?.title}
-            </span>
-            <span
-              style={{
-                paddingLeft: "100px",
-                fontSize: "15px",
-                color: "grey",
-              }}
-            >
-              {props.items[props.curItemId]?.medium}
-              <span
-                style={{
-                  paddingLeft: "50px",
-                  fontSize: "15px",
-                  color: "red",
-                }}
-              >
-                {props.items[props.curItemId]?.sold ? "Sold" : ""}
-              </span>
-            </span>
-
-            <br />
-            <span style={{ paddingRight: "10px" }}>by</span>
+        {props.images.length > 0 && (
+          <Box className={classes.editForm}>
+            {/* <Link href={`/account/#${props.items[props.curItemId]?.userID}`}> */}
+            {props.disableLink && (
+              <IconButton>
+                <Avatar src={props.avatar}></Avatar>
+              </IconButton>
+            )}
             {!props.disableLink && (
-              <Link
+              <IconButton
+                data-testid={`user-avatar`}
                 onClick={() =>
                   artistPost(
                     props.items[props.curItemId]?.userID,
-                    props.items[props.curItemId]?.username
+                    props.items[props.curItemId]?.username,
+                    props.items[props.curItemId]?.profpicID
                   )
                 }
-                color="inherit"
-                herf="/account"
               >
-                {props.items[props.curItemId]?.username}
-              </Link>
+                <Avatar src={props.avatar}></Avatar>
+              </IconButton>
             )}
-            {props.disableLink && (
-              <span>{props.items[props.curItemId]?.username}</span>
-            )}
-            <span className={classes.price}>
-              ${props.items[props.curItemId]?.price}
+
+            <span style={{ textTransform: "none" }}>
+              <span className={classes.itemModalInfoTitle}>
+                {props.items[props.curItemId]?.title}
+              </span>
+              <span
+                style={{
+                  paddingLeft: "100px",
+                  fontSize: "15px",
+                  color: "grey",
+                }}
+              >
+                {props.items[props.curItemId]?.medium}
+                <span
+                  style={{
+                    paddingLeft: "50px",
+                    fontSize: "15px",
+                    color: "red",
+                  }}
+                >
+                  {props.items[props.curItemId]?.sold ? "Sold" : ""}
+                </span>
+              </span>
+
+              <br />
+              <span style={{ paddingRight: "10px" }}>by</span>
+              {!props.disableLink && (
+                <Link
+                  onClick={() =>
+                    artistPost(
+                      props.items[props.curItemId]?.userID,
+                      props.items[props.curItemId]?.username
+                    )
+                  }
+                  color="inherit"
+                  herf="/account"
+                >
+                  {props.items[props.curItemId]?.username}
+                </Link>
+              )}
+              {props.disableLink && (
+                <span>{props.items[props.curItemId]?.username}</span>
+              )}
+              <span className={classes.price}>
+                ${props.items[props.curItemId]?.price}
+              </span>
             </span>
-          </span>
-          <Divider className={classes.divider} />
+            <Divider className={classes.divider} />
 
-          <h4> Description:</h4>
-          <p style={{ paddingRight: "10px", color: "grey" }}>
-            {props.items[props.curItemId]?.description}
-          </p>
-          <Divider className={classes.divider} style={{ marginTop: "10rem" }} />
+            <h4> Description:</h4>
+            <p style={{ paddingRight: "10px", color: "grey" }}>
+              {props.items[props.curItemId]?.description}
+            </p>
+            <Divider
+              className={classes.divider}
+              style={{ marginTop: "10rem" }}
+            />
 
-          {!props.items[props.curItemId]?.sold && (
-            <div>
-              <h4> Delivery Type:</h4>
-              <p style={{ paddingRight: "10px", color: "grey" }}>
-                {props.items[props.curItemId]?.deliverytype}
-              </p>
-            </div>
-          )}
-          <Link
-            style={{
-              position: "absolute",
-              bottom: "0",
-              "&:hover": { cursor: "pointer" },
-            }}
-            onClick={() =>
-              contactHandler(
-                props.items[props.curItemId]?.userID,
-                props.items[props.curItemId]?.username
-              )
-            }
-            herf="/contact"
-          >
-            contact this seller
-          </Link>
-          {/*
+            {!props.items[props.curItemId]?.sold && (
+              <div>
+                <h4> Delivery Type:</h4>
+                <p style={{ paddingRight: "10px", color: "grey" }}>
+                  {props.items[props.curItemId]?.deliverytype}
+                </p>
+              </div>
+            )}
+            <Link
+              style={{
+                position: "absolute",
+                bottom: "0",
+                "&:hover": { cursor: "pointer" },
+              }}
+              onClick={() =>
+                contactHandler(
+                  props.items[props.curItemId]?.userID,
+                  props.items[props.curItemId]?.username
+                )
+              }
+              herf="/contact"
+            >
+              contact this seller
+            </Link>
+            {/*
           <Button
             variant="text"
             className={classes.postButton}
@@ -289,7 +292,8 @@ const ItemDetails = (props) => {
           >
             Add to Chart
           </Button> */}
-        </Box>
+          </Box>
+        )}
       </Paper>
     </Modal>
   );

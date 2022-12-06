@@ -386,7 +386,7 @@ const Post = (props) => {
           }}
         >
           {url.length > 0 && (
-            <img
+            <LazyLoadImage
               onLoad={onImgLoad}
               style={{
                 width: dimension.width,
@@ -399,7 +399,7 @@ const Post = (props) => {
                 p: 4,
               }}
               src={url[offset]}
-            ></img>
+            ></LazyLoadImage>
           )}
         </div>
       </Box>

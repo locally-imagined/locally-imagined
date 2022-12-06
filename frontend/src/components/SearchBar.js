@@ -21,7 +21,7 @@ const SearchBar = (props) => {
   const enterHandler = (event) => {
     if (event.key === "Enter") {
       // props.setFilter([]);
-      if (!props.filterQuery) {
+      if (!props.filterQuery && !search) {
         window.location.reload(false);
         return;
       }

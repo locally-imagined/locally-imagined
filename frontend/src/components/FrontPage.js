@@ -240,7 +240,7 @@ function FrontPage() {
       }${search ? `&${filterQuery}` : filterQuery}`;
     }
 
-    // console.log(url);
+    console.log(url);
     axios
       .get(url, {})
       .then((res) => {

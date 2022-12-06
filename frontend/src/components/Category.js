@@ -51,8 +51,8 @@ const Category = (props) => {
   const [anchorDate, setAnchorDate] = React.useState(null);
   const [anchorMedDel, setAnchorMedDel] = React.useState(null);
   const [anchorDateDel, setAnchorDateDel] = React.useState(null);
-  const [medium, setMedium] = React.useState("");
-  const [date, setDate] = React.useState("");
+  const [medium, setMedium] = React.useState("All");
+  const [date, setDate] = React.useState({"Range": "All"});
   const [selectedMedIndex, setSelectedMedIndex] = React.useState(0);
   const [selectedDateIndex, setSelectedDateIndex] = React.useState(0);
   const [selectedDelIndex, setSelectedDelIndex] = React.useState(0);
@@ -76,7 +76,7 @@ const Category = (props) => {
   };
   const queryDateFormater = (filterOption) => {
     const dateQuery =
-      filterOption.date === "All" ? "" : `startdate=${filterOption.date}`;
+      filterOption.date === "All" ? "" : `startDate=${filterOption.date}`;
     if (!dateQuery) props.setFilterQuery(``);
     return dateQuery;
   };
@@ -89,7 +89,10 @@ const Category = (props) => {
       props.filterOption.medium = mediumOptions[index];
       console.log(props.filterOption);
       console.log(queryMedFormater(props.filterOption));
-      const query = queryMedFormater(props.filterOption);
+      let query = queryMedFormater(props.filterOption);
+      if (date.Range !== "All") {
+        query += "&startDate=" + date.Date;
+      }
       props.getPosts(query, 0);
       props.setFilterQuery(query);
     }
@@ -104,7 +107,10 @@ const Category = (props) => {
       props.filterOption.date = dateOptions[index].Date;
       console.log(props.filterOption);
       console.log(queryDateFormater(props.filterOption));
-      const query = queryDateFormater(props.filterOption);
+      let query = queryDateFormater(props.filterOption);
+      if (medium !== "All") {
+        query += "&medium=" + medium;
+      }
       props.getPosts(query, 0);
       props.setFilterQuery(query);
     }

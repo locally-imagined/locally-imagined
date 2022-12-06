@@ -43,9 +43,9 @@ const Login = (props) => {
           props.setLogin(states.login);
           props.setMsg("Successfully Logged In");
 
-          console.log(
-            JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
-          );
+          // console.log(
+          //   JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
+          // );
           props.getMyAvatar(
             JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
           );
@@ -57,9 +57,8 @@ const Login = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response.status === 400) props.setMsg("Something went wrong");
-        else props.setMsg("Incorrect username or password");
+        props.setMsg(`error:${err}`);
+        console.error(err);
         props.setError(true);
       });
   };
@@ -69,7 +68,11 @@ const Login = (props) => {
       <InputBase
         className={classes.fastlogin}
         placeholder="Username"
-        inputProps={{ onChange: handleInputChange, required: true }}
+        inputProps={{
+          onChange: handleInputChange,
+          "data-tesid": "username",
+          required: true,
+        }}
         type="text"
         name="userName"
       />
@@ -77,7 +80,11 @@ const Login = (props) => {
       <InputBase
         className={classes.fastlogin}
         placeholder="Password"
-        inputProps={{ onChange: handleInputChange, required: true }}
+        inputProps={{
+          onChange: handleInputChange,
+          "data-tesid": "password",
+          required: true,
+        }}
         type="password"
         name="password"
       />

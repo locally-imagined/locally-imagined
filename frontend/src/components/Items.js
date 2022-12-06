@@ -35,6 +35,7 @@ const Items = (props) => {
             props.setOpenEdit(true);
           }}
           id={index}
+          data-testid={`edit-image-${index}`}
         >
           <EditIcon />
         </IconButton>
@@ -42,16 +43,22 @@ const Items = (props) => {
 
       <CardActionArea
         onClick={() => props.openItemHandler(index, item.username)}
+        data-testid={`open-image-${index}`}
       >
         <LazyLoadImage
           className={classes.image}
           src={item.url}
           alt="Image Alt"
           effect="blur"
+          data-testid={`image-${index}`}
         />
 
         <CardContent>
-          <Typography className={classes.itemTitle} varient="body">
+          <Typography
+            className={classes.itemTitle}
+            varient="body"
+            data-testid={`image-${index}-title`}
+          >
             {item.title}
           </Typography>
         </CardContent>

@@ -498,7 +498,7 @@ const styles = makeStyles((theme) => ({
     transform: "translate(-50%, -50%)",
     backgroundColor: "white",
     width: "75rem",
-    height: "80vh",
+    height: "650px",
     borderRadius: "10px",
     bgcolor: "background.paper",
     [theme.breakpoints.down("md")]: {

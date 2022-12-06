@@ -28,39 +28,34 @@ const Dashboard = (props) => {
   const [openPost, setOpenPost] = useState(false);
   return (
     <Grid className={classes.dashboardBox} style={{ marginTop: "3rem" }}>
-      {success && (
-        <AlertMsg
-          type={"success"}
-          success={success}
+      <span
+        style={{
+          marginTop: "5px",
+          width: "100vw",
+          position: "absolute",
+          zIndex: 1,
+        }}
+      >
+        {success && (
+          <AlertMsg
+            type={"success"}
+            success={success}
+            setSucess={setSucess}
+            msg={"success"}
+          />
+        )}
+      </span>
+
+      <Box>
+        {/*Post modal*/}
+        <Post
+          openPost={openPost}
+          setOpenPost={setOpenPost}
+          art={props.art}
+          setArt={props.setArt}
           setSucess={setSucess}
-          msg={"success"}
         />
-      )}
-      <Box className={classes.dashboard}>
-        <Box className={classes.dashboardBoard}>
-          <Typography variant="h5" className={classes.dashboardTitle}>
-            Post Your Art
-          </Typography>
-
-          <Button
-            className={classes.dashboardButton}
-            style={{ color: "white" }}
-            onClick={() => setOpenPost(true)}
-          >
-            <UploadIcon />
-            Create
-          </Button>
-        </Box>
       </Box>
-
-      {/*Post modal*/}
-      <Post
-        openPost={openPost}
-        setOpenPost={setOpenPost}
-        art={props.art}
-        setArt={props.setArt}
-        setSucess={setSucess}
-      />
     </Grid>
   );
 };

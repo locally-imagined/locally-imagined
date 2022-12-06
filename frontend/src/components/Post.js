@@ -29,7 +29,9 @@ const Post = (props) => {
   const [url, setUrl] = React.useState([]);
   const [offset, setOffset] = React.useState(0);
   const [check, setCheck] = useState(false);
-
+  const [dimension, setDimension] = useState({ width: 0, height: 0 });
+  const [paddingLeft, setPaddingLeft] = useState(0);
+  const [paddingTop, setPaddingTop] = useState(0);
   const [currSlideStyle, setCurrSlideStyle] = useState({ opacity: "100%" });
   const maxiumImages = 10;
   const scrollOption = {
@@ -51,15 +53,53 @@ const Post = (props) => {
     });
     // console.log(props.art);
   };
-  // const handleDeliveryChange = (event) => {
-  //   console.log(event.target.name);
-  //   setDelivery(event.target.value);
-  //   props.setArt({
-  //     ...props.art,
-  //     deliverytype: event.target.value,
-  //   });
-  //   console.log(props.art);
-  // };
+
+  const onImgLoad = ({ target: img }) => {
+    console.log(img.naturalWidth, img.naturalHeight);
+    let width = "720px",
+      height = "560px";
+    const middleHeightPx = 280;
+    const middleWidthPx = 360;
+    if (img.naturalHeight / img.naturalWidth <= 1.1) {
+      const ratio = img.naturalWidth / img.naturalHeight;
+      // console.log("ratio:", ratio);
+      width = "560px";
+      height = `${560 * ratio}px`;
+      // console.log("width:", width, "height:", height);
+      const imgMiddleWidthPx = 560 / 2;
+      // console.log("imgMiddleWidthPx:", imgMiddleWidthPx);
+      setPaddingLeft(`${middleWidthPx - imgMiddleWidthPx}px`);
+      // console.log(`padding left:${middleWidthPx - imgMiddleWidthPx}`);
+    }
+    if (img.naturalHeight / img.naturalWidth > 1.1) {
+      const ratio = img.naturalWidth / img.naturalHeight;
+      // console.log("ratio:", ratio);
+      width = 560 * ratio + "px";
+      height = "560px";
+      const imgMiddleWidthPx = (560 * ratio) / 2;
+      // console.log("imgMiddleWidthPx:", imgMiddleWidthPx);
+      setPaddingLeft(`${middleWidthPx - imgMiddleWidthPx}px`);
+      // console.log(`padding left:${middleWidthPx - imgMiddleWidthPx}`);
+    }
+    if (img.naturalWidth / img.naturalHeight > 1.1) {
+      const ratio = img.naturalHeight / img.naturalWidth;
+      // console.log("ratio:", ratio);
+      height = 560 * ratio + "px";
+      width = "560px";
+      const imgMiddleHeightPx = (560 * ratio) / 2;
+      // console.log("imgMiddleHeightPx:", imgMiddleHeightPx);
+      setPaddingTop(`${middleHeightPx - imgMiddleHeightPx}px`);
+      // console.log(`padding Top:${middleHeightPx - imgMiddleHeightPx}`);
+    }
+    setDimension({
+      width: width,
+      height: height,
+    });
+  };
+  const resetPadding = () => {
+    setPaddingLeft(0);
+    setPaddingTop(0);
+  };
   const closeHandler = () => {
     props.setOpenPost(false);
     props.setArt({
@@ -77,14 +117,20 @@ const Post = (props) => {
   };
   const prevHandler = () => {
     setOffset((val) => {
-      if (val > 0) val--;
+      if (val > 0) {
+        resetPadding();
+        val--;
+      }
       setCurrSlideStyle({ opacity: "100%" });
       return val;
     });
   };
   const nextHandler = () => {
     setOffset((val) => {
-      if (val < url.length - 1) val++;
+      if (val < url.length - 1) {
+        resetPadding();
+        val++;
+      }
       setCurrSlideStyle({ opacity: "100%" });
       return val;
     });
@@ -153,6 +199,7 @@ const Post = (props) => {
           props.setOpenPost(false);
           props.setSucess(true);
           setMedium("");
+          setUrl([]);
           setDelivery("");
           closeHandler();
           window.scrollTo(scrollOption);
@@ -164,198 +211,199 @@ const Post = (props) => {
       });
   };
   return (
-    <Modal open={props.openPost} onClose={closeHandler} disableEnforceFocus>
-      <Box className={classes.postPage}>
-        <Box className={classes.postPageDetail}>
-          <h1 className={classes.signUpTitle}>Post Your Art</h1>
-          <Divider className={classes.divider} />
-          <form onSubmit={submitPost} className={classes.PostPage}>
-            <InputBase
-              className={classes.signUpInput}
-              placeholder="Title"
-              inputProps={{
-                "data-id": "title",
-                onChange: handlePostChange,
-                required: true,
-              }}
-              type="text"
-              name="title"
-            />
-            <InputBase
-              className={classes.signUpInput}
-              placeholder="Description"
-              inputProps={{
-                "data-id": "description",
-                onChange: handlePostChange,
-                required: true,
-              }}
-              type="text"
-              name="description"
-            />
-            <InputBase
-              className={classes.signUpInput}
-              placeholder="Price"
-              inputProps={{
-                "data-id": "price",
-                onChange: handlePostChange,
-                required: true,
-              }}
-              type="number"
-              name="price"
-            />
-            <InputLabel>Medium</InputLabel>
-            <Select
-              value={medium}
-              defaultValue=""
-              onChange={handleSelectChange}
-              label="Medium"
-              name="medium"
-              required
-              style={{ width: "150px", height: "40px" }}
-            >
-              {mediumOptions.map((name, index) => (
-                <MenuItem key={index} value={name}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-            <InputLabel>Delivery Options</InputLabel>
-            <Select
-              value={delivery}
-              defaultValue=""
-              onChange={handleSelectChange}
-              label="Delivery"
-              name="deliverytype"
-              required
-              style={{ width: "150px", height: "40px" }}
-            >
-              {delivaryOptions.map((name, index) => (
-                <MenuItem key={index} value={name}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-            <br />
-            <br />
-            <input
-              accept="image/*"
-              style={{ display: "none" }}
-              multiple
-              onChange={handlePostChange}
-              required
+    <Box className={classes.postPage}>
+      <Box className={classes.postPageDetail}>
+        <h1 className={classes.signUpTitle}>Post Your Art</h1>
+        <Divider className={classes.divider} />
+        <form onSubmit={submitPost} className={classes.PostPage}>
+          <InputBase
+            className={classes.signUpInput}
+            placeholder="Title"
+            inputProps={{
+              "data-id": "title",
+              onChange: handlePostChange,
+              required: true,
+            }}
+            type="text"
+            name="title"
+          />
+          <InputBase
+            className={classes.signUpInput}
+            placeholder="Description"
+            inputProps={{
+              "data-id": "description",
+              onChange: handlePostChange,
+              required: true,
+            }}
+            type="text"
+            name="description"
+          />
+          <InputBase
+            className={classes.signUpInput}
+            placeholder="Price"
+            inputProps={{
+              "data-id": "price",
+              onChange: handlePostChange,
+              required: true,
+            }}
+            type="number"
+            name="price"
+          />
+          <InputLabel>Medium</InputLabel>
+          <Select
+            value={medium}
+            defaultValue=""
+            onChange={handleSelectChange}
+            label="Medium"
+            name="medium"
+            required
+            style={{ width: "150px", height: "40px" }}
+          >
+            {mediumOptions.map((name, index) => (
+              <MenuItem key={index} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+          <InputLabel>Delivery Options</InputLabel>
+          <Select
+            value={delivery}
+            defaultValue=""
+            onChange={handleSelectChange}
+            label="Delivery"
+            name="deliverytype"
+            required
+            style={{ width: "150px", height: "40px" }}
+          >
+            {delivaryOptions.map((name, index) => (
+              <MenuItem key={index} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+          <br />
+          <br />
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            multiple
+            onChange={handlePostChange}
+            required
+            disabled={url.length === maxiumImages}
+            id="icon-button-file"
+            type="file"
+            name="content"
+          />
+          <label htmlFor="icon-button-file">
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
               disabled={url.length === maxiumImages}
-              id="icon-button-file"
-              type="file"
-              name="content"
-            />
-            <label htmlFor="icon-button-file">
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-                disabled={url.length === maxiumImages}
-              >
-                <PhotoCamera />
-              </IconButton>
-              <span
-                style={{
-                  fontSize: "13px",
-                  color: url.length === maxiumImages ? "red" : "grey",
-                }}
-              >
-                {url.length === maxiumImages
-                  ? "reached maxium images"
-                  : "upload image"}
-              </span>
-            </label>
-
-            <div>
-              <Checkbox checked={check} onChange={handleCheck} />
-              <span style={{ fontSize: "12px" }}>
-                By checking this box, I agree to share my contact info to buyers
-              </span>
-            </div>
-            <Divider className={classes.divider} style={{ marginTop: "5px" }} />
-            <Button
-              type="submit"
-              value="Submit"
-              variant={check ? "text" : "contained"}
-              disabled={!check}
-              className={classes.postButton}
-              style={{ color: "white", marginTop: "1rem" }}
             >
-              Post
-            </Button>
-          </form>
-          {error && (
-            <AlertMsg
-              error={error}
-              type={"error"}
-              setError={setError}
-              msg={"error"}
-            />
-          )}
-        </Box>
-        <Box className={classes.postPageImageBox}>
-          {url.length > 1 && (
-            <Box
+              <PhotoCamera />
+            </IconButton>
+            <span
               style={{
-                marginTop: "14rem",
-                position: "absolute",
-                zIndex: 1,
+                fontSize: "13px",
+                color: url.length === maxiumImages ? "red" : "grey",
               }}
             >
-              <ArrowBackIcon
-                onClick={prevHandler}
-                style={{ paddingRight: "39rem" }}
-                className={classes.postArrow}
-              />
-              <ArrowForwardIcon
-                onClick={nextHandler}
-                className={classes.postArrow}
-              />
-            </Box>
-          )}
-          <div
-            style={{
-              height: "100%",
-              marginLeft: "25vw",
-              marginTop: "1vh",
-              position: "absolute",
-            }}
-          >
-            <SliderDot
-              offset={offset}
-              currSlideStyle={currSlideStyle}
-              images={url}
-              color={"white"}
-            />
-          </div>
-          <div
-            style={{
-              boxShadow: 3,
+              {url.length === maxiumImages
+                ? "reached maxium images"
+                : "upload image"}
+            </span>
+          </label>
 
-              marginLeft: "3rem",
-              position: "relative",
-              height: "35rem",
+          <div>
+            <Checkbox checked={check} onChange={handleCheck} />
+            <span style={{ fontSize: "12px" }}>
+              By checking this box, I agree to share my contact info to buyers
+            </span>
+          </div>
+          <Divider className={classes.divider} style={{ marginTop: "5px" }} />
+          <Button
+            type="submit"
+            value="Submit"
+            variant={check ? "text" : "contained"}
+            disabled={!check}
+            className={classes.postButton}
+            style={{ color: "white", marginTop: "1rem" }}
+          >
+            Post
+          </Button>
+        </form>
+        {error && (
+          <AlertMsg
+            error={error}
+            type={"error"}
+            setError={setError}
+            msg={"error"}
+          />
+        )}
+      </Box>
+      <Box className={classes.postPageImageBox}>
+        {url.length > 1 && (
+          <Box
+            style={{
+              marginTop: "14rem",
+              position: "absolute",
+              zIndex: 1,
             }}
           >
-            <LazyLoadImage
+            <ArrowBackIcon
+              onClick={prevHandler}
+              style={{ paddingRight: "39rem" }}
+              className={classes.postArrow}
+            />
+            <ArrowForwardIcon
+              onClick={nextHandler}
+              className={classes.postArrow}
+            />
+          </Box>
+        )}
+        <div
+          style={{
+            height: "100%",
+            marginLeft: "390px",
+            marginTop: "23px",
+            position: "absolute",
+          }}
+        >
+          <SliderDot
+            offset={offset}
+            currSlideStyle={currSlideStyle}
+            images={url}
+            color={"black"}
+          />
+        </div>
+        <div
+          style={{
+            width: "720px",
+            height: "560px",
+
+            borderRadius: "10px",
+          }}
+        >
+          {url.length > 0 && (
+            <img
+              onLoad={onImgLoad}
               style={{
-                width: "100%",
-                height: "100%",
-                maxHeight: "35rem",
-                borderRadius: "5px",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.26)",
+                width: dimension.width,
+                height: dimension.height,
+
+                paddingLeft: paddingLeft,
+                paddingTop: paddingTop,
+                borderRadius: "10px",
+                boxShadow: 24,
+                p: 4,
               }}
               src={url[offset]}
-              alt="Image Alt"
-              effect="blur"
-            ></LazyLoadImage>
-          </div>
-        </Box>
+            ></img>
+          )}
+        </div>
       </Box>
-    </Modal>
+    </Box>
   );
 };
 

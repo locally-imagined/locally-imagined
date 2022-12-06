@@ -13,7 +13,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import ChangePage from "./ChangePage";
 import AccountSetting from "./AccountSetting/AccountSetting";
 import ContactInfo from "./ContactInfo";
-
+import AlertMsg from "./AlertMsg";
 /**
  *
  * @return {object} JSX
@@ -29,6 +29,8 @@ function FrontPage() {
   const [userID, setUserID] = useState("");
   const [contact, setContact] = useState({});
   const [filterQuery, setFilterQuery] = useState("");
+  const [error, setError] = useState(false);
+  const [msg, setMsg] = useState("Login successfully");
   const [loading, setLoading] = useState(false);
   const [noResult, setNoResult] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -85,7 +87,8 @@ function FrontPage() {
         }
       })
       .catch((err) => {
-        console.error(err);
+        setError(true);
+        setMsg(`error:${err}`);
       });
   };
 
@@ -115,7 +118,8 @@ function FrontPage() {
         }
       })
       .catch((err) => {
-        console.error(err);
+        setError(true);
+        setMsg(`error:${err}`);
       });
   };
 
@@ -139,7 +143,8 @@ function FrontPage() {
             }
           })
           .catch((err) => {
-            console.error(err);
+            setError(true);
+            setMsg(`error:${err}`);
           });
       })
     );
@@ -154,7 +159,7 @@ function FrontPage() {
             {}
           )
           .then((res) => {
-            if (res.status != 200 || !res.data) {
+            if (res.status != 200) {
               throw res;
             } else {
               let src = "data:image/jpeg;base64,";
@@ -163,7 +168,8 @@ function FrontPage() {
             }
           })
           .catch((err) => {
-            console.error(err);
+            setError(true);
+            setMsg(`error:${err}`);
           });
       })
     );
@@ -183,12 +189,13 @@ function FrontPage() {
           getImagesSetSrc(data).then(() => {
             setImages(imageSet);
             setDeleteCheck(Array(imageSet.length).fill(false));
-            // console.log(imageSet);
+            console.log(imageSet);
           });
         }
       })
       .catch((err) => {
-        console.error(err.response.data);
+        setError(true);
+        setMsg(`error:${err}`);
       });
   };
 
@@ -217,7 +224,8 @@ function FrontPage() {
       })
       .catch((err) => {
         setLoading(false);
-        console.error(err);
+        setError(true);
+        setMsg(`error:${err}`);
       });
   };
   const getPosts = (filterQuery) => {
@@ -250,7 +258,8 @@ function FrontPage() {
         }
       })
       .catch((err) => {
-        console.error(err);
+        setError(true);
+        setMsg(`error:${err}`);
         setLoading(false);
       });
   };
@@ -265,13 +274,14 @@ function FrontPage() {
           throw res;
         } else {
           const data = res.data;
-          console.log(JSON.parse(JSON.stringify(data)));
+          // console.log(JSON.parse(JSON.stringify(data)));
           setContact(JSON.parse(JSON.stringify(data)));
           setLoading(false);
         }
       })
       .catch((err) => {
-        console.error(err);
+        setError(true);
+        setMsg(`error:${err}`);
         setLoading(false);
       });
   };
@@ -283,7 +293,7 @@ function FrontPage() {
       // console.log(`current path:`, curPath);
       tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
     }
-    if (curPath.includes("profile")) {
+    if (curPath?.includes("profile")) {
       // console.log(curPath);
       getArtistPosts(userID);
     }
@@ -330,6 +340,24 @@ function FrontPage() {
             getMyAvatar={getMyAvatar}
             getInfo={getInfo}
           />
+          <span
+            style={{
+              marginTop: "-4px",
+              width: "100vw",
+              position: "absolute",
+              zIndex: 1,
+            }}
+          >
+            {error && (
+              <AlertMsg
+                error={error}
+                type={"error"}
+                setError={setError}
+                msg={msg}
+              />
+            )}
+          </span>
+
           <Listing
             items={tab === "explore" ? items : artistItem}
             images={images}
@@ -384,6 +412,7 @@ function FrontPage() {
             myAvatar={myAvatar}
             getMyAvatar={getMyAvatar}
           />
+
           <AccountPage
             artistItem={artistItem}
             items={items}
@@ -430,6 +459,7 @@ function FrontPage() {
             getMyAvatar={getMyAvatar}
             getInfo={getInfo}
           />
+
           <AccountSetting
             artistItem={artistItem}
             items={items}
@@ -472,6 +502,7 @@ function FrontPage() {
             myAvatar={myAvatar}
             getMyAvatar={getMyAvatar}
           />
+
           <ContactInfo
             contact={contact}
             loading={loading}
@@ -500,6 +531,7 @@ function FrontPage() {
             myAvatar={myAvatar}
             getMyAvatar={getMyAvatar}
           />
+
           <Dashboard
             art={art}
             setArt={setArt}

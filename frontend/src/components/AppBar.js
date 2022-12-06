@@ -158,6 +158,7 @@ const Appbar = (props) => {
           <img
             src="/logo.png"
             alt="Locally Imagine"
+            data-testid="app-logo"
             onClick={() => {
               history.push(`/`);
               window.location.reload(false);
@@ -204,6 +205,7 @@ const Appbar = (props) => {
               size="small"
               sx={{ ml: 2 }}
               aria-haspopup="true"
+              data-testid="button-dashboard"
               aria-expanded={open ? "true" : undefined}
               onClick={() => {
                 props.setSearch("");

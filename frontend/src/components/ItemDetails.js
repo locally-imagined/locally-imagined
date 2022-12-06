@@ -190,6 +190,7 @@ const ItemDetails = (props) => {
           )}
           {!props.disableLink && (
             <IconButton
+              data-testid={`user-avatar`}
               onClick={() =>
                 artistPost(
                   props.items[props.curItemId]?.userID,

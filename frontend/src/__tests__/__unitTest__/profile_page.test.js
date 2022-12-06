@@ -1,5 +1,5 @@
 import App from "../../components/App";
-import AppBar from "../../components/AppBar";
+
 import {
   render,
   screen,
@@ -9,7 +9,6 @@ import {
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { act } from "react-dom/test-utils";
-import axios from "axios";
 
 delete window.location;
 window.location = { reload: jest.fn() };

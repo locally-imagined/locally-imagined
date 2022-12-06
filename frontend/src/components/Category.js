@@ -134,6 +134,7 @@ const Category = (props) => {
             aria-haspopup="listbox"
             aria-controls="lock-menu"
             aria-label="Medium"
+            disabled={props.tab === "mypost"}
             aria-expanded={openMed ? "true" : undefined}
             onClick={handleClickItem}
             className={classes.categoryBarItem}
@@ -176,6 +177,7 @@ const Category = (props) => {
             aria-haspopup="listbox"
             aria-controls="lock-menu"
             aria-label="Date"
+            disabled={props.tab === "mypost"}
             aria-expanded={openDate ? "true" : undefined}
             onClick={handleClickItem}
             className={classes.categoryBarItem}

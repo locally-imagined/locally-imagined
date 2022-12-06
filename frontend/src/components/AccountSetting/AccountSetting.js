@@ -224,7 +224,7 @@ const AccountSetting = (props) => {
                   position: "absolute",
                 }}
               >
-                upload an avatar to show a little more personality to your
+                Upload an avatar to add a little more personality to your
                 profile!
               </div>
             </Typography>

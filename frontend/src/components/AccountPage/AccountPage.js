@@ -37,7 +37,7 @@ const AccountPage = (props) => {
     else props.getAvatar(sessionStorage.getItem("currAvatar"));
   }, [location.state.username]);
 
-  const [edit, setEdit] = useState("");
+  const [edit, setEdit] = useState("edit");
   const [openEdit, setOpenEdit] = useState(false);
   const [msg, setMsg] = useState("");
   const [editId, setEditId] = useState(0);
@@ -123,21 +123,6 @@ const AccountPage = (props) => {
             {props.contact.bio}
           </span>
         </Typography>
-
-        {props.user.userName === props.artistItem[0]?.username && edit === "" && (
-          <IconButton className={classes.accountIcons} onClick={editHandler}>
-            <EditIcon />
-          </IconButton>
-        )}
-        {props.user.userName === props.artistItem[0]?.username &&
-          edit === "edit" && (
-            <IconButton
-              className={classes.accountIcons}
-              onClick={() => setEdit("")}
-            >
-              <ClearIcon />
-            </IconButton>
-          )}
       </Box>
 
       <Box className={classes.accountItems}>

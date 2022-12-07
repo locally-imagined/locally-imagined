@@ -323,8 +323,8 @@ const Post = (props) => {
               }}
             >
               {url.length === maxiumImages
-                ? "reached maxium images"
-                : "upload images"}
+                ? "Reached Maximum Images"
+                : "Upload Images (one at a time please :)"}
             </span>
           </label>
 

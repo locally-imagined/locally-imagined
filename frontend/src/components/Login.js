@@ -50,8 +50,9 @@ const Login = (props) => {
           // console.log(
           //   JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
           // );
-          props.getMyAvatar(
-            JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
+          props.getAvatar(
+            JSON.parse(sessionStorage.getItem("user"))?.token.profpicID,
+            "myAvatar"
           );
           props.setSucess(true);
           const timer = new props.sessionTimer(2); //2 hours session timer

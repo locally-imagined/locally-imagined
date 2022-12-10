@@ -35,7 +35,7 @@ const AccountSetting = (props) => {
 
   useEffect(() => {
     // console.log(JSON.parse(sessionStorage.getItem("avatar")));
-    props.getAvatar(sessionStorage.getItem("myAvatar"));
+    props.getAvatar(sessionStorage.getItem("myAvatar"), "otherAvatar");
     props.getInfo(location.state.userID);
   }, []);
   const getBase64 = (file) => {
@@ -173,6 +173,7 @@ const AccountSetting = (props) => {
           style={{
             width: "40rem",
             position: "absolute",
+
             padding: "20px",
             display: "block",
             marginLeft: "25vw",

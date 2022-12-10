@@ -12,27 +12,23 @@ import ChangePage from "./ChangePage";
 import AccountSetting from "./AccountSetting/AccountSetting";
 import ContactInfo from "./ContactInfo";
 import AlertMsg from "./AlertMsg";
+import AboutBar from "./AboutPage/AboutBar";
+import AboutPage from "./AboutPage/AboutPage";
 /**
  *
  * @return {object} JSX
  */
 function FrontPage() {
+  //Component related state
+  const [curPath, setCurPath] = useState("");
   const [tab, setTab] = React.useState("explore");
   const [items, setItems] = useState([]);
-  const [artistItem, setArtistItem] = useState([]);
-  const [curPath, setCurPath] = useState("");
-  const [images, setImages] = React.useState([]);
-  const [search, setSearch] = useState("");
-  const [bio, setBio] = useState("");
+  //User related states
   const [userID, setUserID] = useState("");
+  const [artistItem, setArtistItem] = useState([]);
+  const [images, setImages] = React.useState([]);
+  const [bio, setBio] = useState("");
   const [contact, setContact] = useState({});
-  const [filterQuery, setFilterQuery] = useState("");
-  const [error, setError] = useState(false);
-  const [msg, setMsg] = useState("Login successfully");
-  const [loading, setLoading] = useState(false);
-  const [noResult, setNoResult] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [deleteCheck, setDeleteCheck] = useState([]);
   const [avatar, setAvatar] = React.useState("");
   const [myAvatar, setMyAvatar] = React.useState("");
   const [user, setUser] = useState({
@@ -42,8 +38,6 @@ function FrontPage() {
     phone: "",
     email: "",
   });
-  const imageSet = [];
-  //Post object
   const [art, setArt] = useState({
     title: "",
     description: "",
@@ -52,55 +46,42 @@ function FrontPage() {
     deliverytype: "",
     content: [],
   });
+  //Filter related states
+  const [search, setSearch] = useState("");
+  const [filterQuery, setFilterQuery] = useState("");
   const filterOption = {
     medium: "all",
   };
   const filterHandler = (filteredItems) => {
     setItems(filteredItems);
   };
-  const getAvatar = (imageID) => {
-    // console.log(imageID);
-    if (!imageID) return;
-    const noImageID = "00000000-0000-0000-0000-000000000000";
-    if (imageID === noImageID) {
-      setAvatar("");
-      sessionStorage.setItem("currAvatar", noImageID);
-      return;
-    }
-    const url = `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${imageID}`;
-    // console.log(url);
+  //utility related states
+  const [msg, setMsg] = useState("Login successfully");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [deleteCheck, setDeleteCheck] = useState([]);
+  const [noResult, setNoResult] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const noImageID = "00000000-0000-0000-0000-000000000000";
+  const imageSet = [];
 
-    return axios
-      .get(url, {})
-      .then((res) => {
-        if (res.status != 200 || !res.data) {
-          throw res;
-        } else {
-          let src = "data:image/jpeg;base64,";
-          src += res.data;
-          setAvatar(encodeURI(src));
-          sessionStorage.setItem("currAvatar", imageID);
-          // console.log("avatar src:", encodeURI(src));
-        }
-      })
-      .catch((err) => {
-        setError(true);
-        setMsg(`error:${err}`);
-      });
-  };
-
-  const getMyAvatar = (imageID) => {
+  //Axios functions
+  /*
+  Get the user avatar
+  input: imageID, option
+  output: nil
+  */
+  const getAvatar = (imageID, option) => {
     // console.log(imageID);
+    // console.log("otion:", option);
     if (!imageID) return;
-    const noImageID = "00000000-0000-0000-0000-000000000000";
+
     if (imageID === noImageID) {
       setAvatar("");
       sessionStorage.setItem("myAvatar", noImageID);
       return;
     }
     const url = `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${imageID}`;
-    // console.log(url);
-
     return axios
       .get(url, {})
       .then((res) => {
@@ -109,9 +90,14 @@ function FrontPage() {
         } else {
           let src = "data:image/jpeg;base64,";
           src += res.data;
-          setMyAvatar(encodeURI(src));
-          sessionStorage.setItem("myAvatar", imageID);
-          // console.log("avatar src:", encodeURI(src));
+          if (option === "otherAvatar") {
+            setAvatar(encodeURI(src));
+            sessionStorage.setItem("currAvatar", imageID);
+          }
+          if (option === "myAvatar") {
+            setMyAvatar(encodeURI(src));
+            sessionStorage.setItem("myAvatar", imageID);
+          }
         }
       })
       .catch((err) => {
@@ -120,6 +106,11 @@ function FrontPage() {
       });
   };
 
+  /*
+  Get the real image src from S3 and add url property to data object
+  input: data fetched from API
+  output: data
+  */
   const getImagesSetSrc = (datas) => {
     return axios.all(
       datas.map(async (id) => {
@@ -140,13 +131,18 @@ function FrontPage() {
             }
           })
           .catch((err) => {
-            console.error(err);
+            setError(true);
+            setMsg(`error:${err}`);
           });
       })
     );
   };
-
-  const getSrc = (datas) => {
+  /*
+  Get the real image src from S3 and add url property to data object
+  input: data: image object fetched from API, option: imageSet or listing
+  output: data
+  */
+  const getSrc = (datas, option) => {
     return axios.all(
       datas.map(async (data) => {
         return axios
@@ -170,6 +166,9 @@ function FrontPage() {
       })
     );
   };
+  /*
+  Get all images associate with the listing from API
+  */
   const getImagesSet = (postID) => {
     axios
       .get(
@@ -194,7 +193,9 @@ function FrontPage() {
         setMsg(`error:${err}`);
       });
   };
-
+  /*
+  Get user's own listings from API
+  */
   const getArtistPosts = (userID) => {
     if (!userID) {
       userID = sessionStorage.getItem("currentUserID");
@@ -224,14 +225,13 @@ function FrontPage() {
         setMsg(`error:${err}`);
       });
   };
+  /*
+    Get post listings from API
+    */
   const getPosts = (_filterQuery) => {
     let url = "";
     let filterQuery;
     filterQuery = _filterQuery ? _filterQuery : "";
-
-    // console.log(`filter query:`, _filterQuery);
-
-    // console.log(`search query:`, search);
     setLoading(true);
     if (!filterQuery && !search) {
       const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpage/`;
@@ -242,7 +242,6 @@ function FrontPage() {
         search ? `keyword=${encodeURIComponent(search)}` : ``
       }${search ? `&${filterQuery}` : filterQuery}`;
     }
-
     console.log(url);
     axios
       .get(url, {})
@@ -265,6 +264,9 @@ function FrontPage() {
         setLoading(false);
       });
   };
+  /*
+  Get user contact info from API
+  */
   const getInfo = (userID) => {
     if (!userID) return;
     setLoading(true);
@@ -287,21 +289,23 @@ function FrontPage() {
         setLoading(false);
       });
   };
+  /*
+  Reset the listing when page refresh
+  */
 
   useEffect(() => {
     setLoading(true);
-
     if (curPath === "/") {
-      // console.log(`current path:`, curPath);
       tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
     }
     if (curPath?.includes("profile")) {
-      // console.log(curPath);
       getArtistPosts(userID);
     }
   }, [offset, curPath, userID]);
 
-  //verify user login state
+  /*
+  verify user login state
+  */
 
   if (sessionStorage.getItem("user") !== null) {
     const userState = JSON.parse(sessionStorage.user);
@@ -313,90 +317,92 @@ function FrontPage() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <Appbar
-            items={tab === "explore" ? items : artistItem}
-            login={states.login}
-            loading={loading}
-            noResult={noResult}
-            offset={offset}
-            search={search}
-            tab={tab}
-            user={user}
-            setTab={setTab}
-            getSrc={getSrc}
-            getArtistPosts={getArtistPosts}
-            setOffset={setOffset}
-            setUser={setUser}
-            setLoading={setLoading}
-            setSearch={setSearch}
-            setFilter={filterHandler}
-            setNoResult={setNoResult}
-            setCurPath={setCurPath}
-            setUserID={setUserID}
-            getPosts={getPosts}
-            setAvatar={setAvatar}
-            avatar={avatar}
-            getAvatar={getAvatar}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            getMyAvatar={getMyAvatar}
-            getInfo={getInfo}
-            filterQuery={filterQuery}
-          />
-          <span
-            style={{
-              marginTop: "-4px",
-              width: "100vw",
-              position: "absolute",
-              zIndex: 1,
-            }}
-          >
-            {error && (
-              <AlertMsg
-                error={error}
-                type={"error"}
-                setError={setError}
-                msg={msg}
-              />
-            )}
-          </span>
+          <div>
+            <Appbar
+              items={tab === "explore" ? items : artistItem}
+              login={states.login}
+              loading={loading}
+              noResult={noResult}
+              offset={offset}
+              search={search}
+              tab={tab}
+              user={user}
+              setTab={setTab}
+              getSrc={getSrc}
+              getArtistPosts={getArtistPosts}
+              setOffset={setOffset}
+              setUser={setUser}
+              setLoading={setLoading}
+              setSearch={setSearch}
+              setFilter={filterHandler}
+              setNoResult={setNoResult}
+              setCurPath={setCurPath}
+              setUserID={setUserID}
+              getPosts={getPosts}
+              setAvatar={setAvatar}
+              avatar={avatar}
+              getAvatar={getAvatar}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+              getInfo={getInfo}
+              filterQuery={filterQuery}
+            />
+            <span
+              style={{
+                marginTop: "-4px",
+                width: "100vw",
+                position: "absolute",
+                zIndex: 1,
+              }}
+            >
+              {error && (
+                <AlertMsg
+                  error={error}
+                  type={"error"}
+                  setError={setError}
+                  msg={msg}
+                />
+              )}
+            </span>
 
-          <Listing
-            items={tab === "explore" ? items : artistItem}
-            images={images}
-            noResult={noResult}
-            loading={loading}
-            offset={offset}
-            tab={tab}
-            user={user}
-            artistItem={artistItem}
-            setArtistItem={setArtistItem}
-            setTab={setTab}
-            setOffset={setOffset}
-            getArtistPosts={getArtistPosts}
-            getImagesSet={getImagesSet}
-            setImages={setImages}
-            setFilterQuery={setFilterQuery}
-            filterOption={filterOption}
-            getPosts={getPosts}
-            setUserID={setUserID}
-            setUser={setUser}
-            getInfo={getInfo}
-            setContact={setContact}
-            setAvatar={setAvatar}
-            avatar={avatar}
-            getAvatar={getAvatar}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            bio={bio}
-            setBio={setBio}
-          />
-          <ChangePage
-            items={tab === "explore" ? items : artistItem}
-            curPath={curPath}
-            offset={offset}
-            setOffset={setOffset}
-          />
+            <Listing
+              items={tab === "explore" ? items : artistItem}
+              images={images}
+              noResult={noResult}
+              loading={loading}
+              offset={offset}
+              tab={tab}
+              user={user}
+              artistItem={artistItem}
+              setArtistItem={setArtistItem}
+              setTab={setTab}
+              setOffset={setOffset}
+              getArtistPosts={getArtistPosts}
+              getImagesSet={getImagesSet}
+              setImages={setImages}
+              setFilterQuery={setFilterQuery}
+              filterOption={filterOption}
+              getPosts={getPosts}
+              setUserID={setUserID}
+              setUser={setUser}
+              getInfo={getInfo}
+              setContact={setContact}
+              setAvatar={setAvatar}
+              avatar={avatar}
+              getAvatar={getAvatar}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+              bio={bio}
+              setBio={setBio}
+            />
+            <ChangePage
+              items={tab === "explore" ? items : artistItem}
+              curPath={curPath}
+              offset={offset}
+              setOffset={setOffset}
+            />
+            <AboutBar />
+          </div>
         </Route>
 
         <Route path="/profile">
@@ -413,142 +419,169 @@ function FrontPage() {
             getAvatar={getAvatar}
             setMyAvatar={setMyAvatar}
             myAvatar={myAvatar}
-            getMyAvatar={getMyAvatar}
           />
-
-          <AccountPage
-            artistItem={artistItem}
-            items={items}
-            images={images}
-            deleteCheck={deleteCheck}
-            loading={loading}
-            noResult={noResult}
-            offset={offset}
-            user={user}
-            getImagesSet={getImagesSet}
-            getSrc={getSrc}
-            setImages={setImages}
-            setOffset={setOffset}
-            setDeleteCheck={setDeleteCheck}
-            setCurPath={setCurPath}
-            setArtistItem={setArtistItem}
-            setUserID={setUserID}
-            setUser={setUser}
-            getInfo={getInfo}
-            contact={contact}
-            setContact={setContact}
-            setAvatar={setAvatar}
-            avatar={avatar}
-            getAvatar={getAvatar}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            getMyAvatar={getMyAvatar}
-          />
+          <div
+            style={{
+              height: "100vh",
+              width: "100vw",
+              poaition: "absolute",
+              display: "block",
+            }}
+          >
+            <AccountPage
+              artistItem={artistItem}
+              items={items}
+              images={images}
+              deleteCheck={deleteCheck}
+              loading={loading}
+              noResult={noResult}
+              offset={offset}
+              user={user}
+              getImagesSet={getImagesSet}
+              getSrc={getSrc}
+              setImages={setImages}
+              setOffset={setOffset}
+              setDeleteCheck={setDeleteCheck}
+              setCurPath={setCurPath}
+              setArtistItem={setArtistItem}
+              setUserID={setUserID}
+              setUser={setUser}
+              getInfo={getInfo}
+              contact={contact}
+              setContact={setContact}
+              setAvatar={setAvatar}
+              avatar={avatar}
+              getAvatar={getAvatar}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+            />
+          </div>
         </Route>
         <Route path="/settings">
-          <NavBar
-            login={states.login}
-            offset={offset}
-            setUser={setUser}
-            user={user}
-            setArtistItem={setArtistItem}
-            setSearch={setSearch}
-            setUserID={setUserID}
-            setAvatar={setAvatar}
-            avatar={avatar}
-            getAvatar={getAvatar}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            getMyAvatar={getMyAvatar}
-            getInfo={getInfo}
-          />
+          <div>
+            <NavBar
+              login={states.login}
+              offset={offset}
+              setUser={setUser}
+              user={user}
+              setArtistItem={setArtistItem}
+              setSearch={setSearch}
+              setUserID={setUserID}
+              setAvatar={setAvatar}
+              avatar={avatar}
+              getAvatar={getAvatar}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+              getInfo={getInfo}
+            />
 
-          <AccountSetting
-            artistItem={artistItem}
-            items={items}
-            images={images}
-            deleteCheck={deleteCheck}
-            loading={loading}
-            noResult={noResult}
-            offset={offset}
-            user={user}
-            getImagesSet={getImagesSet}
-            getSrc={getSrc}
-            setImages={setImages}
-            setOffset={setOffset}
-            setDeleteCheck={setDeleteCheck}
-            setCurPath={setCurPath}
-            setArtistItem={setArtistItem}
-            setUserID={setUserID}
-            setAvatar={setAvatar}
-            avatar={avatar}
-            contact={contact}
-            getAvatar={getAvatar}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            getInfo={getInfo}
-          />
+            <AccountSetting
+              artistItem={artistItem}
+              items={items}
+              images={images}
+              deleteCheck={deleteCheck}
+              loading={loading}
+              noResult={noResult}
+              offset={offset}
+              user={user}
+              getImagesSet={getImagesSet}
+              getSrc={getSrc}
+              setImages={setImages}
+              setOffset={setOffset}
+              setDeleteCheck={setDeleteCheck}
+              setCurPath={setCurPath}
+              setArtistItem={setArtistItem}
+              setUserID={setUserID}
+              setAvatar={setAvatar}
+              avatar={avatar}
+              contact={contact}
+              getAvatar={getAvatar}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+              getInfo={getInfo}
+            />
+          </div>
         </Route>
         <Route path="/contact">
-          <NavBar
-            login={states.login}
-            offset={offset}
-            setUser={setUser}
-            user={user}
-            setArtistItem={setArtistItem}
-            setSearch={setSearch}
-            setUserID={setUserID}
-            setAvatar={setAvatar}
-            avatar={avatar}
-            getAvatar={getAvatar}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            getMyAvatar={getMyAvatar}
-          />
+          <div>
+            <NavBar
+              login={states.login}
+              offset={offset}
+              setUser={setUser}
+              user={user}
+              setArtistItem={setArtistItem}
+              setSearch={setSearch}
+              setUserID={setUserID}
+              setAvatar={setAvatar}
+              avatar={avatar}
+              getAvatar={getAvatar}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+            />
 
-          <ContactInfo
-            contact={contact}
-            loading={loading}
-            user={user}
-            getInfo={getInfo}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            avatar={avatar}
-            getAvatar={getAvatar}
-            getMyAvatar={getMyAvatar}
-          />
+            <ContactInfo
+              contact={contact}
+              loading={loading}
+              user={user}
+              getInfo={getInfo}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+              avatar={avatar}
+              getAvatar={getAvatar}
+            />
+          </div>
         </Route>
         <Route path="/create">
-          <NavBar
-            login={states.login}
-            offset={offset}
-            setUser={setUser}
-            user={user}
-            setArtistItem={setArtistItem}
-            setSearch={setSearch}
-            setUserID={setUserID}
-            setAvatar={setAvatar}
-            avatar={avatar}
-            getAvatar={getAvatar}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            getMyAvatar={getMyAvatar}
-          />
+          <div>
+            <NavBar
+              login={states.login}
+              offset={offset}
+              setUser={setUser}
+              user={user}
+              setArtistItem={setArtistItem}
+              setSearch={setSearch}
+              setUserID={setUserID}
+              setAvatar={setAvatar}
+              avatar={avatar}
+              getAvatar={getAvatar}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+            />
 
-          <Dashboard
-            art={art}
-            setArt={setArt}
-            setCurPath={setCurPath}
-            setArtistItem={setArtistItem}
-            setSearch={setSearch}
-            setAvatar={setAvatar}
-            setUserID={setUserID}
-            setMyAvatar={setMyAvatar}
-            getAvatar={getAvatar}
-            getMyAvatar={getMyAvatar}
-            myAvatar={myAvatar}
-            getInfo={getInfo}
-          />
+            <Dashboard
+              art={art}
+              setArt={setArt}
+              setCurPath={setCurPath}
+              setArtistItem={setArtistItem}
+              setSearch={setSearch}
+              setAvatar={setAvatar}
+              setUserID={setUserID}
+              setMyAvatar={setMyAvatar}
+              getAvatar={getAvatar}
+              myAvatar={myAvatar}
+              getInfo={getInfo}
+            />
+          </div>
+        </Route>
+        <Route path="/about">
+          <div>
+            <NavBar
+              login={states.login}
+              offset={offset}
+              setUser={setUser}
+              user={user}
+              setArtistItem={setArtistItem}
+              setSearch={setSearch}
+              setUserID={setUserID}
+              setAvatar={setAvatar}
+              avatar={avatar}
+              getAvatar={getAvatar}
+              setMyAvatar={setMyAvatar}
+              myAvatar={myAvatar}
+            />
+            <AboutPage />
+            <AboutBar />
+          </div>
         </Route>
       </Switch>
     </BrowserRouter>

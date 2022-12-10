@@ -11,6 +11,7 @@ import Edit from "./Edit";
 import AlertMsg from "../AlertMsg";
 import ReactLoading from "react-loading";
 import ItemDetails from "../ItemDetails";
+import AboutBar from "../AboutPage/AboutBar";
 /**
  * AccountPage
  *
@@ -33,8 +34,8 @@ const AccountPage = (props) => {
       location.state.username ===
       JSON.parse(sessionStorage.getItem("user"))?.userName
     )
-      props.getMyAvatar(sessionStorage.getItem("myAvatar"));
-    else props.getAvatar(sessionStorage.getItem("currAvatar"));
+      props.getAvatar(sessionStorage.getItem("myAvatar"), "myAvatar");
+    else props.getAvatar(sessionStorage.getItem("currAvatar", "otherAvatar"));
   }, [location.state.username]);
 
   const [edit, setEdit] = useState("edit");
@@ -51,7 +52,7 @@ const AccountPage = (props) => {
     props.getImagesSet(props.artistItem[id].postID);
     setOpenItemUrl(props.artistItem[id].url);
     setCurItemId(id);
-    props.getAvatar(props.artistItem[id].profpicID);
+    props.getAvatar(props.artistItem[id].profpicID, "otherAvatar");
   };
   const openEditHandler = (index) => {
     setEditId(index);
@@ -67,7 +68,7 @@ const AccountPage = (props) => {
   const classes = styles();
 
   return (
-    <Box className={classes.accountBox}>
+    <div>
       <br />
       <br />
       <br />
@@ -84,7 +85,7 @@ const AccountPage = (props) => {
         style={{
           width: "80vw",
           borderRadius: "10px",
-          position: "absolute",
+
           marginLeft: "10vw",
         }}
       >
@@ -200,7 +201,7 @@ const AccountPage = (props) => {
         avatar={props.avatar}
         setAvatar={props.setAvatar}
       />
-    </Box>
+    </div>
   );
 };
 export default AccountPage;

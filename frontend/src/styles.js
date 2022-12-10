@@ -25,8 +25,6 @@ const styles = makeStyles((theme) => ({
   accountBox: {
     width: "100vw",
 
-    position: "absolute",
-
     backgroundColor: "#eeeeee",
   },
   accountIcons: {
@@ -271,6 +269,44 @@ const styles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       width: "60",
     },
+  },
+  footer: {
+    height: "150px",
+    backgroundColor: "#37383d",
+    fontSize: "10px",
+  },
+  footerCopyright: {
+    fontSize: "12px",
+    color: "#aaa",
+    marginLeft: "44%",
+    paddingTop: "100px",
+    textAlign: "center",
+  },
+  footerNav: {
+    listStyle: "none",
+    display: "flex",
+    textAlign: "center",
+    justifyContent: "center",
+    marginBottom: "5rem",
+    marginLeft: "30%",
+    position: "absolute",
+    [theme.breakpoints.down("sm")]: {
+      width: "25vw",
+    },
+  },
+  footerItem: {
+    marginRight: "4rem",
+  },
+  footerLogo: {
+    height: "5rem",
+    display: "block",
+    margin: "0 auto",
+    marginBottom: "5rem",
+  },
+  footerLink: {
+    fontSize: "11px",
+    color: "#eee",
+    textDecoration: "none",
   },
   image: {
     height: "14vw",

@@ -79,7 +79,7 @@ const Items = (props) => {
     }
     if (props.tab === "artists") {
       return props.items.map((item, index) => (
-        <Card className={classes.item} key={index}>
+        <Card className={classes.item} key={index} style={{height: '10vw'}}>
           <CardActionArea
             onClick={() =>
               artistPost(
@@ -89,8 +89,8 @@ const Items = (props) => {
               )
             }
           >
-            <Avatar src={item.url}></Avatar>
             <CardContent>
+            <Avatar src={item.url}></Avatar>
               <Typography
                 className={classes.itemTitle}
                 varient="body"

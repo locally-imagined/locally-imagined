@@ -34,7 +34,8 @@ const Listing = (props) => {
       props.tab === "explore"
         ? props.items[id].profpicID
         : props.artistItem[id].profpicID,
-      username
+
+      "otherAvatar"
     );
     setOpenItemUrl(
       props.tab === "explore" ? props.items[id].url : props.artistItem[id].url

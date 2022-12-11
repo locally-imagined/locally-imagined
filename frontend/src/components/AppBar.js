@@ -110,8 +110,9 @@ const Appbar = (props) => {
     const username = JSON.parse(sessionStorage.getItem("user")).userName;
     //console.log(username);
     props.setUserID(userID);
-    props.getMyAvatar(
-      JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
+    props.getAvatar(
+      JSON.parse(sessionStorage.getItem("user"))?.token.profpicID,
+      "myAvatar"
     );
     props.getInfo(userID);
     sessionStorage.removeItem("currentUserID");
@@ -139,11 +140,12 @@ const Appbar = (props) => {
   };
   useEffect(() => {
     props.setCurPath(location.pathname);
-    props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+    props.getAvatar(sessionStorage.getItem("myAvatar"), "myAvatar");
 
     props.getAvatar(
       JSON.parse(sessionStorage.getItem("avatar")),
-      JSON.parse(sessionStorage.getItem("user"))?.username
+      JSON.parse(sessionStorage.getItem("user"))?.username,
+      "otherAvatar"
     );
   }, []);
 

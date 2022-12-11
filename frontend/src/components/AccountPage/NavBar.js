@@ -26,7 +26,7 @@ const NavBar = (props) => {
   const openAccountMenu = Boolean(anchorEl);
   const [login, setLogin] = useState(props.login);
   useEffect(() => {
-    props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+    props.getAvatar(sessionStorage.getItem("myAvatar"), "myAvatar");
   }, []);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -51,7 +51,7 @@ const NavBar = (props) => {
     props.setUserID(userID);
     sessionStorage.removeItem("currentUserID");
     sessionStorage.setItem("currentUserID", userID);
-    props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+    props.getAvatar(sessionStorage.getItem("myAvatar"), "myAvatar");
     history.push(`/profile/${username}`, {
       userID: userID,
       username: username,

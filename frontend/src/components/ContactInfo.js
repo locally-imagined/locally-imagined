@@ -22,9 +22,9 @@ const ContactInfo = (props) => {
       location.state.username ===
       JSON.parse(sessionStorage.getItem("user"))?.userName
     )
-      props.getMyAvatar(sessionStorage.getItem("myAvatar"));
+      props.getAvatar(sessionStorage.getItem("myAvatar"), "myAvatar");
     else {
-      props.getAvatar(sessionStorage.getItem("currAvatar"));
+      props.getAvatar(sessionStorage.getItem("currAvatar"), "otherAvatar");
     }
   }, []);
   return (

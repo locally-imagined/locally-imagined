@@ -31,7 +31,6 @@ const ItemDetails = (props) => {
     behavior: "smooth",
   };
   const onImgLoad = ({ target: img }) => {
-    // console.log(img.naturalWidth, img.naturalHeight);
     let width = "720px",
       height = "680px";
     const middleHeightPx = 340;
@@ -39,18 +38,14 @@ const ItemDetails = (props) => {
 
     if (img.naturalHeight / img.naturalWidth > 1.1) {
       const ratio = img.naturalWidth / img.naturalHeight;
-      // console.log("ratio:", ratio);
       width = 720 * ratio + "px";
       const imgMiddleWidthPx = (720 * ratio) / 2;
-      // console.log("imgMiddleWidthPx:", imgMiddleWidthPx);
       setPaddingLeft(`${middleWidthPx - imgMiddleWidthPx}px`);
     }
     if (img.naturalWidth / img.naturalHeight > 1.1) {
       const ratio = img.naturalHeight / img.naturalWidth;
-      // console.log("ratio:", ratio);
       height = 680 * ratio + "px";
       const imgMiddleHeightPx = (680 * ratio) / 2;
-      // console.log("imgMiddleHeightPx:", imgMiddleHeightPx);
       setPaddingTop(`${middleHeightPx - imgMiddleHeightPx}px`);
     }
     setDimension({
@@ -90,15 +85,12 @@ const ItemDetails = (props) => {
     });
   };
   const artistPost = (userID, username, profpicID) => {
-    // console.log(userID);
-    // console.log(username);
     props.setImages([]);
     props.setArtistItem([]);
     sessionStorage.setItem("currentUserID", userID);
     props.setUserID(userID);
     props.getInfo(userID);
-    // console.log(profpicID);
-    props.getAvatar(profpicID);
+    props.getAvatar(profpicID, "otherAvatar");
     history.push(`/profile/${username}`, {
       userID: userID,
       username: username,

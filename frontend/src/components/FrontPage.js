@@ -26,6 +26,7 @@ function FrontPage() {
   //User related states
   const [userID, setUserID] = useState("");
   const [artistItem, setArtistItem] = useState([]);
+  const [artists, setArtists] = useState([]);
   const [images, setImages] = React.useState([]);
   const [bio, setBio] = useState("");
   const [contact, setContact] = useState({});
@@ -166,6 +167,34 @@ function FrontPage() {
       })
     );
   };
+
+  /*
+  This is for Artists tab experiments
+  */
+  const getArtistSrc = (datas, option) => {
+    return axios.all(
+      datas.map(async (data) => {
+        return axios
+          .get(
+            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.profpicID}`,
+            {}
+          )
+          .then((res) => {
+            if (res.status != 200) {
+              throw res;
+            } else {
+              let src = "data:image/jpeg;base64,";
+              src += res.data;
+              data.url = encodeURI(src);
+            }
+          })
+          .catch((err) => {
+            setError(true);
+            setMsg(`error:${err}`);
+          });
+      })
+    );
+  };
   /*
   Get all images associate with the listing from API
   */
@@ -216,6 +245,38 @@ function FrontPage() {
             setArtistItem(data);
             setLoading(false);
             // console.log(JSON.parse(JSON.stringify(data)));
+          });
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(true);
+        setMsg(`error:${err}`);
+      });
+  };
+
+  /*
+  Get artists who have made posts
+  */
+  const getArtists = (userID) => {
+    if (!userID) {
+      userID = sessionStorage.getItem("currentUserID");
+    }
+    setLoading(true);
+    const url = `https://locally-imagined.herokuapp.com/posts/artists/${offset}`;
+    // console.log(`url:${url}`);
+    axios
+      .get(url, {})
+      .then((res) => {
+        if (res.status != 200 || !res.data) {
+          throw res;
+        } else {
+          const data = res.data;
+          // console.log(data);
+          getArtistSrc(data).then(() => {
+            data.length === 0 ? setNoResult(true) : setNoResult(false);
+            setArtists(data);
+            setLoading(false);
           });
         }
       })
@@ -296,7 +357,7 @@ function FrontPage() {
   useEffect(() => {
     setLoading(true);
     if (curPath === "/") {
-      tab === "explore" ? getPosts(filterQuery) : getArtistPosts();
+      tab === "explore" ? getPosts(filterQuery) : getArtists();
     }
     if (curPath?.includes("profile")) {
       getArtistPosts(userID);
@@ -319,7 +380,7 @@ function FrontPage() {
         <Route path="/" exact>
           <div>
             <Appbar
-              items={tab === "explore" ? items : artistItem}
+              items={tab === "explore" ? items : artists}
               login={states.login}
               loading={loading}
               noResult={noResult}
@@ -346,6 +407,8 @@ function FrontPage() {
               myAvatar={myAvatar}
               getInfo={getInfo}
               filterQuery={filterQuery}
+              artist={artists}
+              setArtists={setArtists}
             />
             <span
               style={{
@@ -366,7 +429,7 @@ function FrontPage() {
             </span>
 
             <Listing
-              items={tab === "explore" ? items : artistItem}
+              items={tab === "explore" ? items : artists}
               images={images}
               noResult={noResult}
               loading={loading}
@@ -377,6 +440,7 @@ function FrontPage() {
               setArtistItem={setArtistItem}
               setTab={setTab}
               setOffset={setOffset}
+              getArtists={getArtists}
               getArtistPosts={getArtistPosts}
               getImagesSet={getImagesSet}
               setImages={setImages}
@@ -394,9 +458,12 @@ function FrontPage() {
               myAvatar={myAvatar}
               bio={bio}
               setBio={setBio}
+              artist={artists}
+              setArtists={setArtists}
+            
             />
             <ChangePage
-              items={tab === "explore" ? items : artistItem}
+              items={tab === "explore" ? items : artists}
               curPath={curPath}
               offset={offset}
               setOffset={setOffset}
@@ -419,6 +486,8 @@ function FrontPage() {
             getAvatar={getAvatar}
             setMyAvatar={setMyAvatar}
             myAvatar={myAvatar}
+            artist={artists}
+            setArtists={setArtists}
           />
           <div
             style={{
@@ -454,6 +523,8 @@ function FrontPage() {
               getAvatar={getAvatar}
               setMyAvatar={setMyAvatar}
               myAvatar={myAvatar}
+              artist={artists}
+              setArtists={setArtists}
             />
           </div>
         </Route>
@@ -473,6 +544,8 @@ function FrontPage() {
               setMyAvatar={setMyAvatar}
               myAvatar={myAvatar}
               getInfo={getInfo}
+              artist={artists}
+              setArtists={setArtists}
             />
 
             <AccountSetting
@@ -499,6 +572,8 @@ function FrontPage() {
               setMyAvatar={setMyAvatar}
               myAvatar={myAvatar}
               getInfo={getInfo}
+              artist={artists}
+              setArtists={setArtists}
             />
           </div>
         </Route>
@@ -517,6 +592,8 @@ function FrontPage() {
               getAvatar={getAvatar}
               setMyAvatar={setMyAvatar}
               myAvatar={myAvatar}
+              artist={artists}
+              setArtists={setArtists}
             />
 
             <ContactInfo
@@ -546,6 +623,8 @@ function FrontPage() {
               getAvatar={getAvatar}
               setMyAvatar={setMyAvatar}
               myAvatar={myAvatar}
+              artist={artists}
+              setArtists={setArtists}
             />
 
             <Dashboard
@@ -560,6 +639,8 @@ function FrontPage() {
               getAvatar={getAvatar}
               myAvatar={myAvatar}
               getInfo={getInfo}
+              artist={artists}
+              setArtists={setArtists}
             />
           </div>
         </Route>
@@ -578,6 +659,8 @@ function FrontPage() {
               getAvatar={getAvatar}
               setMyAvatar={setMyAvatar}
               myAvatar={myAvatar}
+              artist={artists}
+              setArtists={setArtists}
             />
             <AboutPage />
             <AboutBar />

@@ -28,17 +28,17 @@ const Listing = (props) => {
     props.getImagesSet(
       props.tab === "explore"
         ? props.items[id].postID
-        : props.artistItem[id].postID
+        : props.artists[id].profpicID
     );
     props.getAvatar(
       props.tab === "explore"
         ? props.items[id].profpicID
-        : props.artistItem[id].profpicID,
+        : props.artists[id].profpicID,
 
       "otherAvatar"
     );
     setOpenItemUrl(
-      props.tab === "explore" ? props.items[id].url : props.artistItem[id].url
+      props.tab === "explore" ? props.items[id].url : props.artists[id].url
     );
     setCurItemId(id);
   };
@@ -46,10 +46,10 @@ const Listing = (props) => {
   const handleTabChange = (event, newTab) => {
     props.setTab(newTab);
     props.setOffset(0);
-    if (newTab === "mypost") {
+    if (newTab === "artists") {
       const userID = JSON.parse(sessionStorage.user).token.userID;
       // console.log(userID);
-      props.getArtistPosts(userID);
+      props.getArtists();
     }
     if (newTab === "explore") {
       props.getPosts();
@@ -73,7 +73,7 @@ const Listing = (props) => {
       >
         <Tab value="explore" label="Explore" />
 
-        {states.login && <Tab value="mypost" label="My Posts" />}
+        {states.login && <Tab value="artists" label="Artists" />}
       </Tabs>
 
       <Box
@@ -94,11 +94,29 @@ const Listing = (props) => {
               <ReactLoading type="bars" color="grey" height={100} width={100} />
             </Box>
           )}
-          {!props.loading && (
+          {!props.loading && (props.tab === "explore") && (
             <Items
-              // favoriteHandler={favoriteHandler}
               openItemHandler={openItemHandler}
               items={props.items}
+              tab={props.tab}
+              setImages={props.setImages}
+              setArtistItem={props.setArtistItem}
+              setUserID={props.setUserID}
+              getInfo={props.getInfo}
+              getAvatar={props.getAvatar}
+              icon={"favorite"}
+            />
+          )}
+          {!props.loading && (props.tab === "artists") && (
+            <Items
+              openItemHandler={openItemHandler}
+              items={props.items}
+              tab={props.tab}
+              setImages={props.setImages}
+              setArtistItem={props.setArtistItem}
+              setUserID={props.setUserID}
+              getInfo={props.getInfo}
+              getAvatar={props.getAvatar}
               icon={"favorite"}
             />
           )}

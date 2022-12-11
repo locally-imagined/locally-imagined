@@ -43,21 +43,15 @@ const AboutBar = () => {
               }}
             >
               <p>
-                Locally Imagined is a marketplace for artists, purveyors, and
-                normal people alike.
-                <li>
-                  A solution that simultaneously competes with and supplements
-                  the traditional and archaic gallery, museum, and auction
-                  formats.
-                </li>
-                <li>
-                  A way for a customer to overcome the gatekeepers of the art
-                  world.
-                </li>
-                <li>
-                  A way for an artist to overcome the gatekeepers of the art
-                  world
-                </li>
+                Locally Imagined is a Santa Cruz marketplace for artists, purveyors, and
+                normal people alike. No longer do artists have to compete to get into
+                presigious and selective galleries. We present a solution that 
+                simultaneously competes with and supplements the traditional and 
+                archaic gallery, museum, and auction formats. Artists are now able to
+                create their own galleries online and share it to their local community.
+                Artists can continue sharing their art the way they already do, but can now
+                also now tell their customers about their Locally Imagined gallery for
+                additional exposure.  
               </p>
             </div>
           </Typography>

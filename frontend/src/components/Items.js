@@ -132,7 +132,13 @@ const Items = (props) => {
             }}
             src={item.url}
           ></Avatar>
-          <Typography style={{ marginLeft: "70px", marginTop: "10px" }}>
+          <Typography
+            style={{
+              paddingLeft: "auto",
+              textAlign: "center",
+              marginTop: "10px",
+            }}
+          >
             {item.username}
           </Typography>
           <CardContent></CardContent>

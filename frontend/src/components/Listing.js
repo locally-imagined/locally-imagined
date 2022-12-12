@@ -47,7 +47,7 @@ const Listing = (props) => {
     props.setTab(newTab);
     props.setOffset(0);
     if (newTab === "artists") {
-      const userID = JSON.parse(sessionStorage.user).token.userID;
+      // const userID = JSON.parse(sessionStorage.user).token.userID;
       // console.log(userID);
       props.getArtists();
     }
@@ -73,7 +73,7 @@ const Listing = (props) => {
       >
         <Tab value="explore" label="Explore" />
 
-        {states.login && <Tab value="artists" label="Artists" />}
+        <Tab value="artists" label="Artists" />
       </Tabs>
 
       <Box
@@ -94,7 +94,7 @@ const Listing = (props) => {
               <ReactLoading type="bars" color="grey" height={100} width={100} />
             </Box>
           )}
-          {!props.loading && (props.tab === "explore") && (
+          {!props.loading && props.tab === "explore" && (
             <Items
               openItemHandler={openItemHandler}
               items={props.items}
@@ -107,7 +107,7 @@ const Listing = (props) => {
               icon={"favorite"}
             />
           )}
-          {!props.loading && (props.tab === "artists") && (
+          {!props.loading && props.tab === "artists" && (
             <Items
               openItemHandler={openItemHandler}
               items={props.items}

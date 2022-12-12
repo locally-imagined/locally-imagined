@@ -199,8 +199,9 @@ const Post = (props) => {
           console.log(userID);
           const username = JSON.parse(sessionStorage.getItem("user")).userName;
           console.log(username);
+          console.log(props);
           props.setUserID(userID);
-          props.getMyAvatar(
+          props.getAvatar(
             JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
           );
           props.getInfo(userID);

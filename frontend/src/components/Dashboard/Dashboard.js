@@ -49,6 +49,7 @@ const Dashboard = (props) => {
           setSucess={setSucess}
           getInfo={props.getInfo}
           getMyAvatar={props.getMyAvatar}
+          getAvatar={props.getAvatar}
         />
       </Box>
     </Grid>

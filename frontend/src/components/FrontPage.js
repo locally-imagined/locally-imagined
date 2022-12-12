@@ -254,7 +254,62 @@ function FrontPage() {
         setMsg(`error:${err}`);
       });
   };
+  /*
+  This is for Artists preview picture experiments
+  */
+  const getArtistPreviewSrc = (datas) => {
+    return axios.all(
+      datas.map(async (data) => {
+        return axios
+          .get(
+            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.previewDataID}`,
+            {}
+          )
+          .then((res) => {
+            if (res.status != 200) {
+              throw res;
+            } else {
+              let src = "data:image/jpeg;base64,";
+              src += res.data;
+              data.previewUrl = encodeURI(src);
+            }
+          })
+          .catch((err) => {
+            setError(true);
+            setMsg(`error:${err}`);
+          });
+      })
+    );
+  };
+  /*
+  This is for Artists preview picture experiments
+  */
 
+  const getArtistPreview = (datas) => {
+    return axios.all(
+      datas.map(async (data) => {
+        return axios
+          .get(
+            `https://locally-imagined.herokuapp.com/posts/artistposts/0?userID=${data.userID}`,
+            {}
+          )
+          .then(async (res) => {
+            if (res.status != 200 || !res.data) {
+              throw res;
+            } else {
+              const previewDataID = res.data[0].imageIDs[0];
+              // console.log(`previewDataID`, previewDataID);
+              data.previewDataID = previewDataID;
+            }
+          })
+          .catch((err) => {
+            setLoading(false);
+            setError(true);
+            setMsg(`error:${err}`);
+          });
+      })
+    );
+  };
   /*
   Get artists who have made posts
   */
@@ -275,8 +330,13 @@ function FrontPage() {
           // console.log(data);
           getArtistSrc(data).then(() => {
             data.length === 0 ? setNoResult(true) : setNoResult(false);
-            setArtists(data);
-            setLoading(false);
+            getArtistPreview(data).then(() => {
+              getArtistPreviewSrc(data).then(() => {
+                // console.log(data);
+                setArtists(data);
+                setLoading(false);
+              });
+            });
           });
         }
       })
@@ -460,7 +520,6 @@ function FrontPage() {
               setBio={setBio}
               artist={artists}
               setArtists={setArtists}
-            
             />
             <ChangePage
               items={tab === "explore" ? items : artists}

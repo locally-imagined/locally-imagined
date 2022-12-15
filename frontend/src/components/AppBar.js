@@ -18,7 +18,7 @@ import states from "../states";
 import SearchBar from "./SearchBar";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import Post from "./Post";
+import Post from "./Dashboard/Post";
 import AlertMsg from "./AlertMsg";
 import ChangePage from "./ChangePage";
 

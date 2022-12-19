@@ -35,7 +35,7 @@ const AccountPage = (props) => {
       JSON.parse(sessionStorage.getItem("user"))?.userName
     )
       props.getAvatar(sessionStorage.getItem("myAvatar"), "myAvatar");
-    else props.getAvatar(sessionStorage.getItem("currAvatar", "otherAvatar"));
+    else props.getAvatar(sessionStorage.getItem("currAvatar"), "otherAvatar");
   }, [location.state.username]);
 
   const [edit, setEdit] = useState("edit");

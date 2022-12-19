@@ -16,12 +16,9 @@ import ReactLoading from "react-loading";
  */
 const Listing = (props) => {
   const classes = styles();
-
   const [openItem, setOpenItem] = React.useState(false);
   const [curItemId, setCurItemId] = React.useState(0);
-
   const [openItemUrl, setOpenItemUrl] = React.useState("");
-
   const openItemHandler = (id, username) => {
     setOpenItem(true);
 

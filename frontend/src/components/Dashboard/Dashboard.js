@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "../../styles";
 import AlertMsg from "../AlertMsg";
-import Post from "../Post";
+import Post from "./Post";
 /**
  * Dashboard
  * @return {object} JSX
@@ -48,7 +48,6 @@ const Dashboard = (props) => {
           setUserID={props.setUserID}
           setSucess={setSucess}
           getInfo={props.getInfo}
-          getMyAvatar={props.getMyAvatar}
           getAvatar={props.getAvatar}
         />
       </Box>

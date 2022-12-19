@@ -8,10 +8,10 @@ const AboutBar = () => {
       elevation={1}
       style={{
         backgroundColor: "#464754",
-        height: "60px",
+        height: "80px",
         bottom: "-10px",
         width: "97vw",
-        marginTop: "-10px",
+        marginTop: "50px",
         marginLeft: "-10px",
         zIndex: 2,
       }}

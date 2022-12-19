@@ -346,11 +346,19 @@ const styles = makeStyles((theme) => ({
       left: 20,
     },
   },
+  bigModal: {
+    position:'absolute',
+    top:'10%',
+    left:'10%',
+    overflow:'scroll',
+    height:'100%',
+    display:'block'
+  },
   itemModal: {
     position: "relative",
     marginLeft: "10%",
     marginTop: "5%",
-    display: "inline-block",
+    display: "flex",
     width: "80vw",
     height: "80vh",
     borderRadius: "10px",

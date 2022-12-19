@@ -10,6 +10,7 @@ import states from "../states";
 import Items from "./Items";
 import ItemDetails from "./ItemDetails";
 import ReactLoading from "react-loading";
+import HorizontalScroll from "react-horizontal-scrolling";
 /**
  * Listing
  * @return {object} JSX

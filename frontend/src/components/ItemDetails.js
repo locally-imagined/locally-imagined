@@ -8,6 +8,7 @@ import {
   Link,
 } from "@material-ui/core";
 import Box from "@mui/material/Box";
+import HorizontalScroll from "react-horizontal-scrolling";
 import { useHistory } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useState } from "react";
@@ -109,7 +110,7 @@ const ItemDetails = (props) => {
     });
   };
   return (
-    <Modal open={props.openItem}>
+    <Modal open={props.openItem} className={classes.bigModal}>
       <Paper
         className={classes.itemModal}
         style={{ width: "1150px", height: "680px" }}

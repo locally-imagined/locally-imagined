@@ -14,6 +14,7 @@ import ContactInfo from "./ContactInfo";
 import AlertMsg from "./AlertMsg";
 import AboutBar from "./AboutPage/AboutBar";
 import AboutPage from "./AboutPage/AboutPage";
+import HorizontalScroll from "react-horizontal-scrolling";
 /**
  *
  * @return {object} JSX

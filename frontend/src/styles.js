@@ -199,17 +199,12 @@ const styles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   dashboardBox: {
-    width: "100vw",
-    height: "100vh",
-    left: "0px",
+    width: "100%",
+    height: "100%",
+    left: "0",
     position: "absolute",
 
     backgroundColor: "#eeeeee",
-
-    [theme.breakpoints.down("sm")]: {
-      width: "100vw",
-      height: "100vh",
-    },
   },
   dashboardBoard: {
     width: "24vw",
@@ -553,8 +548,8 @@ const styles = makeStyles((theme) => ({
     borderRadius: "10px",
     bgcolor: "background.paper",
     [theme.breakpoints.down("md")]: {
-      width: "40vw",
-      height: "100vh",
+      width: "100%",
+      height: "100%",
     },
   },
   postPageDetail: {
@@ -578,7 +573,7 @@ const styles = makeStyles((theme) => ({
   },
   price: {
     float: "right",
-    paddingRight: "20px",
+    paddingRight: "0px",
     [theme.breakpoints.down("md")]: {
       paddingRight: "5rem",
     },

@@ -7,9 +7,9 @@ import Checkbox from "@mui/material/Checkbox";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import AlertMsg from "./AlertMsg";
-import styles from "../styles";
-import SliderDot from "./UI/SliderDot";
+import AlertMsg from "../AlertMsg";
+import styles from "../../styles";
+import SliderDot from "../UI/SliderDot";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -202,7 +202,8 @@ const Post = (props) => {
           console.log(props);
           props.setUserID(userID);
           props.getAvatar(
-            JSON.parse(sessionStorage.getItem("user"))?.token.profpicID
+            JSON.parse(sessionStorage.getItem("user"))?.token.profpicID,
+            "myAvatar"
           );
           props.getInfo(userID);
           sessionStorage.removeItem("currentUserID");

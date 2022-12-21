@@ -142,16 +142,30 @@ const Post = (props) => {
   const handlePostChange = (event) => {
     if (event.target.name === "content") {
       //console.log("img");
-      setUrl([...url, URL.createObjectURL(event.target.files[0])]);
-      //console.log(url);
-      getBase64(event.target.files[0])
-        .then((result) => {
-          result = result.split(",").pop();
-          props.art.content.push(result);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      console.log(event.target.files.length);
+      var urls = url.map((x) => x);
+      for (var i=0; i<event.target.files.length; i++) {
+        urls.push(URL.createObjectURL(event.target.files[i]));
+        getBase64(event.target.files[i])
+          .then((result) => {
+            result = result.split(",").pop();
+            props.art.content.push(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      setUrl(urls);
+      // setUrl([...url, URL.createObjectURL(event.target.files[0])]);
+      // //console.log(url);
+      // getBase64(event.target.files[0])
+      //   .then((result) => {
+      //     result = result.split(",").pop();
+      //     props.art.content.push(result);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
     } else {
       props.setArt({
         ...props.art,
@@ -300,8 +314,8 @@ const Post = (props) => {
           <br />
           <input
             accept="image/*"
-            style={{ display: "none" }}
             multiple
+            style={{ display: "none" }}
             onChange={handlePostChange}
             required
             disabled={url.length === maxiumImages}
@@ -326,7 +340,7 @@ const Post = (props) => {
             >
               {url.length === maxiumImages
                 ? "Reached Maximum Images"
-                : "Upload Images (one at a time please :)"}
+                : "Upload Images"}
             </span>
           </label>
 
@@ -358,7 +372,7 @@ const Post = (props) => {
         )}
       </Box>
       <Box className={classes.postPageImageBox}>
-        {url.length > 1 && (
+        {url.length > 0 && (
           <Box
             style={{
               marginTop: "14rem",

@@ -372,7 +372,7 @@ const Post = (props) => {
         )}
       </Box>
       <Box className={classes.postPageImageBox}>
-        {url.length > 0 && (
+        {url.length > 1 && (
           <Box
             style={{
               marginTop: "14rem",

@@ -332,7 +332,7 @@ const Edit = (props) => {
   };
 
   return (
-    <Modal open={props.openEdit} disableEnforceFocus>
+    <Modal open={props.openEdit} className={classes.bigModal} disableEnforceFocus>
       <Paper
         className={classes.itemModal}
         style={{ width: "1150px", height: "680px" }}

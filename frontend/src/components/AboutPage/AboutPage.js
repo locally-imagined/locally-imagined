@@ -45,7 +45,7 @@ const AboutBar = () => {
               <p>
                 Locally Imagined is a Santa Cruz marketplace for artists, purveyors, and
                 normal people alike. No longer do artists have to compete to get into
-                presigious and selective galleries. We present a solution that 
+                prestigious and selective galleries. We present a solution that 
                 simultaneously competes with and supplements the traditional and 
                 archaic gallery, museum, and auction formats. Artists are now able to
                 create their own galleries online and share it to their local community.

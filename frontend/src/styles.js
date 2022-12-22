@@ -739,9 +739,9 @@ const styles = makeStyles((theme) => ({
   },
 
   topbar: {
-    position: "relatively",
+    position: "relative",
     marginTop: 20,
-    marginLeft: -10,
+    marginLeft: 0,
     backgroundColor: "white",
     width: "37vh",
   },

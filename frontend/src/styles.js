@@ -496,8 +496,9 @@ const styles = makeStyles((theme) => ({
     },
   },
   favoriteIcon: {
-    marginLeft: "11vw",
-    marginBottom: "-8vh",
+    position: "absolute",
+    marginLeft: "0%",
+    marginBottom: "100%",
     zIndex: 1,
     color: "black",
     backgroundColor: "#e6e6e6",

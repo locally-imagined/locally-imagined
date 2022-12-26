@@ -208,6 +208,21 @@ const Category = (props) => {
             </MenuItem>
           ))}
         </Menu>
+        <List
+          component="nav"
+          aria-label="City settings"
+          sx={{ bgcolor: "background.paper" }}
+        >
+          <ListItem
+            disabled="true"
+            className={classes.categoryBarItem}
+          >
+            <ListItemText
+              primary="Area"
+              secondary="Santa Cruz"
+            />
+          </ListItem>
+        </List>
       </Toolbar>
     </Box>
   );

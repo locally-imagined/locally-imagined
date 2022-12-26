@@ -71,7 +71,7 @@ const SignUp = (props) => {
       })
       .catch((err) => {
         if (err.response.status === 400) props.setMsg("Something went wrong");
-        else props.setMsg("Username is already taken");
+        else props.setMsg("Username or Email is already taken");
         props.setError(true);
         console.log(err);
       });

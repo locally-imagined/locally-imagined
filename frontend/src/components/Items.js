@@ -41,20 +41,6 @@ const Items = (props) => {
   if (props.tab === "explore") {
     return props.items.map((item, index) => (
       <Card className={classes.item} key={index}>
-        {props.icon === "edit" && props.user.userName === item?.username && (
-          <IconButton
-            className={classes.favoriteIcon}
-            onClick={() => {
-              props.openEditHandler(index);
-              props.setOpenEdit(true);
-            }}
-            size="medium"
-            id={index}
-            data-testid={`edit-image-${index}`}
-          >
-            <EditIcon />
-          </IconButton>
-        )}
         <CardActionArea
           onClick={() => props.openItemHandler(index, item.username)}
         >
@@ -151,6 +137,7 @@ const Items = (props) => {
       {props.icon === "edit" && props.user.userName === item?.username && (
         <IconButton
           className={classes.favoriteIcon}
+          iconStyle={classes.favoriteIcon}
           onClick={() => {
             props.openEditHandler(index);
             props.setOpenEdit(true);

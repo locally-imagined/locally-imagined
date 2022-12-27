@@ -208,7 +208,7 @@ const Category = (props) => {
             </MenuItem>
           ))}
         </Menu>
-        <List
+        {/* <List
           component="nav"
           aria-label="City settings"
           sx={{ bgcolor: "background.paper" }}
@@ -222,7 +222,37 @@ const Category = (props) => {
               secondary="Santa Cruz"
             />
           </ListItem>
+        </List> */}
+        <List
+          component="nav"
+          aria-label="City settings"
+          sx={{ bgcolor: "background.paper" }}
+        >
+          <ListItem
+            button
+            id="city-list"
+            aria-haspopup="listbox"
+            aria-controls="lock-menu"
+            aria-label="City"
+            disabled={true}
+            aria-expanded={undefined}
+            className={classes.categoryBarItem}
+          >
+            <ListItemText
+              primary="City"
+              secondary="Santa Cruz"
+            />
+          </ListItem>
         </List>
+        <Menu
+          id="city-menu"
+          open={false}
+          MenuListProps={{
+            "aria-labelledby": "lock-button",
+            role: "listbox",
+          }}
+        >
+        </Menu>
       </Toolbar>
     </Box>
   );

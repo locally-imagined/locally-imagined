@@ -382,7 +382,7 @@ const Post = (props) => {
           >
             <ArrowBackIcon
               onClick={prevHandler}
-              style={{ paddingRight: "39rem" }}
+              style={{ paddingRight: "39rem"}}
               className={classes.postArrow}
             />
             <ArrowForwardIcon

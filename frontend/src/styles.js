@@ -546,6 +546,7 @@ const styles = makeStyles((theme) => ({
     width: "75rem",
     height: "650px",
     borderRadius: "10px",
+    overflow:'scroll',
     bgcolor: "background.paper",
     [theme.breakpoints.down("md")]: {
       width: "100%",
@@ -567,7 +568,7 @@ const styles = makeStyles((theme) => ({
     padding: "2rem",
     height: "70.7vh",
     [theme.breakpoints.down("md")]: {
-      width: "40vw",
+      width: "70vw",
       height: "45.8vh",
     },
   },

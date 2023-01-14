@@ -63,6 +63,19 @@ const styles = makeStyles((theme) => ({
       width: "70%",
     },
   },
+  postButton: {
+    color: "white",
+    backgroundColor: theme.palette.primary.main,
+    fontWeight: "bold",
+    justify: "space-between",
+    margin: "2rem",
+    marginTop: "10rem",
+    width: "10rem",
+    position: "absolute",
+    [theme.breakpoints.down("md")]: {
+      width: "40%",
+    },
+  },
 }));
 
 export default styles;

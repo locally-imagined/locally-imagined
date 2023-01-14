@@ -1,0 +1,14 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 0.8px solid rgb(188, 188, 188);
+  height: 36px;
+  width: 250px;
+  border-radius: 8px;
+}
+.search-bar-input {
+  width: 200px;
+}
+.search-bar-icon {
+  color: rgb(200, 200, 200);
+}

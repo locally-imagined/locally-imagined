@@ -1,0 +1,21 @@
+.appbar {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid rgb(189, 189, 189);
+  justify-content: space-between;
+  width: 100vw;
+  align-items: center;
+}
+.appbar-feature {
+  display: flex;
+  align-items: center;
+}
+.logo-image {
+  width: 200px;
+}
+.logo-image:hover {
+  cursor: pointer;
+}
+.account-menu {
+  margin-top: 3.1rem;
+}

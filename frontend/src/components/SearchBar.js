@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "../styles";
 import { Search } from "@material-ui/icons";
-
+import "./SearchBar.css";
 /**
  * SearchBar
  * @return {object} JSX
@@ -34,25 +34,22 @@ const SearchBar = (props) => {
   };
 
   return (
-    <Grid className={classes.topbar}>
-      <div className={classes.search}>
-        <span className={classes.searchIcon}>
-          <Search />
-        </span>
-        <InputBase
-          disabled={props.tab === "mypost"}
-          className={classes.searchInput}
-          placeholder="Search Marketplace"
-          onChange={handleSearchChange}
-          onClick={() => {
-            setOpen(true);
-          }}
-          onKeyDown={enterHandler}
-          type="search"
-          name="search"
-        />
-      </div>
-    </Grid>
+    <div className="search-bar">
+      <span className="search-bar-icon">
+        <Search />
+      </span>
+      <InputBase
+        className="search-bar-input"
+        placeholder="Search Marketplace"
+        onChange={handleSearchChange}
+        onClick={() => {
+          setOpen(true);
+        }}
+        onKeyDown={enterHandler}
+        type="search"
+        name="search"
+      />
+    </div>
   );
 };
 export default SearchBar;

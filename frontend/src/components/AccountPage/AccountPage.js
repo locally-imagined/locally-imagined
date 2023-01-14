@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Avatar } from "@material-ui/core";
+import { Typography, Avatar, Divider } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Items from "../Items";
@@ -11,7 +11,9 @@ import Edit from "./Edit";
 import AlertMsg from "../AlertMsg";
 import ReactLoading from "react-loading";
 import ItemDetails from "../ItemDetails";
+import Loading from "../UI/Loading";
 import AboutBar from "../AboutPage/AboutBar";
+import "./AccountPage.css";
 /**
  * AccountPage
  *
@@ -68,87 +70,39 @@ const AccountPage = (props) => {
   const classes = styles();
 
   return (
-    <div>
-      <br />
-      <br />
-      <br />
-      {success && (
-        <AlertMsg
-          success={success}
-          type={"success"}
-          setSucess={setSuccess}
-          msg={msg}
-        />
+    <div className="account-page">
+      <div className="account-board">
+        <div className="account-board-basic-info">
+          <Avatar
+            className="account-board-avatar"
+            src={
+              location.state.username ===
+              JSON.parse(sessionStorage.getItem("user"))?.userName
+                ? props.myAvatar
+                : props.avatar
+            }
+          >
+            {location.state.username[0]}
+          </Avatar>
+          <span className="account-board-username">
+            {location.state.username}
+          </span>
+        </div>
+
+        <div className="account-board-bio">{props.contact.bio}</div>
+      </div>
+      <div>
+        <Divider />
+      </div>
+      {props.artistItem[0] && (
+        <h3 className="account-title">{username}'s Art</h3>
       )}
-      <Box
-        className={classes.accountBoard}
-        style={{
-          width: "80vw",
-          borderRadius: "10px",
 
-          marginLeft: "10vw",
-        }}
-      >
-        <Typography component={"span"} className={classes.accountBoardDetails}>
-          <span
-            style={{
-              marginLeft: "10px",
-              marginTop: "-10px",
-              position: "absolute",
-            }}
-            data-testid="account-detail"
-          >
-            <Avatar
-              className={classes.avatar}
-              style={{ width: 60, height: 60 }}
-              src={
-                location.state.username ===
-                JSON.parse(sessionStorage.getItem("user"))?.userName
-                  ? props.myAvatar
-                  : props.avatar
-              }
-            >
-              {location.state.username[0]}
-            </Avatar>
-          </span>
-          <span style={{ marginLeft: "100px" }}>{location.state.username}</span>
-          <br />
-          <br />
-          <span
-            style={{
-              fontSize: "15px",
-              color: "grey",
-              paddingRight: "10px",
-            }}
-          >
-            {props.contact.bio}
-          </span>
-        </Typography>
-      </Box>
-
-      <Box className={classes.accountItems}>
-        {props.artistItem[0] && (
-          <h3 style={{ color: "#494a91" }}>{username}'s Art</h3>
-        )}
-        {props.loading && (
-          <Box
-            className={classes.loading}
-            style={{ marginLeft: "30vw", height: "100vh" }}
-          >
-            <ReactLoading type="bars" color="grey" height={100} width={100} />
-          </Box>
-        )}
+      <div className="account-items">
+        {props.loading && <Loading />}
 
         {props.noResult && (
-          <Typography
-            variant="h5"
-            style={{
-              marginLeft: "45%",
-              color: " grey",
-              paddingTop: "10vw",
-              paddingBottom: "100vh",
-            }}
-          >
+          <Typography variant="h5" className="no-result">
             No Results
           </Typography>
         )}
@@ -164,13 +118,7 @@ const AccountPage = (props) => {
           contact={props.contact}
           user={props.user}
         />
-
-        <ChangePage
-          setOffset={props.setOffset}
-          offset={props.offset}
-          items={props.artistItem}
-        />
-      </Box>
+      </div>
       <Edit
         setOpenEdit={setOpenEdit}
         openEdit={openEdit}

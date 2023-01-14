@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import styles from "../styles";
 import states from "../states";
 import axios from "axios";
+import "./SignUp.css";
 /**
  * SignUp
  * @return {object} JSX
@@ -79,12 +80,12 @@ const SignUp = (props) => {
 
   return (
     <Modal open={props.openSignup} onClose={() => props.setSignup(false)}>
-      <Paper className={classes.signUp}>
-        <h1 className={classes.signUpTitle}>Join Locally Imagined</h1>
+      <Paper className="signup">
+        <h1 className="signup-title">Join Locally Imagined</h1>
         <Divider className={classes.divider} />
-        <form onSubmit={submitSignup}>
+        <form onSubmit={submitSignup} className="signup-form">
           <InputBase
-            className={classes.signUpInput}
+            className="signup-input"
             placeholder="Username"
             inputProps={{
               "data-testid": "input-username",
@@ -95,7 +96,7 @@ const SignUp = (props) => {
             name="userName"
           />
           <InputBase
-            className={classes.signUpInput}
+            className="signup-input"
             placeholder="First Name"
             inputProps={{
               "data-testid": "input-firstname",
@@ -106,7 +107,7 @@ const SignUp = (props) => {
             name="firstName"
           />
           <InputBase
-            className={classes.signUpInput}
+            className="signup-input"
             placeholder="Last Name"
             inputProps={{
               "data-testid": "input-lastname",
@@ -117,7 +118,7 @@ const SignUp = (props) => {
             name="lastName"
           />
           <InputBase
-            className={classes.signUpInput}
+            className="signup-input"
             placeholder="Phone"
             inputProps={{
               "data-testid": "input-phone",
@@ -128,7 +129,7 @@ const SignUp = (props) => {
             name="phone"
           />
           <InputBase
-            className={classes.signUpInput}
+            className="signup-input"
             placeholder="Email address"
             inputProps={{
               "data-testid": "input-email",
@@ -140,7 +141,7 @@ const SignUp = (props) => {
           />
 
           <InputBase
-            className={classes.signUpInput}
+            className="signup-input"
             placeholder="Password"
             inputProps={{
               "data-testid": "input-password",
@@ -156,13 +157,7 @@ const SignUp = (props) => {
             type="submit"
             value="Submit"
             data-testid="submit-signup"
-            style={{
-              color: "white",
-              width: "90%",
-              marginTop: "40px",
-              marginLeft: "15px",
-            }}
-            className={classes.signUpButton}
+            className="signup-btn"
           >
             Sign Up
           </Button>

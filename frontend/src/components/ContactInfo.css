@@ -1,0 +1,18 @@
+.contact-box {
+  width: 100vw;
+  background-color: #eeeeee;
+}
+.contact-return-btn {
+  color: black;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 10px;
+  opacity: 0.5;
+}
+
+.contact-return-btn:hover {
+  opacity: 0.3;
+  color: grey;
+  background-color: #e6e6e6;
+  cursor: pointer;
+}

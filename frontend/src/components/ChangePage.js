@@ -5,7 +5,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "../styles";
-
+import "./ChangePage.css";
 const ChangePage = (props) => {
   const classes = styles();
   const scrollOption = {
@@ -26,28 +26,16 @@ const ChangePage = (props) => {
   };
 
   return (
-    <Toolbar className={classes.changePage}>
-      <Box className={classes.changePageLink}>
-        <ArrowBackIcon
-          style={{ paddingRight: "10rem" }}
-          className={classes.changePageButton}
-          onClick={prevHandler}
-        />
-        <Box
-          style={{
-            paddingRight: "10rem",
-            display: "inline-block",
-          }}
-        >
-          {props.offset + 1}
-        </Box>
+    <span className="pagination">
+      <ArrowBackIcon
+        style={{ marginRight: "10rem" }}
+        className="pagination-btn"
+        onClick={prevHandler}
+      />
+      <p className="pagination-number">{props.offset + 1}</p>
 
-        <ArrowForwardIcon
-          className={classes.changePageButton}
-          onClick={nextHandler}
-        />
-      </Box>
-    </Toolbar>
+      <ArrowForwardIcon className="pagination-btn" onClick={nextHandler} />
+    </span>
   );
 };
 export default ChangePage;

@@ -24,7 +24,10 @@ import AlertMsg from "../AlertMsg";
 import axios from "axios";
 import SliderArrow from "../UI/SliderArrow";
 import SliderDot from "../UI/SliderDot";
+import Loading from "../UI/Loading";
+import "./Edit.css";
 /**
+ *
  * Edit
  *
  * @return {object} JSX
@@ -298,9 +301,7 @@ const Edit = (props) => {
       setMsg("no changes");
       return;
     }
-    // console.log("Token:", token);
-    // console.log("URL:", url);
-    // console.log("URL Encoded:", encodeURIComponent(url));
+
     axios
       .put(
         url,
@@ -332,41 +333,17 @@ const Edit = (props) => {
   };
 
   return (
-    <Modal open={props.openEdit} className={classes.bigModal} disableEnforceFocus>
-      <Paper
-        className={classes.itemModal}
-        style={{ width: "1150px", height: "680px" }}
-      >
-        <IconButton className={classes.cancelIcon} onClick={closeEditHandler}>
-          <CancelIcon />
-        </IconButton>
-        {props.images.length > 1 && (
-          <SliderArrow
-            prevHandler={prevHandler}
-            nextHandler={nextHandler}
-            marginLeft={"620px"}
-          />
-        )}
-        {props.images.length === 0 && (
-          <Box className={classes.loading}>
-            <ReactLoading
-              className={classes.loadingLogo}
-              type="bars"
-              color="grey"
-              height={100}
-              width={100}
+    <Modal open={props.openEdit} className="bigModal" disableEnforceFocus>
+      <div className="itemModal">
+        {props.images.length === 0 && <Loading />}
+        <div className="edit-image-container">
+          {props.images.length > 1 && (
+            <SliderArrow
+              prevHandler={prevHandler}
+              nextHandler={nextHandler}
+              marginLeft={"620px"}
             />
-          </Box>
-        )}
-        <Box
-          className={classes.imageBox}
-          style={{
-            width: "720px",
-            height: "680px",
-
-            borderRadius: "10px",
-          }}
-        >
+          )}
           {props.images.length > 0 && (
             <LazyLoadImage
               src={props.images[offset].src}
@@ -374,29 +351,34 @@ const Edit = (props) => {
               id={props.editId}
               onLoad={onImgLoad}
               style={{
+                boxSizing: "content-box",
                 width: dimension.width,
                 height: dimension.height,
                 paddingLeft: paddingLeft,
                 paddingTop: paddingTop,
                 borderRadius: "10px",
                 boxShadow: 24,
-
                 p: 4,
               }}
             ></LazyLoadImage>
           )}
+
           <SliderDot
             offset={offset}
             currSlideStyle={currSlideStyle}
             images={props.images}
             color={"white"}
           />
-        </Box>
+        </div>
 
-        <Box className={classes.editForm}>
-          <span className={classes.title} style={{ padding: "2rem" }}>
-            Edit
-          </span>
+        <div className="editForm">
+          <div className="edit-top">
+            <span className="edit-title">Edit</span>
+            <IconButton className="edit-cancel-icon" onClick={closeEditHandler}>
+              <CancelIcon />
+            </IconButton>
+          </div>
+
           <Divider className={classes.divider} />
 
           <form onSubmit={submitChange}>
@@ -411,7 +393,7 @@ const Edit = (props) => {
               }}
               type="text"
               name="title"
-            />{" "}
+            />
             <InputBase
               className={classes.signUpInput}
               placeholder="Description"
@@ -443,7 +425,7 @@ const Edit = (props) => {
               onChange={handleSelectChange}
               label="Medium"
               name="medium"
-              style={{ width: "150px", height: "40px", marginLeft: "15px" }}
+              className="edit-select"
             >
               {mediumOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>
@@ -460,7 +442,7 @@ const Edit = (props) => {
               onChange={handleSelectChange}
               label="Delivery"
               name="deliverytype"
-              style={{ width: "150px", height: "40px", marginLeft: "15px" }}
+              className="edit-select"
             >
               {delivaryOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>
@@ -469,7 +451,7 @@ const Edit = (props) => {
               ))}
             </Select>
             {props.images.length > 1 && (
-              <span style={{ paddingLeft: "10px" }}>
+              <span className="edit-delete-prompt">
                 Delete picture {offset + 1}?
                 <Checkbox checked={check} onChange={checkHandler}></Checkbox>
               </span>
@@ -485,7 +467,7 @@ const Edit = (props) => {
               onChange={handleSelectChange}
               label="Sold"
               name="sold"
-              style={{ width: "150px", height: "40px", marginLeft: "15px" }}
+              className="edit-select"
             >
               {soldOptions.map((name, index) => (
                 <MenuItem key={index} value={name}>
@@ -493,7 +475,7 @@ const Edit = (props) => {
                 </MenuItem>
               ))}
             </Select>
-            <span style={{ paddingLeft: "5px" }}> Delete Post</span>
+            <span className="edit-delete-prompt"> Delete Post</span>
             <IconButton onClick={deleteHandler}>
               <DeleteIcon />
             </IconButton>
@@ -517,14 +499,14 @@ const Edit = (props) => {
                 variant="text"
                 type="submit"
                 value="Submit"
-                className={classes.postButton}
+                className="edit-btn"
                 style={{ color: "white", marginTop: "1rem" }}
               >
                 Save Changes
               </Button>
             )}
             {deleteArt && (
-              <Container className={classes.deletePrompt}>
+              <Container className="edit-delete-promt-box">
                 <div
                   style={{
                     fontWeight: "bold",
@@ -546,8 +528,8 @@ const Edit = (props) => {
               </Container>
             )}
           </form>
-        </Box>
-      </Paper>
+        </div>
+      </div>
     </Modal>
   );
 };

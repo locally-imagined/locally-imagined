@@ -9,8 +9,9 @@ import Category from "./Category";
 import states from "../states";
 import Items from "./Items";
 import ItemDetails from "./ItemDetails";
-import ReactLoading from "react-loading";
+import Loading from "./UI/Loading";
 import HorizontalScroll from "react-horizontal-scrolling";
+import "./Listing.css";
 /**
  * Listing
  * @return {object} JSX
@@ -54,7 +55,8 @@ const Listing = (props) => {
     }
   };
   return (
-    <Grid>
+    <div className="listing-container">
+      {/* <div> */}
       <Category
         filterOption={props.filterOption}
         getPosts={props.getPosts}
@@ -62,78 +64,54 @@ const Listing = (props) => {
         setOffset={props.setOffset}
         tab={props.tab}
       />
+      {/* <div> */}
       <Tabs
         value={props.tab ? props.tab : "explore"}
         onChange={handleTabChange}
         textColor="secondary"
         indicatorColor="secondary"
-        className={classes.listingTab}
+        className="listing-tab"
       >
         <Tab value="explore" label="Explore" />
-
         <Tab value="artists" label="Artists" />
       </Tabs>
 
-      <Box
-        elevation={0}
-        className={classes.listingPage}
-        data-testid="image-page"
-        style={{
-          paddingTop: "20px",
-          paddingLeft: "100px",
-        }}
-      >
-        <Container>
-          {props.loading && (
-            <Box
-              className={classes.loading}
-              style={{ marginLeft: "37vw", height: "100vh" }}
-            >
-              <ReactLoading type="bars" color="grey" height={100} width={100} />
-            </Box>
-          )}
-          {!props.loading && props.tab === "explore" && (
-            <Items
-              openItemHandler={openItemHandler}
-              items={props.items}
-              tab={props.tab}
-              setImages={props.setImages}
-              setArtistItem={props.setArtistItem}
-              setUserID={props.setUserID}
-              getInfo={props.getInfo}
-              getAvatar={props.getAvatar}
-              icon={"favorite"}
-            />
-          )}
-          {!props.loading && props.tab === "artists" && (
-            <Items
-              openItemHandler={openItemHandler}
-              items={props.items}
-              tab={props.tab}
-              setImages={props.setImages}
-              setArtistItem={props.setArtistItem}
-              setUserID={props.setUserID}
-              getInfo={props.getInfo}
-              getAvatar={props.getAvatar}
-              icon={"favorite"}
-            />
-          )}
+      <div className="listing-items" data-testid="image-page">
+        {props.loading && <Loading />}
+        {!props.loading && props.tab === "explore" && (
+          <Items
+            openItemHandler={openItemHandler}
+            items={props.items}
+            tab={props.tab}
+            setImages={props.setImages}
+            setArtistItem={props.setArtistItem}
+            setUserID={props.setUserID}
+            getInfo={props.getInfo}
+            getAvatar={props.getAvatar}
+            icon={"favorite"}
+          />
+        )}
+        {!props.loading && props.tab === "artists" && (
+          <Items
+            openItemHandler={openItemHandler}
+            items={props.items}
+            tab={props.tab}
+            setImages={props.setImages}
+            setArtistItem={props.setArtistItem}
+            setUserID={props.setUserID}
+            getInfo={props.getInfo}
+            getAvatar={props.getAvatar}
+            icon={"favorite"}
+          />
+        )}
 
-          {props.noResult && (
-            <Typography
-              variant="h5"
-              style={{
-                marginLeft: "45%",
-                color: " grey",
-                paddingTop: "10vw",
-                paddingBottom: "100vh",
-              }}
-            >
-              No Results
-            </Typography>
-          )}
-        </Container>
-      </Box>
+        {props.noResult && (
+          <Typography variant="h5" className="no-result-msg">
+            No Results
+          </Typography>
+        )}
+      </div>
+
       <ItemDetails
         openItem={openItem}
         setOpenItem={setOpenItem}
@@ -153,7 +131,7 @@ const Listing = (props) => {
         getInfo={props.getInfo}
         getAvatar={props.getAvatar}
       />
-    </Grid>
+    </div>
   );
 };
 

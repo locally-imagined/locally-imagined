@@ -1,0 +1,11 @@
+.dashboard-box {
+  width: 1200px;
+}
+.dashboard-alert {
+  margin-top: 5px;
+  width: 100vw;
+  position: absolute;
+  z-index: 1;
+}
+.dashboard-post {
+}

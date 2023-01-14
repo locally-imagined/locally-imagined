@@ -1,0 +1,13 @@
+.aboutbar {
+  background-color: #464754;
+  height: 100px;
+  display: flex;
+  width: 100;
+  justify-content: center;
+  padding: 20px;
+}
+.aboutbar a {
+  font-size: 13px;
+  color: #eee;
+  text-decoration: none;
+}

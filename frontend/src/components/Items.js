@@ -14,7 +14,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import EditIcon from "@mui/icons-material/Edit";
 import { useHistory } from "react-router-dom";
 import styles from "../styles";
-
+import "./Items.css";
 const Items = (props) => {
   const classes = styles();
   const history = useHistory();
@@ -40,19 +40,19 @@ const Items = (props) => {
 
   if (props.tab === "explore") {
     return props.items.map((item, index) => (
-      <Card className={classes.item} key={index}>
+      <Card className="item-card" key={index} style={{ boxShadow: "none" }}>
         <CardActionArea
           onClick={() => props.openItemHandler(index, item.username)}
         >
           <LazyLoadImage
-            className={classes.image}
+            className="item-image"
             src={item.url}
             alt="Image Alt"
             effect="blur"
           />
           <CardContent>
             <Typography
-              className={classes.itemTitle}
+              className="item-title"
               varient="body"
               data-testid={`image-title`}
             >
@@ -65,109 +65,67 @@ const Items = (props) => {
   }
   if (props.tab === "artists") {
     return props.items.map((item, index) => (
-      // <Card className={classes.item} key={index} style={{ height: "10vw" }}>
-      //   <CardActionArea
-      //     onClick={() => artistPost(item.userID, item.username, item.profpicID)}
-      //   >
-      //     <CardContent>
-      //       <LazyLoadImage
-      //         className={classes.image}
-      //         src={item.url}
-      //         alt="Image Alt"
-      //         effect="blur"
-      //       />
-      //       <Avatar src={item.url}></Avatar>
-      //       <Typography
-      //         className={classes.itemTitle}
-      //         varient="body"
-      //         data-testid={`image-title`}
-      //       >
-      //         {item.username}
-      //       </Typography>
-      //     </CardContent>
-      //   </CardActionArea>
-      // </Card>
       <Card
-        style={{
-          height: "370px",
-          width: "230px",
-          display: "inline-block",
-          backgroundColor: "transparent",
-          boxShadow: "none",
-          paddingRight: "10px",
-        }}
+        className="artist-item-card"
         key={index}
+        style={{ boxShadow: "none" }}
       >
         <CardActionArea
           onClick={() => artistPost(item.userID, item.username, item.profpicID)}
         >
           <LazyLoadImage
-            style={{ height: "210px", width: "230px", borderRadius: "4px" }}
+            className="artist-item-image"
             src={item?.previewUrl}
             alt="Image Alt"
             effect="blur"
           />
 
           <Avatar
+            className="artist-avatar"
             style={{
-              marginLeft: "37%",
-              marginTop: "-40px",
-              height: "50px",
               width: "50px",
-              border: "2px solid white",
+              height: "50px",
             }}
             src={item.url}
           ></Avatar>
-          <Typography
-            style={{
-              paddingLeft: "auto",
-              textAlign: "center",
-              marginTop: "10px",
-            }}
-          >
-            {item.username}
-          </Typography>
+          <Typography className="artist-username">{item.username}</Typography>
           <CardContent></CardContent>
         </CardActionArea>
       </Card>
     ));
   }
   return props.items.map((item, index) => (
-    <Card className={classes.item} key={index}>
-      {props.icon === "edit" && props.user.userName === item?.username && (
-        <IconButton
-          className={classes.favoriteIcon}
-          iconStyle={classes.favoriteIcon}
-          onClick={() => {
-            props.openEditHandler(index);
-            props.setOpenEdit(true);
-          }}
-          size="medium"
-          id={index}
-          data-testid={`edit-image-${index}`}
-        >
-          <EditIcon />
-        </IconButton>
-      )}
+    <Card className="item-card" key={index}>
       <CardActionArea
         onClick={() => props.openItemHandler(index, item.username)}
       >
         <LazyLoadImage
-          className={classes.image}
+          className="item-image"
           src={item.url}
           alt="Image Alt"
           effect="blur"
         />
         <CardContent>
-          <Typography
-            className={classes.itemTitle}
-            varient="body"
-            data-testid={`image-title`}
-          >
+          <Typography varient="body" data-testid={`image-title`}>
             {item.title}
           </Typography>
         </CardContent>
       </CardActionArea>
+      {props.icon === "edit" && props.user.userName === item?.username && (
+        <div className="edit-icon">
+          <IconButton
+            onClick={() => {
+              props.openEditHandler(index);
+              props.setOpenEdit(true);
+            }}
+            size="medium"
+            id={index}
+            data-testid={`edit-image-${index}`}
+          >
+            <EditIcon />
+          </IconButton>
+        </div>
+      )}
     </Card>
   ));
 };

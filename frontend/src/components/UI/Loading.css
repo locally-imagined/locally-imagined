@@ -1,0 +1,11 @@
+.loading {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.loadingLogo {
+  position: absolute;
+  margin-left: 45%;
+  margin-top: 10%;
+  transform: translate(-40%, 0);
+}

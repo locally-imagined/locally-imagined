@@ -5,6 +5,7 @@ import {
   Typography,
   Avatar,
   IconButton,
+  Button,
   Tooltip,
   Menu,
   MenuItem,
@@ -18,10 +19,11 @@ import states from "../states";
 import SearchBar from "./SearchBar";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import LoginModal from "./LoginModal";
 import Post from "./Dashboard/Post";
 import AlertMsg from "./AlertMsg";
 import ChangePage from "./ChangePage";
-
+import "./AppBar.css";
 /**
  * Appbar
  * @return {object} JSX
@@ -33,9 +35,7 @@ const Appbar = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [login, setLogin] = useState(props.login);
   const [openSignup, setSignup] = useState(false);
-  const [error, setError] = useState(false);
-  const [msg, setMsg] = useState("Login successfully");
-  const [success, setSucess] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const [sessionEnd, setSessionEnd] = useState(false);
   const [info, setInfo] = useState(false);
   const openAccountMenu = Boolean(anchorEl);
@@ -150,21 +150,21 @@ const Appbar = (props) => {
   }, []);
 
   return (
-    <AppBar className={classes.appBar} elevation={1}>
-      <Toolbar className={classes.toolbar}>
-        {/*title*/}
-        <Typography style={{ flex: 1 }}>
-          <img
-            src="/logo.png"
-            alt="Locally Imagine"
-            data-testid="app-logo"
-            onClick={() => {
-              history.push(`/`);
-              window.location.reload(false);
-            }}
-            className={classes.logo}
-          ></img>
-        </Typography>
+    <header className="appbar">
+      {/*title*/}
+      <div className="logo">
+        <img
+          src="/logo.png"
+          alt="Locally Imagine"
+          data-testid="app-logo"
+          onClick={() => {
+            history.push(`/`);
+            window.location.reload(false);
+          }}
+          className="logo-image"
+        ></img>
+      </div>
+      <div className="appbar-feature">
         <SearchBar
           tab={props.tab}
           items={props.items}
@@ -182,21 +182,38 @@ const Appbar = (props) => {
           getPosts={props.getPosts}
           filterQuery={props.filterQuery}
         />
-        {/*display fast login input fields while not login*/}
+
+        {/*display fast login input fields while not login <form>*/}
+        <div className="login-input">
+          {!login && (
+            <Login
+              setError={props.setError}
+              setLogin={setLogin}
+              setMsg={props.setMsg}
+              setSuccess={props.setSuccess}
+              setUser={props.setUser}
+              user={props.user}
+              setSignup={setSignup}
+              setMyAvatar={props.setMyAvatar}
+              getAvatar={props.getAvatar}
+              sessionTimer={sessionTimer}
+              getMyAvatar={props.getMyAvatar}
+            />
+          )}
+        </div>
         {!login && (
-          <Login
-            setError={setError}
-            setLogin={setLogin}
-            setMsg={setMsg}
-            setSucess={setSucess}
-            setUser={props.setUser}
-            user={props.user}
-            setSignup={setSignup}
-            setMyAvatar={props.setMyAvatar}
-            getAvatar={props.getAvatar}
-            sessionTimer={sessionTimer}
-            getMyAvatar={props.getMyAvatar}
-          />
+          <button className="login-btn" onClick={() => setOpenLogin(true)}>
+            Log In
+          </button>
+        )}
+        {!login && (
+          <Button
+            underline="hover"
+            className="signup-btn"
+            onClick={() => setSignup(true)}
+          >
+            Sign Up
+          </Button>
         )}
         {/*Create post button*/}
         {login && (
@@ -238,7 +255,7 @@ const Appbar = (props) => {
         {/*Account menu*/}
         <Menu
           anchorEl={anchorEl}
-          className={classes.accountMenu}
+          className="account-menu"
           open={openAccountMenu}
           onClose={handleClose}
           MenuListProps={{
@@ -248,58 +265,59 @@ const Appbar = (props) => {
           <MenuItem
             onClick={accountHandler}
             data-testid="button-profile"
-            className={classes.accountMenuItem}
+            className="account-menu-item"
           >
             Profile
           </MenuItem>
+
           <MenuItem
             onClick={accountSettingHandler}
             data-testid="button-setting"
-            className={classes.accountMenuItem}
+            className="account-menu-item"
           >
             Account Settings
           </MenuItem>
           <MenuItem
             onClick={handleLogout}
-            className={classes.accountMenuItem}
+            className="account-menu-item"
             data-testid="button-logout"
           >
             Logout
           </MenuItem>
         </Menu>
-      </Toolbar>
-      {/*unsuccessful alert*/}
-      {error && (
-        <AlertMsg error={error} type={"error"} setError={setError} msg={msg} />
-      )}
-      {/*successful alert*/}
-      {success && (
-        <AlertMsg
-          success={success}
-          type={"success"}
-          setSucess={setSucess}
-          msg={msg}
-        />
-      )}
-      {/*Timeout alert*/}
-      {sessionEnd && (
-        <AlertMsg type={"info"} setInfo={setInfo} info={info} msg={msg} />
-      )}
+      </div>
 
       {/*Signup modal*/}
       <SignUp
         setSignup={setSignup}
         handleInputChange={handleInputChange}
         openSignup={openSignup}
-        setError={setError}
+        setError={props.setError}
         setLogin={setLogin}
-        setMsg={setMsg}
-        setSucess={setSucess}
+        setMsg={props.setMsg}
+        setSucess={props.setSucess}
         setUser={props.setUser}
         user={props.user}
         setUserID={props.setUserID}
       />
-    </AppBar>
+
+      {/*Login modal*/}
+      <LoginModal
+        setError={props.setError}
+        setLogin={setLogin}
+        openLogin={openLogin}
+        setOpenLogin={setOpenLogin}
+        setMsg={props.setMsg}
+        setSuccess={props.setSuccess}
+        setUser={props.setUser}
+        user={props.user}
+        setSignup={setSignup}
+        setMyAvatar={props.setMyAvatar}
+        getAvatar={props.getAvatar}
+        sessionTimer={sessionTimer}
+        getMyAvatar={props.getMyAvatar}
+      />
+    </header>
   );
 };
 

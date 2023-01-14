@@ -1,4 +1,5 @@
 import styles from "../../styles";
+import "./SliderDot.css";
 /**
  * SliderDot
  * @return {object} JSX
@@ -6,12 +7,12 @@ import styles from "../../styles";
 const SliderDot = (props) => {
   const classes = styles();
   return (
-    <div className={classes.sliderDotBox}>
+    <div className="sliderDot-box">
       {props.images.length > 0 &&
         props.images.map((_, index) => {
           return (
             <span
-              className={classes.sliderDot}
+              className="sliderDot"
               key={index}
               style={
                 index === props.offset

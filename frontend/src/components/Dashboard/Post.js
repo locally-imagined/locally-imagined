@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import "./Post.css";
 /**
  * Post
  * @return {object} JSX
@@ -144,7 +145,7 @@ const Post = (props) => {
       //console.log("img");
       console.log(event.target.files.length);
       var urls = url.map((x) => x);
-      for (var i=0; i<event.target.files.length; i++) {
+      for (var i = 0; i < event.target.files.length; i++) {
         urls.push(URL.createObjectURL(event.target.files[i]));
         getBase64(event.target.files[i])
           .then((result) => {
@@ -156,16 +157,6 @@ const Post = (props) => {
           });
       }
       setUrl(urls);
-      // setUrl([...url, URL.createObjectURL(event.target.files[0])]);
-      // //console.log(url);
-      // getBase64(event.target.files[0])
-      //   .then((result) => {
-      //     result = result.split(",").pop();
-      //     props.art.content.push(result);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
     } else {
       props.setArt({
         ...props.art,
@@ -177,14 +168,6 @@ const Post = (props) => {
 
   const submitPost = (event) => {
     event.preventDefault();
-    // console.log(props.art);
-    //   console.log(`title:${props.art.title}
-    //   description:${props.art.description}
-    //   price:${props.art.price}
-    //   medium:${props.art.medium}
-    //   content:${props.art.content}
-    //  `);
-
     const token = JSON.parse(sessionStorage.getItem("user")).token.jwt;
     // console.log("token:", token);
     const body = JSON.stringify(props.art);
@@ -235,11 +218,11 @@ const Post = (props) => {
       });
   };
   return (
-    <Box className={classes.postPage}>
-      <Box className={classes.postPageDetail}>
-        <h1 className={classes.signUpTitle}>Post Your Art</h1>
+    <div className="post-page">
+      <div className="post-detail">
+        <h1 className="post-title">Post Your Art</h1>
         <Divider className={classes.divider} />
-        <form onSubmit={submitPost} className={classes.PostPage}>
+        <form onSubmit={submitPost} className="post-form">
           <InputBase
             className={classes.signUpInput}
             placeholder="Title"
@@ -284,7 +267,7 @@ const Post = (props) => {
             label="Medium"
             name="medium"
             required
-            style={{ width: "150px", height: "40px", marginLeft: "15px" }}
+            className="post-select"
           >
             {mediumOptions.map((name, index) => (
               <MenuItem key={index} value={name}>
@@ -302,7 +285,7 @@ const Post = (props) => {
             label="Delivery"
             name="deliverytype"
             required
-            style={{ width: "150px", height: "40px", marginLeft: "15px" }}
+            className="post-select"
           >
             {delivaryOptions.map((name, index) => (
               <MenuItem key={index} value={name}>
@@ -310,8 +293,7 @@ const Post = (props) => {
               </MenuItem>
             ))}
           </Select>
-          <br />
-          <br />
+
           <input
             accept="image/*"
             multiple
@@ -370,57 +352,16 @@ const Post = (props) => {
             msg={"error"}
           />
         )}
-      </Box>
-      <Box className={classes.postPageImageBox}>
-        {url.length > 1 && (
-          <Box
-            style={{
-              marginTop: "14rem",
-              position: "absolute",
-              zIndex: 1,
-            }}
-          >
-            <ArrowBackIcon
-              onClick={prevHandler}
-              style={{ paddingRight: "39rem" }}
-              className={classes.postArrow}
-            />
-            <ArrowForwardIcon
-              onClick={nextHandler}
-              className={classes.postArrow}
-            />
-          </Box>
-        )}
-        <div
-          style={{
-            height: "100%",
-            marginLeft: "390px",
-            marginTop: "23px",
-            position: "absolute",
-          }}
-        >
-          <SliderDot
-            offset={offset}
-            currSlideStyle={currSlideStyle}
-            images={url}
-            color={"black"}
-          />
-        </div>
-        <div
-          style={{
-            width: "720px",
-            height: "560px",
-
-            borderRadius: "10px",
-          }}
-        >
+      </div>
+      <div className="post-image-box">
+        <div className="post-image" style={{}}>
           {url.length > 0 && (
             <LazyLoadImage
               onLoad={onImgLoad}
               style={{
+                boxSizing: "content-box",
                 width: dimension.width,
                 height: dimension.height,
-
                 paddingLeft: paddingLeft,
                 paddingTop: paddingTop,
                 borderRadius: "10px",
@@ -430,9 +371,29 @@ const Post = (props) => {
               src={url[offset]}
             ></LazyLoadImage>
           )}
+          {url.length > 1 && (
+            <div className="post-arrow-box">
+              <ArrowBackIcon
+                onClick={prevHandler}
+                className={classes.postArrow}
+              />
+              <ArrowForwardIcon
+                onClick={nextHandler}
+                className={classes.postArrow}
+              />
+            </div>
+          )}
+          <div className="post-dot-box">
+            <SliderDot
+              offset={offset}
+              currSlideStyle={currSlideStyle}
+              images={url}
+              color={"black"}
+            />
+          </div>
         </div>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

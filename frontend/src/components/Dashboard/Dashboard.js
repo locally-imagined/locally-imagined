@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import styles from "../../styles";
 import AlertMsg from "../AlertMsg";
 import Post from "./Post";
+import "./Dashboard.css";
 /**
  * Dashboard
  * @return {object} JSX
@@ -19,15 +20,8 @@ const Dashboard = (props) => {
   const [success, setSucess] = useState(false);
   const [openPost, setOpenPost] = useState(false);
   return (
-    <Grid className={classes.dashboardBox} style={{ marginTop: "3rem" }}>
-      <span
-        style={{
-          marginTop: "5px",
-          width: "100vw",
-          position: "absolute",
-          zIndex: 1,
-        }}
-      >
+    <div className="dashboard-box">
+      <span className="dashboard-alert">
         {success && (
           <AlertMsg
             type={"success"}
@@ -38,20 +32,18 @@ const Dashboard = (props) => {
         )}
       </span>
 
-      <Box>
-        {/*Post modal*/}
-        <Post
-          openPost={openPost}
-          setOpenPost={setOpenPost}
-          art={props.art}
-          setArt={props.setArt}
-          setUserID={props.setUserID}
-          setSucess={setSucess}
-          getInfo={props.getInfo}
-          getAvatar={props.getAvatar}
-        />
-      </Box>
-    </Grid>
+      {/*Post modal*/}
+      <Post
+        openPost={openPost}
+        setOpenPost={setOpenPost}
+        art={props.art}
+        setArt={props.setArt}
+        setUserID={props.setUserID}
+        setSucess={setSucess}
+        getInfo={props.getInfo}
+        getAvatar={props.getAvatar}
+      />
+    </div>
   );
 };
 export default Dashboard;

@@ -13,6 +13,7 @@ import SliderDot from "../UI/SliderDot";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import SliderArrow from "../UI/SliderArrow";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "./Post.css";
 /**
@@ -372,16 +373,7 @@ const Post = (props) => {
             ></LazyLoadImage>
           )}
           {url.length > 1 && (
-            <div className="post-arrow-box">
-              <ArrowBackIcon
-                onClick={prevHandler}
-                className={classes.postArrow}
-              />
-              <ArrowForwardIcon
-                onClick={nextHandler}
-                className={classes.postArrow}
-              />
-            </div>
+            <SliderArrow prevHandler={prevHandler} nextHandler={nextHandler} />
           )}
           <div className="post-dot-box">
             <SliderDot

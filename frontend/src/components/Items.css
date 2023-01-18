@@ -40,9 +40,8 @@
   margin-top: 10px;
 }
 .edit-icon {
-  z-index: 1;
+  z-index: 999;
   position: absolute;
-
   right: 0;
   color: black;
   border-radius: 50%;

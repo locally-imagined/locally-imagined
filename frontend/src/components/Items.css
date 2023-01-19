@@ -1,0 +1,55 @@
+.item-card {
+  height: 400px;
+  width: 250px;
+  display: inline-block;
+  box-shadow: none !important;
+  background-color: transparent;
+  position: relative;
+}
+.item-image {
+  height: 250px;
+  width: 250px;
+  border-radius: 4px;
+}
+.item-title {
+  text-align: center;
+}
+
+.artist-item-image {
+  height: 250px;
+  width: 250px;
+  border-radius: 4px;
+}
+@media (max-width: 1387px) {
+  .artist-item-image {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.artist-avatar {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100px;
+  border: 2px solid white;
+}
+.artist-username {
+  padding-left: auto;
+  text-align: center;
+  margin-top: 10px;
+}
+.edit-icon {
+  z-index: 999;
+  position: absolute;
+  right: 0;
+  color: black;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+.edit-icon:hover {
+  opacity: 0.3;
+  color: grey;
+  background-color: #e6e6e6;
+  cursor: pointer;
+}

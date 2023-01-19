@@ -15,6 +15,7 @@ import AlertMsg from "./AlertMsg";
 import AboutBar from "./AboutPage/AboutBar";
 import AboutPage from "./AboutPage/AboutPage";
 import HorizontalScroll from "react-horizontal-scrolling";
+import "./FrontPage.css";
 /**
  *
  * @return {object} JSX
@@ -61,6 +62,7 @@ function FrontPage() {
   const [msg, setMsg] = useState("Login successfully");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [deleteCheck, setDeleteCheck] = useState([]);
   const [noResult, setNoResult] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -439,124 +441,153 @@ function FrontPage() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <div>
-            <Appbar
-              items={tab === "explore" ? items : artists}
-              login={states.login}
-              loading={loading}
-              noResult={noResult}
-              offset={offset}
-              search={search}
-              tab={tab}
-              user={user}
-              setTab={setTab}
-              getSrc={getSrc}
-              getArtistPosts={getArtistPosts}
-              setOffset={setOffset}
-              setUser={setUser}
-              setLoading={setLoading}
-              setSearch={setSearch}
-              setFilter={filterHandler}
-              setNoResult={setNoResult}
-              setCurPath={setCurPath}
-              setUserID={setUserID}
-              getPosts={getPosts}
-              setAvatar={setAvatar}
-              avatar={avatar}
-              getAvatar={getAvatar}
-              setMyAvatar={setMyAvatar}
-              myAvatar={myAvatar}
-              getInfo={getInfo}
-              filterQuery={filterQuery}
-              artist={artists}
-              setArtists={setArtists}
-            />
-            <span
-              style={{
-                marginTop: "-4px",
-                width: "100vw",
-                position: "absolute",
-                zIndex: 1,
-              }}
-            >
-              {error && (
-                <AlertMsg
-                  error={error}
-                  type={"error"}
-                  setError={setError}
-                  msg={msg}
-                />
-              )}
-            </span>
+          <div className="container-box">
+            <div className="appbar-box">
+              {/* <header> */}
+              <Appbar
+                items={tab === "explore" ? items : artists}
+                login={states.login}
+                loading={loading}
+                noResult={noResult}
+                offset={offset}
+                search={search}
+                tab={tab}
+                user={user}
+                setTab={setTab}
+                getSrc={getSrc}
+                getArtistPosts={getArtistPosts}
+                setOffset={setOffset}
+                setUser={setUser}
+                setLoading={setLoading}
+                setSearch={setSearch}
+                setFilter={filterHandler}
+                setNoResult={setNoResult}
+                setError={setError}
+                setSuccess={setSuccess}
+                setMsg={setMsg}
+                setCurPath={setCurPath}
+                setUserID={setUserID}
+                getPosts={getPosts}
+                setAvatar={setAvatar}
+                avatar={avatar}
+                getAvatar={getAvatar}
+                setMyAvatar={setMyAvatar}
+                myAvatar={myAvatar}
+                getInfo={getInfo}
+                filterQuery={filterQuery}
+                artist={artists}
+                setArtists={setArtists}
+              />
+            </div>
 
-            <Listing
-              items={tab === "explore" ? items : artists}
-              images={images}
-              noResult={noResult}
-              loading={loading}
-              offset={offset}
-              tab={tab}
-              user={user}
-              artistItem={artistItem}
-              setArtistItem={setArtistItem}
-              setTab={setTab}
-              setOffset={setOffset}
-              getArtists={getArtists}
-              getArtistPosts={getArtistPosts}
-              getImagesSet={getImagesSet}
-              setImages={setImages}
-              setFilterQuery={setFilterQuery}
-              filterOption={filterOption}
-              getPosts={getPosts}
-              setUserID={setUserID}
-              setUser={setUser}
-              getInfo={getInfo}
-              setContact={setContact}
-              setAvatar={setAvatar}
-              avatar={avatar}
-              getAvatar={getAvatar}
-              setMyAvatar={setMyAvatar}
-              myAvatar={myAvatar}
-              bio={bio}
-              setBio={setBio}
-              artist={artists}
-              setArtists={setArtists}
-            />
-            <ChangePage
-              items={tab === "explore" ? items : artists}
-              curPath={curPath}
-              offset={offset}
-              setOffset={setOffset}
-            />
-            <AboutBar />
+            {error && (
+              <AlertMsg
+                error={error}
+                type={"error"}
+                setError={setError}
+                msg={msg}
+              />
+            )}
+            {success && (
+              <AlertMsg
+                success={success}
+                type={"success"}
+                setSuccess={setSuccess}
+                msg={msg}
+              />
+            )}
+            <article className="listing-box">
+              {/* <div> */}
+              <Listing
+                items={tab === "explore" ? items : artists}
+                images={images}
+                noResult={noResult}
+                loading={loading}
+                offset={offset}
+                tab={tab}
+                user={user}
+                artistItem={artistItem}
+                setArtistItem={setArtistItem}
+                setTab={setTab}
+                setOffset={setOffset}
+                setSuccess={setSuccess}
+                setError={setError}
+                setMsg={setMsg}
+                getArtists={getArtists}
+                getArtistPosts={getArtistPosts}
+                getImagesSet={getImagesSet}
+                setImages={setImages}
+                setFilterQuery={setFilterQuery}
+                filterOption={filterOption}
+                getPosts={getPosts}
+                setUserID={setUserID}
+                setUser={setUser}
+                getInfo={getInfo}
+                setContact={setContact}
+                setAvatar={setAvatar}
+                avatar={avatar}
+                getAvatar={getAvatar}
+                setMyAvatar={setMyAvatar}
+                myAvatar={myAvatar}
+                bio={bio}
+                setBio={setBio}
+                artist={artists}
+                setArtists={setArtists}
+              />
+              {/* <div> */}
+              <div className="pagination-container">
+                <ChangePage
+                  items={tab === "explore" ? items : artists}
+                  curPath={curPath}
+                  offset={offset}
+                  setOffset={setOffset}
+                />
+              </div>
+
+              {/* <footer> */}
+            </article>
+            <div className="aboutbar-container">
+              <AboutBar />
+            </div>
           </div>
         </Route>
 
         <Route path="/profile">
-          <NavBar
-            login={states.login}
-            offset={offset}
-            setUser={setUser}
-            user={user}
-            setArtistItem={setArtistItem}
-            setSearch={setSearch}
-            setUserID={setUserID}
-            setAvatar={setAvatar}
-            avatar={avatar}
-            getAvatar={getAvatar}
-            setMyAvatar={setMyAvatar}
-            myAvatar={myAvatar}
-            artist={artists}
-            setArtists={setArtists}
-          />
-          <div
-            style={{
-              height: "100vh",
-              width: "100vw",
-              poaition: "absolute",
-              display: "block",
-            }}
-          >
+          <div className="container-box">
+            <header className="appbar-box">
+              <NavBar
+                login={states.login}
+                offset={offset}
+                setUser={setUser}
+                user={user}
+                setArtistItem={setArtistItem}
+                setSearch={setSearch}
+                setUserID={setUserID}
+                setAvatar={setAvatar}
+                avatar={avatar}
+                getAvatar={getAvatar}
+                setMyAvatar={setMyAvatar}
+                myAvatar={myAvatar}
+                artist={artists}
+                setArtists={setArtists}
+              />
+            </header>
+            {error && (
+              <AlertMsg
+                error={error}
+                type={"error"}
+                setError={setError}
+                msg={msg}
+              />
+            )}
+            {success && (
+              <AlertMsg
+                success={success}
+                type={"success"}
+                setSuccess={setSuccess}
+                msg={msg}
+              />
+            )}
             <AccountPage
               artistItem={artistItem}
               items={items}
@@ -586,6 +617,15 @@ function FrontPage() {
               artist={artists}
               setArtists={setArtists}
             />
+            {/* <div> */}
+            <div className="pagination-container">
+              <ChangePage
+                items={tab === "explore" ? items : artists}
+                curPath={curPath}
+                offset={offset}
+                setOffset={setOffset}
+              />
+            </div>
           </div>
         </Route>
         <Route path="/settings">
@@ -639,23 +679,24 @@ function FrontPage() {
         </Route>
         <Route path="/contact">
           <div>
-            <NavBar
-              login={states.login}
-              offset={offset}
-              setUser={setUser}
-              user={user}
-              setArtistItem={setArtistItem}
-              setSearch={setSearch}
-              setUserID={setUserID}
-              setAvatar={setAvatar}
-              avatar={avatar}
-              getAvatar={getAvatar}
-              setMyAvatar={setMyAvatar}
-              myAvatar={myAvatar}
-              artist={artists}
-              setArtists={setArtists}
-            />
-
+            <header className="appbar-box">
+              <NavBar
+                login={states.login}
+                offset={offset}
+                setUser={setUser}
+                user={user}
+                setArtistItem={setArtistItem}
+                setSearch={setSearch}
+                setUserID={setUserID}
+                setAvatar={setAvatar}
+                avatar={avatar}
+                getAvatar={getAvatar}
+                setMyAvatar={setMyAvatar}
+                myAvatar={myAvatar}
+                artist={artists}
+                setArtists={setArtists}
+              />
+            </header>
             <ContactInfo
               contact={contact}
               loading={loading}
@@ -669,24 +710,25 @@ function FrontPage() {
           </div>
         </Route>
         <Route path="/create">
-          <div>
-            <NavBar
-              login={states.login}
-              offset={offset}
-              setUser={setUser}
-              user={user}
-              setArtistItem={setArtistItem}
-              setSearch={setSearch}
-              setUserID={setUserID}
-              setAvatar={setAvatar}
-              avatar={avatar}
-              getAvatar={getAvatar}
-              setMyAvatar={setMyAvatar}
-              myAvatar={myAvatar}
-              artist={artists}
-              setArtists={setArtists}
-            />
-
+          <div className="container-box-flex">
+            <header className="appbar-box">
+              <NavBar
+                login={states.login}
+                offset={offset}
+                setUser={setUser}
+                user={user}
+                setArtistItem={setArtistItem}
+                setSearch={setSearch}
+                setUserID={setUserID}
+                setAvatar={setAvatar}
+                avatar={avatar}
+                getAvatar={getAvatar}
+                setMyAvatar={setMyAvatar}
+                myAvatar={myAvatar}
+                artist={artists}
+                setArtists={setArtists}
+              />
+            </header>
             <Dashboard
               art={art}
               setArt={setArt}

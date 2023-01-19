@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useHistory } from "react-router-dom";
 import styles from "../styles";
-
+import "./Category.css";
 /**
  * category list
  * @return {object} JSX
@@ -120,12 +120,13 @@ const Category = (props) => {
     setAnchorDateDel(null);
   };
   return (
-    <Box sx={{ flexGrow: 1 }} className={classes.categoryBox}>
-      <Toolbar position="static" className={classes.categoryBar}>
+    <div className="category">
+      <Toolbar position="static" className="categoryBar">
         <List
           component="nav"
           aria-label="Medium settings"
           sx={{ bgcolor: "background.paper" }}
+          className="categoryBar-list"
         >
           <ListItem
             button
@@ -136,7 +137,7 @@ const Category = (props) => {
             disabled={props.tab === "mypost"}
             aria-expanded={openMed ? "true" : undefined}
             onClick={handleClickItem}
-            className={classes.categoryBarItem}
+            className="categoryBar-item"
           >
             <ListItemText
               primary="Medium"
@@ -169,6 +170,7 @@ const Category = (props) => {
           component="nav"
           aria-label="Date settings"
           sx={{ bgcolor: "background.paper" }}
+          className="categoryBar-list"
         >
           <ListItem
             button
@@ -179,7 +181,7 @@ const Category = (props) => {
             disabled={props.tab === "mypost"}
             aria-expanded={openDate ? "true" : undefined}
             onClick={handleClickItem}
-            className={classes.categoryBarItem}
+            className="categoryBar-item"
           >
             <ListItemText
               primary="Date"
@@ -227,6 +229,7 @@ const Category = (props) => {
           component="nav"
           aria-label="City settings"
           sx={{ bgcolor: "background.paper" }}
+          className="categoryBar-list"
         >
           <ListItem
             button
@@ -236,12 +239,9 @@ const Category = (props) => {
             aria-label="City"
             disabled={true}
             aria-expanded={undefined}
-            className={classes.categoryBarItem}
+            className="categoryBar-item"
           >
-            <ListItemText
-              primary="City"
-              secondary="Santa Cruz"
-            />
+            <ListItemText primary="City" secondary="Santa Cruz" />
           </ListItem>
         </List>
         <Menu
@@ -251,10 +251,9 @@ const Category = (props) => {
             "aria-labelledby": "lock-button",
             role: "listbox",
           }}
-        >
-        </Menu>
+        ></Menu>
       </Toolbar>
-    </Box>
+    </div>
   );
 };
 

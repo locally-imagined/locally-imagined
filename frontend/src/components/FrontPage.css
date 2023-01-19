@@ -1,0 +1,28 @@
+/*global reset*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+/*main boxes*/
+.container-box {
+  display: grid;
+
+  grid-template-columns: 1fr;
+}
+.container-box-flex {
+  display: flex;
+  max-width: fit-content;
+  justify-content: center;
+  flex-direction: column;
+}
+.appbar-box {
+  grid-column: 1/-1;
+}
+.pagination-container {
+  grid-column: 1/-1;
+}
+.aboutbar-container {
+  grid-column: 1/-1;
+}

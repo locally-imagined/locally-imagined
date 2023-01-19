@@ -4,6 +4,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import styles from "../../styles";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Box from "@mui/material/Box";
+import "./SliderArrow.css";
 /**
  * SliderArrow
  * @return {object} JSX
@@ -11,18 +12,14 @@ import Box from "@mui/material/Box";
 const SliderArrow = (props) => {
   const classes = styles();
   return (
-    <Box className={classes.arrowBox}>
-      <IconButton onClick={props.prevHandler} className={classes.arrow}>
-        <ArrowBackIcon className={classes.arrow} />
+    <div className="arrow-container">
+      <IconButton onClick={props.prevHandler} className="arrow">
+        <ArrowBackIcon />
       </IconButton>
-      <IconButton
-        className={classes.arrow}
-        onClick={props.nextHandler}
-        style={{ marginLeft: props.marginLeft }}
-      >
+      <IconButton className="arrow" onClick={props.nextHandler}>
         <ArrowForwardIcon />
       </IconButton>
-    </Box>
+    </div>
   );
 };
 export default SliderArrow;

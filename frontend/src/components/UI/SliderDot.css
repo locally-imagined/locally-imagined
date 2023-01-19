@@ -1,0 +1,14 @@
+.sliderDot-box {
+  font-size: 10px;
+  opacity: 0.7;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.sliderDot {
+  opacity: 30%;
+  color: white;
+  padding-right: 10px;
+  cursor: pointer;
+}

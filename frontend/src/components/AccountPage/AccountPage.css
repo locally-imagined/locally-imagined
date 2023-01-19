@@ -1,0 +1,64 @@
+.account-page {
+  display: flex;
+  flex-direction: column;
+}
+.account-board {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding: 3rem 5rem 10rem 12rem;
+}
+.account-board-basic-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.account-board-bio {
+  padding-left: 6rem;
+  color: grey;
+}
+.account-board-avatar {
+  width: 5rem !important;
+  height: 5rem !important;
+}
+.account-board-username {
+  font-size: 1.5rem;
+}
+
+.account-items {
+  padding: 30px 70px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+@media (max-width: 1390px) {
+  .account-items {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 1141px) {
+  .account-items {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 893px) {
+  .account-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.account-title {
+  margin-left: 6rem;
+  margin-top: 1rem;
+}
+.no-result {
+  margin-left: 45%;
+  color: grey;
+  padding-top: 10vw;
+  padding-bottom: 100vh;
+}

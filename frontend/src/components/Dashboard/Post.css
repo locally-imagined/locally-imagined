@@ -1,0 +1,48 @@
+.post-page {
+  background-color: white;
+  width: 75rem;
+  height: 40rem;
+  border-radius: 10px;
+  margin-left: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+}
+.post-detail {
+  display: flex;
+  flex-direction: column;
+  width: 25rem;
+  padding: 2rem;
+}
+.post-form {
+}
+.post-arrow-box {
+  display: flex;
+  padding: 0 3rem;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.post-dot-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.post-select {
+  width: 150px;
+  height: 40px;
+  margin-left: 15px;
+}
+.post-image-box {
+  width: 800px;
+  height: 560px;
+}
+.post-image {
+  width: 720;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+}

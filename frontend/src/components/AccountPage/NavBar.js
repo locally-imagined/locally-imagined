@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "../../styles";
 import states from "../../states";
+import "./NavBar.css";
 
 /**
  * NavBar
@@ -80,68 +81,71 @@ const NavBar = (props) => {
     window.location.reload(false);
   };
   return (
-    <AppBar className={classes.appBar} elevation={1}>
-      <Toolbar className={classes.toolbar}>
-        {/*title*/}
-        <Typography style={{ flex: 1 }}>
-          <img
-            src="/logo.png"
-            alt="Locally Imagine"
-            data-testid="nav-logo"
-            onClick={() => {
-              history.push(`/`);
-              window.location.reload(false);
-            }}
-            className={classes.logo}
-          ></img>
-        </Typography>
-
-        {/*display avatar and username and log out button when login*/}
-        {login && (
-          <Tooltip title="Account settings">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              <Avatar className={classes.avatar} src={props.myAvatar}>
-                {props.user.userName[0]}
-              </Avatar>
-            </IconButton>
-          </Tooltip>
-        )}
-        {/*Account menu*/}
-        <Menu
-          id="account-menu"
-          anchorEl={anchorEl}
-          className={classes.accountMenu}
-          open={openAccountMenu}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
+    <header className="appbar" elevation={1}>
+      <div className="logo">
+        <img
+          src="/logo.png"
+          alt="Locally Imagine"
+          data-testid="app-logo"
+          onClick={() => {
+            history.push(`/`);
+            window.location.reload(false);
           }}
+          className="logo-image"
+        ></img>
+      </div>
+
+      {/*display avatar and username and log out button when login*/}
+      {login && (
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? "account-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+          >
+            <Avatar className={classes.avatar} src={props.myAvatar}>
+              {props.user.userName[0]}
+            </Avatar>
+          </IconButton>
+        </Tooltip>
+      )}
+
+      <Menu
+        anchorEl={anchorEl}
+        className="account-menu"
+        open={openAccountMenu}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem
+          onClick={accountHandler}
+          data-testid="button-profile"
+          className="account-menu-item"
         >
-          <MenuItem
-            onClick={accountHandler}
-            className={classes.accountMenuItem}
-          >
-            Profile
-          </MenuItem>
-          <MenuItem
-            onClick={accountSettingHandler}
-            className={classes.accountMenuItem}
-          >
-            Account Settings
-          </MenuItem>
-          <MenuItem onClick={handleLogout} className={classes.accountMenuItem}>
-            Logout
-          </MenuItem>
-        </Menu>
-      </Toolbar>
-    </AppBar>
+          Profile
+        </MenuItem>
+
+        <MenuItem
+          onClick={accountSettingHandler}
+          data-testid="button-setting"
+          className="account-menu-item"
+        >
+          Account Settings
+        </MenuItem>
+        <MenuItem
+          onClick={handleLogout}
+          className="account-menu-item"
+          data-testid="button-logout"
+        >
+          Logout
+        </MenuItem>
+      </Menu>
+    </header>
   );
 };
 

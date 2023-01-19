@@ -1,0 +1,64 @@
+.bigModal {
+  position: relative;
+
+  height: 100%;
+  display: block;
+  overflow: scroll;
+}
+
+.itemModal {
+  margin: 2rem auto;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 24;
+  width: 1150px;
+  height: 680px;
+  display: flex;
+}
+.edit-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.edit-cancel-icon {
+  position: absolute;
+  z-index: 1;
+  right: 0px;
+}
+.edit-image-container {
+  width: 720px;
+  height: 680px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.edit-select {
+  width: 150px;
+  height: 40px;
+  margin-left: 15px;
+}
+.editForm {
+  width: 395px;
+  padding: 1rem;
+  height: 600px;
+}
+.edit-title {
+  color: #3f4cc4;
+  font-size: 27px;
+  font-weight: bold;
+  margin-left: -20;
+}
+
+.edit-btn {
+  background-color: #3f4cc4 !important;
+}
+.edit-btn:hover {
+  background-color: #646ece !important;
+}
+.edit-delete-prompt {
+  padding-left: 10px;
+}
+.edit-delete-promt-box {
+  width: 15rem;
+  height: 5rem;
+}

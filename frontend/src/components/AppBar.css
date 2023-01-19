@@ -1,0 +1,43 @@
+.appbar {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid rgb(189, 189, 189);
+  justify-content: space-between;
+
+  align-items: center;
+}
+.appbar-feature {
+  display: flex;
+  align-items: center;
+}
+.logo-image {
+  width: 200px;
+}
+.account-menu {
+  margin-top: 3.1rem;
+}
+.login-btn {
+  display: none;
+  width: 4rem;
+  height: 2.4rem;
+  font-size: 0.8rem;
+  background-color: #3f4cc4;
+  color: #fff;
+  border-radius: 6px;
+  text-transform: uppercase;
+  margin: 0 1rem;
+  border: none;
+  text-align: center;
+}
+.login-btn:hover {
+  cursor: pointer;
+  background-color: #5863c9;
+}
+@media (max-width: 1200px) {
+  .login-input {
+    display: none;
+  }
+  .login-btn {
+    display: inline-block;
+  }
+}

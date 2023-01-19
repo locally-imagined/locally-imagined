@@ -1,0 +1,50 @@
+.setting-box {
+  width: 100vw;
+}
+.setting-form {
+  display: flex;
+  flex-direction: column;
+}
+.setting-card {
+  width: 40rem;
+  position: relative;
+  padding: 20px;
+  display: block;
+  margin-left: 25vw;
+  margin-top: 25px;
+  height: 15rem;
+}
+@media (max-width: 1320px) {
+  .setting-card {
+    width: 35rem;
+  }
+}
+@media (max-width: 1141px) {
+  .setting-card {
+    width: 30rem;
+  }
+}
+@media (max-width: 898px) {
+  .setting-card {
+    width: 25rem;
+    height: 18rem;
+  }
+}
+.setting-avatar {
+  margin-left: 10px;
+  position: absolute;
+}
+.setting-upload {
+  margin-left: 7rem;
+  margin-bottom: 6rem;
+}
+.setting-text {
+  font-size: 15px;
+  color: grey;
+  padding-right: 10px;
+  bottom: 2rem;
+  position: absolute;
+}
+.setting-title {
+  margin-bottom: 1rem;
+}

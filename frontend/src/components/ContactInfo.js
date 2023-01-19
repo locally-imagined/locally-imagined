@@ -3,13 +3,13 @@ import { Typography, Avatar } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import ReactLoading from "react-loading";
+
 import styles from "../styles";
 import { useEffect } from "react";
 import { useLocation, useParams, useHistory } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
+import Loading from "./UI/Loading";
 const ContactInfo = (props) => {
   const classes = styles();
   const location = useLocation();
@@ -28,28 +28,13 @@ const ContactInfo = (props) => {
     }
   }, []);
   return (
-    <Box className={classes.accountBox}>
-      <br />
-      <br />
-      <br />
-      <IconButton
-        onClick={() => history.goBack()}
-        className={classes.arrow}
-        style={{ position: "absolute", marginTop: "10px", marginLeft: "10px" }}
-      >
-        <ArrowBackIcon className={classes.arrow} />
+    <Box className="contact-box">
+      <IconButton onClick={() => history.goBack()}>
+        <ArrowBackIcon className="contact-return-btn" />
       </IconButton>
-      {props.loading && (
-        <Box
-          className={classes.loading}
-          style={{ marginLeft: "45vw", height: "100vh", marginTop: "10vh" }}
-        >
-          <ReactLoading type="bars" color="grey" height={100} width={100} />
-        </Box>
-      )}
+      {props.loading && <Loading />}
       {!props.loading && (
         <Card
-          className={classes.settingCard}
           style={{
             width: "40rem",
             position: "absolute",

@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import AlertMsg from "../AlertMsg";
+import "./AccountSetting.css";
 /**
  * AccountSetting
  * @return {object} JSX
@@ -144,10 +145,7 @@ const AccountSetting = (props) => {
     }
   };
   return (
-    <Box className={classes.accountBox}>
-      <br />
-      <br />
-      <br />
+    <Box className="setting-box">
       {info && (
         <AlertMsg success={info} type={"info"} setInfo={setInfo} msg={msg} />
       )}
@@ -167,24 +165,12 @@ const AccountSetting = (props) => {
           msg={msg}
         />
       )}
-      <form onSubmit={submitSetting}>
-        <Card
-          className={classes.settingCard}
-          style={{
-            width: "40rem",
-            position: "absolute",
-
-            padding: "20px",
-            display: "block",
-            marginLeft: "25vw",
-            marginTop: "25px",
-            height: "15rem",
-          }}
-        >
+      <form onSubmit={submitSetting} className="setting-form">
+        <Card className="setting-card">
           {user && (
-            <Typography component={"span"}>
-              <h2>Avatar</h2>
-              <span style={{ marginLeft: "10px", position: "absolute" }}>
+            <div>
+              <h2 className="setting-title">Avatar</h2>
+              <span className="setting-avatar">
                 <Avatar
                   className={classes.avatar}
                   style={{ width: 100, height: 100 }}
@@ -193,7 +179,7 @@ const AccountSetting = (props) => {
                   {user.userName[0]}
                 </Avatar>
               </span>
-              <span style={{ marginLeft: "7rem", marginBottom: "6rem" }}>
+              <span className="setting-upload">
                 <input
                   accept="image/*"
                   style={{ display: "none" }}
@@ -215,37 +201,17 @@ const AccountSetting = (props) => {
                 </label>
               </span>
 
-              <br />
-              <div
-                style={{
-                  fontSize: "15px",
-                  color: "grey",
-                  paddingRight: "10px",
-                  bottom: "2rem",
-                  position: "absolute",
-                }}
-              >
+              <div className="setting-text">
                 Upload an avatar to add a little more personality to your
                 profile!
               </div>
-            </Typography>
+            </div>
           )}
         </Card>
-        <Card
-          className={classes.settingCard}
-          style={{
-            width: "40rem",
-            position: "absolute",
-            padding: "20px",
-            display: "block",
-            marginLeft: "25vw",
-            marginTop: "21rem",
-            height: "15rem",
-          }}
-        >
+        <Card className="setting-card">
           {user && (
-            <Typography component={"span"}>
-              <h2>Bio</h2>
+            <dic>
+              <h2 className="setting-title">Bio</h2>
               <div
                 style={{
                   borderStyle: "solid",
@@ -268,21 +234,11 @@ const AccountSetting = (props) => {
                 />
               </div>
 
-              <br />
-
-              <div
-                style={{
-                  fontSize: "15px",
-                  color: "grey",
-                  paddingRight: "10px",
-                  bottom: "2rem",
-                  position: "absolute",
-                }}
-              >
+              <div className="setting-text">
                 Tell your customers a little about yourself in 300 characters or
                 less.
               </div>
-            </Typography>
+            </dic>
           )}
         </Card>
         <Button

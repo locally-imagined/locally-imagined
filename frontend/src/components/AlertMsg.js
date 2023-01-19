@@ -22,7 +22,7 @@ const AlertMsg = (props) => {
             size="small"
             onClick={() => {
               if (props.type === "error") props.setError(false);
-              if (props.type === "success") props.setSucess(false);
+              if (props.type === "success") props.setSuccess(false);
               if (props.type === "info") props.setInfo(false);
             }}
           >

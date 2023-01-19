@@ -1,0 +1,21 @@
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28rem;
+  height: 28rem !important;
+  padding: 3rem;
+  box-shadow: 24;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 1rem;
+}
+.login-title {
+  color: #3f4cc4;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}

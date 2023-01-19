@@ -1,15 +1,15 @@
 import React from "react";
-import { Button, InputBase } from "@material-ui/core";
+import { Button, InputBase, Modal, Paper, Divider } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import styles from "../styles";
 import states from "../states";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import "./Login.css";
+import "./LoginModal.css";
 /**
- * Login
+ * LoginModal
  * @return {object} JSX
  */
-const Login = (props) => {
+const LoginModal = (props) => {
   const classes = styles();
   const history = useHistory();
   const handleInputChange = (event) => {
@@ -22,6 +22,7 @@ const Login = (props) => {
   const submitLogin = (event) => {
     event.preventDefault();
     // console.log(props.user);
+    props.setOpenLogin(false);
     axios
       .post(
         "https://locally-imagined.herokuapp.com/login",
@@ -65,43 +66,50 @@ const Login = (props) => {
         props.setError(true);
       });
   };
+
   return (
-    <form onSubmit={submitLogin}>
-      {/*username input*/}
-      <InputBase
-        className={classes.fastlogin}
-        placeholder="Username"
-        inputProps={{
-          onChange: handleInputChange,
-          "data-tesid": "username",
-          required: true,
-        }}
-        type="text"
-        name="userName"
-      />
-      {/*password input*/}
-      <InputBase
-        className={classes.fastlogin}
-        placeholder="Password"
-        inputProps={{
-          onChange: handleInputChange,
-          "data-tesid": "password",
-          required: true,
-        }}
-        type="password"
-        name="password"
-      />
-      {/*login and submit*/}
-      <Button
-        variant="text"
-        type="submit"
-        value="Submit"
-        className={classes.login}
-        style={{ color: "white" }}
-      >
-        Login
-      </Button>
-    </form>
+    <Modal open={props.openLogin} onClose={() => props.setOpenLogin(false)}>
+      <Paper className="login">
+        <h1 className="login-title">Login</h1>
+        <Divider />
+        <form onSubmit={submitLogin} className="login-form">
+          {/*username input*/}
+          <InputBase
+            className={classes.fastlogin}
+            placeholder="Username"
+            inputProps={{
+              onChange: handleInputChange,
+              "data-tesid": "username",
+              required: true,
+            }}
+            type="text"
+            name="userName"
+          />
+          {/*password input*/}
+          <InputBase
+            className={classes.fastlogin}
+            placeholder="Password"
+            inputProps={{
+              onChange: handleInputChange,
+              "data-tesid": "password",
+              required: true,
+            }}
+            type="password"
+            name="password"
+          />
+          {/*login and submit*/}
+          <Button
+            variant="text"
+            type="submit"
+            value="Submit"
+            className={classes.login}
+            style={{ color: "white" }}
+          >
+            Login
+          </Button>
+        </form>
+      </Paper>
+    </Modal>
   );
 };
-export default Login;
+export default LoginModal;

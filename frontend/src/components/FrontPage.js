@@ -85,7 +85,7 @@ function FrontPage() {
       sessionStorage.setItem("myAvatar", noImageID);
       return;
     }
-    const url = `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${imageID}`;
+    const url = `https://bucketeer-6f1316fe-9d4c-47b8-b6d0-e7d3c37a1231.s3.amazonaws.com/public/${imageID}`;
     return axios
       .get(url, {})
       .then((res) => {
@@ -121,7 +121,7 @@ function FrontPage() {
         // console.log(id);
         return await axios
           .get(
-            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${id}`,
+            `https://bucketeer-6f1316fe-9d4c-47b8-b6d0-e7d3c37a1231.s3.amazonaws.com/public/${id}`,
             {}
           )
           .then((res) => {
@@ -151,7 +151,7 @@ function FrontPage() {
       datas.map(async (data) => {
         return axios
           .get(
-            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.imageIDs[0]}`,
+            `https://bucketeer-6f1316fe-9d4c-47b8-b6d0-e7d3c37a1231.s3.amazonaws.com/public/${data.imageIDs[0]}`,
             {}
           )
           .then((res) => {
@@ -179,7 +179,7 @@ function FrontPage() {
       datas.map(async (data) => {
         return axios
           .get(
-            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.profpicID}`,
+            `https://bucketeer-6f1316fe-9d4c-47b8-b6d0-e7d3c37a1231.s3.amazonaws.com/public/${data.profpicID}`,
             {}
           )
           .then((res) => {
@@ -204,7 +204,7 @@ function FrontPage() {
   const getImagesSet = (postID) => {
     axios
       .get(
-        `https://locally-imagined.herokuapp.com/posts/getimages/${postID}`,
+        `https://locally-imagined-e6de634a2095.herokuapp.com/posts/getimages/${postID}`,
         {}
       )
       .then((res) => {
@@ -233,7 +233,7 @@ function FrontPage() {
       userID = sessionStorage.getItem("currentUserID");
     }
     setLoading(true);
-    const url = `https://locally-imagined.herokuapp.com/posts/artistposts/${offset}?userID=${userID}`;
+    const url = `https://locally-imagined-e6de634a2095.herokuapp.com/posts/artistposts/${offset}?userID=${userID}`;
     // console.log(`url:${url}`);
     axios
       .get(url, {})
@@ -265,7 +265,7 @@ function FrontPage() {
       datas.map(async (data) => {
         return axios
           .get(
-            `https://bucketeer-8e1fe0c2-5dfb-4787-8878-55a22a5940a8.s3.amazonaws.com/public/${data.previewDataID}`,
+            `https://bucketeer-6f1316fe-9d4c-47b8-b6d0-e7d3c37a1231.s3.amazonaws.com/public/${data.previewDataID}`,
             {}
           )
           .then((res) => {
@@ -293,7 +293,7 @@ function FrontPage() {
       datas.map(async (data) => {
         return axios
           .get(
-            `https://locally-imagined.herokuapp.com/posts/artistposts/0?userID=${data.userID}`,
+            `https://locally-imagined-e6de634a2095.herokuapp.com/posts/artistposts/0?userID=${data.userID}`,
             {}
           )
           .then(async (res) => {
@@ -321,7 +321,7 @@ function FrontPage() {
       userID = sessionStorage.getItem("currentUserID");
     }
     setLoading(true);
-    const url = `https://locally-imagined.herokuapp.com/posts/artists/${offset}`;
+    const url = `https://locally-imagined-e6de634a2095.herokuapp.com/posts/artists/${offset}`;
     // console.log(`url:${url}`);
     axios
       .get(url, {})
@@ -358,15 +358,14 @@ function FrontPage() {
     filterQuery = _filterQuery ? _filterQuery : "";
     setLoading(true);
     if (!filterQuery && !search) {
-      const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpage/`;
+      const baseUrl = `https://locally-imagined-e6de634a2095.herokuapp.com/posts/getpage/`;
       url = `${baseUrl}${offset}`;
     } else {
-      const baseUrl = `https://locally-imagined.herokuapp.com/posts/getpagefiltered/`;
+      const baseUrl = `https://locally-imagined-e6de634a2095.herokuapp.com/posts/getpagefiltered/`;
       url = `${baseUrl}${offset}?${
         search ? `keyword=${encodeURIComponent(search)}` : ``
       }${search ? `&${filterQuery}` : filterQuery}`;
     }
-    console.log(url);
     axios
       .get(url, {})
       .then((res) => {
@@ -394,7 +393,7 @@ function FrontPage() {
   const getInfo = (userID) => {
     if (!userID) return;
     setLoading(true);
-    const url = `https://locally-imagined.herokuapp.com/users/info?userID=${userID}`;
+    const url = `https://locally-imagined-e6de634a2095.herokuapp.com/users/info?userID=${userID}`;
     axios
       .get(url, {})
       .then((res) => {

@@ -32,7 +32,7 @@ const SignUp = (props) => {
       email: props.user.email,
     });
     axios
-      .post("https://locally-imagined.herokuapp.com/signup", body, {
+      .post("https://locally-imagined-e6de634a2095.herokuapp.com/signup", body, {
         "content-type": "application/json",
         auth: {
           username: props.user.userName,

@@ -85,7 +85,7 @@ const AccountSetting = (props) => {
     if (setting.avatar) {
       axios
         .put(
-          "https://locally-imagined.herokuapp.com/users/updateprofilepic",
+          "https://locally-imagined-e6de634a2095.herokuapp.com/users/updateprofilepic",
           {
             content: setting.avatar,
           },
@@ -116,7 +116,7 @@ const AccountSetting = (props) => {
     if (setting.bio.length > 0) {
       axios
         .put(
-          "https://locally-imagined.herokuapp.com/users/updatebio",
+          "https://locally-imagined-e6de634a2095.herokuapp.com/users/updatebio",
           {
             bio: setting.bio,
           },

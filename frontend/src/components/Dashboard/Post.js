@@ -173,7 +173,7 @@ const Post = (props) => {
     // console.log("token:", token);
     const body = JSON.stringify(props.art);
     axios
-      .post("https://locally-imagined.herokuapp.com/posts/create", body, {
+      .post("https://locally-imagined-e6de634a2095.herokuapp.com/posts/create", body, {
         // prettier-ignore
         "content-type": "application/json",
 

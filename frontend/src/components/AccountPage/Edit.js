@@ -184,7 +184,7 @@ const Edit = (props) => {
     // console.log(deleteArr);
     axios
       .delete(
-        `https://locally-imagined.herokuapp.com/posts/delete/${
+        `https://locally-imagined-e6de634a2095.herokuapp.com/posts/delete/${
           props.items[props.editId].postID
         }`,
         {
@@ -214,7 +214,7 @@ const Edit = (props) => {
       });
   };
   const queryUrlFormater = (deleteArr) => {
-    const baseUrl = `https://locally-imagined.herokuapp.com/posts/edit/${
+    const baseUrl = `https://locally-imagined-e6de634a2095.herokuapp.com/posts/edit/${
       props.items[props.editId].postID
     }?`;
     const titleQuery = edit.title ? `title=${edit.title}` : "";

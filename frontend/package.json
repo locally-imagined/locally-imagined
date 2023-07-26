@@ -28,9 +28,10 @@
   },
   "scripts": {
     "build": "react-scripts build",
-    "start": "react-scripts start",
+    "start": "serve -s build",
     "test": "react-scripts test --coverage --transformIgnorePatterns \"node_modules/(?!axios)/\"",
-    "lint": "eslint ./src/**/*.js"
+    "lint": "eslint ./src/**/*.js",
+    "heroku-postbuild": "npm run build"
   },
   "jest": {
     "transform": {
